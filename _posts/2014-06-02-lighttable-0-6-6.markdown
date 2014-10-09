@@ -1,0 +1,59 @@
+---
+title: Light Table 0.6.6
+author: Chris Granger
+layout: post
+---
+
+Happy to announce a new, and fairly big, release of [Light Table][lt] today! The highlight of this release comes from moving LT to [CodeMirror 4][cm], which gives us multiple cursors, tons of performance improvements, and a few other little editing niceties. Here's a list of the new multiple cursors commands:
+
+* Editor: Set selection to top most cursor
+* Editor: Clear multiple cursors
+* Editor: Insert line after
+* Editor: Insert line before
+* Editor: Select next occurrence of word
+* Editor: Select between brackets
+* Editor: Select scope
+* Editor: Go to bracket
+* Editor: Swap line up
+* Editor: Swap line down
+* Editor: Join lines
+* Editor: Duplicate line
+* Editor: Sort lines
+* Editor: Sort lines insensitive
+* Editor: Select lines upward with multiple cursors
+* Editor: Select lines downward with multiple cursors
+* Editor: Split selection into cursors per line
+
+We had tons of contributions, so thanks so much to all of you for the pull requests and refinements you have all put in! Here's the full changelist:
+
+###0.6.6
+
+* FIX: combine try-read catches now that :default is available in cljs (cldwalker)
+* FIX: tweak show-docs command to open only one doc (snufkon)
+* FIX: update solarized (ccspell and gozala)
+* FIX: source map urls were not correctly encoded (nickgieschen)
+* FIX: Ignore case when sorting plugins (seancaffery)
+* FIX: Remove windowVerbatimArguments to fix pathing issues for processes on windows
+* FIX: Push the initial position onto the stack when jumping (joshuafcole)
+* FIX: remove warning from eclipse theme (Bost)
+* FIX: don't move the search forward after every keypress (jamii)
+* FIX: Prevent font settings from being unnecessarily updated (ibdknox)
+* ADDED: Multiple cursor commands from CM4
+* ADDED: Multiple fonts support (ykomatsu)
+* ADDED: reasonable default keybindings for zoom (cldwalker)
+* ADDED: select the previous search text when bringing up the searcher (Bost)
+* ADDED: Report bug button on welcome screen (Tyrieke Morton)
+* ADDED: `Editor: Set options for line commenting` behavior (cldwalker)
+* ADDED: you can right click to copy an inline result (cldwalker)
+* API: make tab and tabset menus extensible (mortalapeman)
+* API: log context changes (ndr-qef)
+* API: checks for required keys in commands (cldwalker)
+* API: add copy and paste platform functions (cldwalker)
+* API: open-path function (cldwalker)
+* API: Make $ and $$ multi-arity (mortalapeman)
+* API: editor.add-gutter and remove-gutter functions (seancaffery)
+* UPDATED: CodeMirror 4!
+* UPDATED: CodeMirror modes
+
+[lt]: http://www.lighttable.com
+[cm]: http://codemirror.net/
