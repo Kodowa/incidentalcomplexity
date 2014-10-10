@@ -4,7 +4,7 @@ title: Incidental Complexity
 ---
 
 <div id="blogposts">
-    {% for post in site.posts limit: 3 %}
+    {% for post in site.posts limit: 1 %}
     <div class="post" id="{{post.link}}">
         <h2><a href="{{post.url}}" class="title">{{post.title}}</a></h2>
         <p class="date">{{post.date | date_to_string }}&nbsp;-&nbsp;{{post.author}}</p>
