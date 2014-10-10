@@ -106,7 +106,7 @@ header h1 a {  color:#555;}
 #related a { color: #f27; text-decoration:none; }
 #related a:hover { color: #f27; text-decoration:underline; }
 #related .posts li { margin-left: 25px; margin-bottom:8px; }
-#related .posts li:before { content: "⇀ "; color: #999; }
+#related .posts li:before { content: "-> "; color: #999; }
 
 .archive { font-family: "Open Sans"; font-size:12pt; }
 .archive h2 { font-family: "GRL"; font-size: 32px; color: #555; display: inline-block; margin-top:40px; margin-bottom:30px; }
