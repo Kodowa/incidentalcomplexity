@@ -9,6 +9,16 @@ title: Incidental Complexity
         <h2><a href="{{post.url}}" class="title">{{post.title}}</a></h2>
         <p class="date">{{post.date | date_to_string }}&nbsp;-&nbsp;{{post.author}}</p>
         {{ post.content }}
+
     </div>
     {% endfor %}
+
+    <div id="related">
+        <h3>Other posts</h3>
+        <ul class="posts">
+            {% for post in site.posts offset: 1 limit: 3 %}
+            <li><a href="{{ post.url }}"><span>{{ post.title }}</span></a></li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>

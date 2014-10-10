@@ -102,10 +102,11 @@ header h1 a {  color:#555;}
 
 
 #related { font-family: "Open Sans"; font-size:12pt; margin-top:30px; margin-bottom:80px; }
-#related h3 { font-family: "GRL"; font-size: 24px; color: #1b4b68; display: inline-block; margin-top:20px; margin-bottom:12px; }
+#related h3 { font-family: "GRL"; font-size: 24px; color: #555; display: inline-block; margin-top:20px; margin-bottom:12px; }
 #related a { color: #f27; text-decoration:none; }
 #related a:hover { color: #f27; text-decoration:underline; }
-#related .posts li { margin-bottom:3px; }
+#related .posts li { margin-left: 25px; margin-bottom:8px; }
+#related .posts li:before { content: "⇀ "; color: #999; }
 
 .archive { font-family: "Open Sans"; font-size:12pt; }
 .archive h2 { font-family: "GRL"; font-size: 32px; color: #555; display: inline-block; margin-top:40px; margin-bottom:30px; }
