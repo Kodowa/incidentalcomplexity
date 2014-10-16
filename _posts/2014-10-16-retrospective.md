@@ -132,7 +132,7 @@ Storing the entire [provenance graph](http://citeseerx.ist.psu.edu/viewdoc/downl
 
 We circled around the problem all month, reading papers and sketching out ideas. Other work got done but we knew this was a problem that could sink the entire approach and so we kept getting drawn back to it.
 
-Unlike the constraint solver, there was no sudden revelation. We got there by chipping away the problem space until we arrived at a more useful way of thinking about the problem. We had been locked into thinking that the only information available is the structure of the rule being evaluated and the sequence of decisions recorded from previous evaluations. Semi-naive evaluation uses the former to rule out cases where old inputs do not need to be considered. Incremental triejoin uses the latter to remember where it made decisions that made need to be changed.
+Unlike the constraint solver, there was no sudden revelation. We got there by chipping away the problem space until we arrived at a more useful way of thinking about the problem. We had been locked into thinking that the only information available is the structure of the rule being evaluated and the sequence of decisions recorded from previous evaluations. Semi-naive evaluation uses the former to rule out cases where old inputs do not need to be considered. Incremental triejoin uses the latter to remember where it made decisions that may need to be changed.
 
 Just as we saw a constraint solver by looking at triejoin from the right angle, we spotted a different way of thinking about incremental triejoin. Rather than directly recording sequences of decisions and replaying them, as triejoin does, we changed the job of the constraint solver.
 
