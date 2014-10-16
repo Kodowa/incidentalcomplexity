@@ -95,7 +95,7 @@ header h1 a {  color:#555;}
 .post a:hover { color: #f27; text-decoration:underline; }
 .post .date { margin-bottom: 10px; }
 .post ul { list-style:disc; margin-bottom:30px; }
-.post li { list-style: disc; margin-left:30px; margin-bottom:10px;}
+.post li { list-style: disc; margin-left:30px; margin-bottom:10px; line-height: 155%; }
 .post pre { background:#fff; overflow:auto; background:none; margin-bottom:30px; padding: 10px 10px; border-radius:3px; border:0px solid #ddd; font-family:"Inconsolata", "Consolas", monospace; }
 .post em { font-style:italic; }
 .post strong { font-weight: bold; }
