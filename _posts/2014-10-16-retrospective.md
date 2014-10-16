@@ -5,7 +5,7 @@ author: Jamie Brandon
 tags: []
 ---
 
-This is the Eve development diary.
+This is the [Eve][eve] development diary.
 
 The goal of Eve is to give everyone access to computing as a general purpose tool. Languages and tools aimed at programmers require an inordinate investment of time and effort to reach basic competence. Environments aimed at non-programmers impose a low ceiling on power and have not caught up to modern computing (support for real-time collaboration, sharing data between programs, building web applications etc). We aim to build a computing environment that supports beginners and experts equally.
 
@@ -195,3 +195,5 @@ Keeping the implementation small and simple is essential given the size of our t
 * tests and benchmarks - 500 loc
 
 Now that we have a passably fast and stable language to work with, the main focus over the next month or two will be on improving the programming experience.
+
+[eve]: http://www.chris-granger.com/2014/10/01/beyond-light-table/
