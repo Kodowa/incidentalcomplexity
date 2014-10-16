@@ -166,6 +166,8 @@ We also encountered the [Edelweiss](http://db.cs.berkeley.edu/papers/vldb14-edel
 
 The editor moved from a fill-in-the-blanks textual representation to a more Excel-like representation. Showing the intermediate data and interacting with it directly seems to be easier for most people than dealing with variables. There is no loss of power compared to the previous editor but it is much less dense. It works for editing code but we will have to find some more compact representation for when users are browsing code.
 
+[![Spreadsheet]({{ site.url }}/images/3.png)]({{ site.url }}/images/3.png)
+
 ### Today
 
 This brings us more or less to the present. Interface aside, the current language is essentially a classic datalog with stratified negation and aggregates. Table fields can contain any scalar js value and queries can call any pure js function.
