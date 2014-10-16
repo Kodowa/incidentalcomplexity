@@ -13,6 +13,7 @@ title: Incidental Complexity
     </div>
     {% endfor %}
 
+    {% if site.posts.size > 1 %}
     <div id="related">
         <h3>Other posts</h3>
         <ul class="posts">
@@ -21,4 +22,5 @@ title: Incidental Complexity
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
 </div>
