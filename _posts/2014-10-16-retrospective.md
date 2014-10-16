@@ -43,7 +43,7 @@ The UI hadn't changed much from the initial demo at Strange Loop. We showed a co
 
 The good:
 
-* All state was accessible and browsable from the root of the tree. The ease of debugging and understanding that we experienced led to the heretical idea that [perhaps local/encapsulated state is actually harmful](http://scattered-thoughts.net/blog/2014/02/17/local-state-is-harmful/)
+* All state was accessible and browsable from the root of the tree. The ease of debugging and understanding that we experienced led to the heretical idea that [perhaps encapsulated state is actually harmful](http://scattered-thoughts.net/blog/2014/02/17/local-state-is-harmful/)
 * Every function had a unique id. The names displayed on the screen were just documentation. There were no namespaces and renaming a function just required changing the name tag attached to the id.
 * The SAC-like model made it easy to immediately see the effects of changes to data or code. Tight feedback loops make for easy debugging.
 
