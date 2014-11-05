@@ -98,6 +98,7 @@ header h1 a {  color:#555;}
 .post li { list-style: disc; margin-left:30px; margin-bottom:10px; line-height: 155%; }
 .post code { padding:2px 5px; background:#e0e0e0; color:#444; border-radius:3px; font-family:"Inconsolata", "Menlo", "Consolas", monospace; }
 .post pre { background:#fff; overflow:auto; background:none; margin-bottom:30px; padding: 10px 10px; border-radius:3px; border:0px solid #ddd; font-family:"Inconsolata", "Consolas", monospace; }
+.post pre code { padding:0; background:none; }
 .post em { font-style:italic; }
 .post strong { font-weight: bold; }
 
