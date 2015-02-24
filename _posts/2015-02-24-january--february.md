@@ -6,6 +6,10 @@ tags: []
 
 Better late than never.
 
+### People
+
+Joshua Cole and Corey Montella joined us in the new year, bringing us up to a merry band of five.
+
 ### Editor
 
 The goal for Eve is to have both textual and graphical code representations that stay in sync, so users can switch back and forth as they prefer. We've shown textual prototypes before - this is our first graphical prototype.
