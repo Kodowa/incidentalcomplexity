@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "January / February"
+title: "January / February: GUIs, time, joins and aggregates"
 tags: []
 ---
 
