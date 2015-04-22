@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "January / February: GUIs, time, joins and aggregates"
+author: "Jamie Brandon"
 tags: []
 ---
 
@@ -16,7 +17,7 @@ The goal for Eve is to have both textual and graphical code representations that
 
 <iframe width="600" height="450" src="https://www.youtube.com/embed/EfClpyk0jhQ" frameborder="0" allowfullscreen></iframe>
 
-The core visual metaphor is cards. Each card represents a single chunk of code. Cards for specialised domains like UI have their own specialised representations and editors. We intend to have pages of cards for organising large projects - so a server project might have a network page that contains code cards for some of the important views as well as UI cards with graphs of network activity.
+The core visual metaphor is tiles. Each tile represents a single chunk of code. Tiles for specialised domains like UI have their own specialised representations and editors. We intend to have grids of tiles for organising large projects - so a server project might have a network grid that contains tiles for some of the important views as well as UI tiles with graphs of network activity. This makes the editor almost into both a workspace and dashboard.
 
 The table editor is functionally complete - you can write any Eve program using it - but the UI for adding aggregates was designed for an older version of the language and can behave weirdly.
 
@@ -32,7 +33,7 @@ We are currently working through the details in an isolated implementation and i
 
 ### Time
 
-We experimented with first-class time intervals as described in [Time and Relational Algebra](http://www.amazon.com/Time-Relational-Theory-Second-Management/dp/0128006315/ref=sr_1_1?ie=UTF8&qid=1424816894&sr=8-1&keywords=date+temporal+relational). Unfortunately this caused huge performance problems, partly due to the lack in incremental evaluation in the current runtime and partly because of the lack of custom value types in javascript.
+We experimented with first-class time intervals as described in [Time and Relational Algebra](http://www.amazon.com/Time-Relational-Theory-Second-Management/dp/0128006315/ref=sr_1_1?ie=UTF8&qid=1424816894&sr=8-1&keywords=date+temporal+relational). Unfortunately this caused huge performance problems, partly due to the lack of incremental evaluation in the current runtime and partly because of the lack of custom value types in javascript.
 
 We also experimented with various different ways of representing time and change in Eve. Within the same program we can express timeless aggregates (like 'x is the number of unique click events') or more imperative updates (like 'given a click at time t, the new x is the previous x plus 1') without ever needing destructive change. It won't be clear which patterns work best until the runtime is able to support much bigger programs.
 
