@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Version control, collaborative editing and undo"
+author: "Jamie Brandon"
 tags: []
 ---
 
