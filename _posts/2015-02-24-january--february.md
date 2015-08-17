@@ -51,10 +51,10 @@ Tetris is still a good candidate for our join algorithm if we can work out these
 
 While running in the browser is a requirement for Eve, it's always been clear that using javascript directly was not a long-term option. So many of our implementation problems come down to lack of control over data layout. For Eve we need to implement:
 
-New types (like intervals) - but there is a space overhead of 24 extra bytes per object
-Polymorphic comparisons - but dispatching on typeof is slow
-Cache-friendly indexes - but it's hard to store multiple js objects sequentially in memory
-Radix tries - but converting strings to bytes is slow
+* New types (like intervals) - but there is a space overhead of 24 extra bytes per object
+* Polymorphic comparisons - but dispatching on typeof is slow
+* Cache-friendly indexes - but it's hard to store multiple js objects sequentially in memory
+* Radix tries - but converting strings to bytes is slow
 
 We also want to be able to distribute native code for mobile devices and use real threads on servers. Lastly, there is some benefit to using reference-counting for the indexes so that we can avoid copying nodes when we know we have sole access.
 
