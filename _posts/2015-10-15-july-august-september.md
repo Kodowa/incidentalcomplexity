@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "July / August / September"
+author: "Jamie Brandon"
 tags: []
 ---
 
