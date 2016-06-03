@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Eve Dev Diary (October - November)"
+title: "Eve Dev Diary (Oct - Nov)"
 author: "Corey Montella"
 tags: []
 ---
@@ -11,7 +11,7 @@ Without a clear idea on where to go next, we did the next best thing: a breadth 
 
 Below, I'll talk about each of our projects:
 
-## Copperfield ([github](https://github.com/witheve/Eve/tree/af13f8d5f8a537d22c459f3e69e39b2736b16384/experimental/copperfield/ui))
+### Copperfield ([github](https://github.com/witheve/Eve/tree/af13f8d5f8a537d22c459f3e69e39b2736b16384/experimental/copperfield/ui))
 
 Josh built Copperfield to find the simplest expressive interface in Eve. Copperfield was to designed to feel immediately useful and eminently explorable like Wikipedia, with additional influences in Hypercard, and Urbit. The project was built around three central tenets:
 
@@ -23,11 +23,11 @@ Entities served as the main objects of the system. They could be anything from q
 
 Josh wrote up a full overview of Copperfield, which you can read [here](https://gist.github.com/cmontella/05029cb67b5216ee838f4cb0b1f4ab98).
 
-## Imp ([github](https://github.com/jamii/imp/tree/master/src))
+### Imp ([github](https://github.com/jamii/imp/tree/master/src))
 
 Jamie built Imp, which he intended to be an Eve for people who build Eves (i.e. people who build compilers and languages). We've always wrestled with the question of what it would be like to build Eve in Eve. One barrier we forsee is performance; while Eve is a general purpose language, we are initially targeting users who might not care about how fast the language is -- web devs, small busines owners, knowledge workers, etc. Thus, Imp was a test to see just how performant Jamie could make the system. Fortunately, Jamie kept a detailed account of his journey building Imp, which you can read about [here](https://github.com/jamii/imp/blob/master/diary.md).
 
-## GridEve ([github](https://github.com/witheve/Eve/tree/af13f8d5f8a537d22c459f3e69e39b2736b16384/experimental/grideve))
+### GridEve ([github](https://github.com/witheve/Eve/tree/af13f8d5f8a537d22c459f3e69e39b2736b16384/experimental/grideve))
 
 I built GridEve, which was an evolution of Excel with Eve-like semantics. The idea was to explore what Eve would look like if we took a product that was proven to work, and extended it to make it more powerful. GridEve has two important innovations over vanilla Excel, which I felt made it much more flexible and useful:
 
@@ -48,7 +48,7 @@ But Excel already does dataflow, this is nothing new. GridEve goes a step furthe
 
 In this final example, I demonstrate how a form could be laid out in the grid. I type `textbox("Name")`, which evaluates to a textbox UI element. By right-clicking on a cell, I toggle the visibility of the formula so only the UI element is showing. In this way, UI can be laid out on directly to the grid. The function of an element can easily be edited by right clicking on the element and editing its formula.
 
-## CardWiki ([github](https://github.com/witheve/Eve/tree/af13f8d5f8a537d22c459f3e69e39b2736b16384/experimental/cardwiki))
+### CardWiki ([github](https://github.com/witheve/Eve/tree/af13f8d5f8a537d22c459f3e69e39b2736b16384/experimental/cardwiki))
 
 CardWiki was Chris' project, and probably the most ambitious. It really started when Chris was watching Apple unveil the new version of the Apple TV in September 2015. In one of the demos, the presenter speaks into the remote control and commands "Show that Modern Family episode with Edward Norton". Apple TV then navigates to the correct episode of Modern Family. Well, Eve should be able to do the same thing, right? Why not? Thus, CardWiki was born.
 
@@ -68,7 +68,7 @@ Another feature demonstrated here is the implication mechanism, which is a way t
 
 Several queries are laid out as "cards" in a workspace. The large purple cards in the middle shoe the wiki interface in action. Plain text can be annotated to have semantic meaning. In the top card, Vin Diesel is marked as a member of the classes "American" and "actor", so any searchs for "American actors" will include him. Below him, Edward Norton's age, haircolor, and salary are annotated as attributes, so they can be queried and used in calculations.
 
-## Results
+### Results
 
 So what did we learn from all of this? First, it surprised us how different our projects were. We had been working on Eve together for a while, yet we each had a different idea what Eve meant at an individual level. To me, it was a calculator/notebook with super powers. To Chris, it was a computation on crowd-sourced, world-scale data. For Jamie it was just getting more performance out of the engine so he could write compilers in Eve.
 
