@@ -2,10 +2,8 @@
 layout: post
 title: "Dev Diary: October - November"
 author: "Corey Montella"
-tags: ["Dev Diary",]
+tags: []
 ---
-
-# Eve Developer Diary - October - November
 
 After we [launched V0](http://www.chris-granger.com/2015/08/17/version-0/) at the end of last Summer, we spent a lot of time figuring out where to go next. The graph model featured in V0 had a lot of strengths: immediate feedback on actions, no coding with a completely point and click interface, all possible options were displayed on the screen, and the universal search was great for discovery. But there were weaknesses too: aggregates never really fit into the picture, a lot of time was spent laying out the query graphs, some of the terminology (like chunk and ordinal) was unintuitive and confusing. That, and we still weren't sure how the interface would scale to larger programs.
 
