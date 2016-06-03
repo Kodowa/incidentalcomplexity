@@ -1,4 +1,4 @@
-incidentalcomplexity.com
+Incidental Complexity
 ===================
 This is the development blog for [Eve](http://witheve.com).
 
