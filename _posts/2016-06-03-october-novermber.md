@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Dev Diary: October - November"
+title: "Eve Dev Diary: October - November"
 author: "Corey Montella"
 tags: []
 ---
