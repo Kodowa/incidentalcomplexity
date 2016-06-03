@@ -1,8 +1,7 @@
-lighttable.com
+incidentalcomplexity.com
 ===================
+This is the development blog for [Eve](http://witheve.com).
 
-Light Table's official website
-
-You can view it online at  http://www.lighttable.com
+You can view it online at  http://incidentalcomplexity.com
 
 
