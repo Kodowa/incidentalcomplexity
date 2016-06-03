@@ -76,23 +76,23 @@ header h1 a {  color:#555;}
 .nav { display:block; font-size:12pt; font-family:"GRL"; margin-top:6px; }
 .nav li { display:inline-block; }
 .nav li + li { margin-left: 5px;}
-.nav a {color: #f27; color: #555; }
+.nav a {color: rgb(91,89,164); color: #555; }
 
 #blogposts { margin:0 auto; width:700px; padding-bottom:100px; }
 
-.post h2 { text-align:center; }
-.post .title { text-align:center; font-family: "GRL"; font-size: 32px; color: #f27; display: inline-block; margin: 40px 0px 5px 0px;}
-.post a.title:hover { color: #; text-shadow: 1px 1px 3px rgba(70, 70, 90, .1); text-decoration:none; }
+.post h2 { color: rgb(91,89,164); }
+.post .title { text-align:center; font-family: "GRL"; font-size: 32px; color: rgb(91,89,164); display: inline-block; margin: 40px 0px 5px 0px;}
+.post a.title:hover { color: rgb(91,89,164); text-shadow: 1px 1px 3px rgba(70, 70, 90, .1); text-decoration:none; }
 .date { text-align:center; font-family: "GRL"; font-size: 12pt; color: #778c98; padding-bottom: 45px; text-transform: none;}
 
 .post { font-family: "Open Sans"; font-size: 12pt; color: #555; }
 .post p { line-height: 155%; margin-bottom:30px; }
 .post img { max-width: 700px; border-radius:3px; margin:5px auto; width:auto; }
 .post object, .post iframe { max-width: 700px; border-radius:3px; margin:35px 0; margin-top:10px; width:100%; }
-.post h3 { text-align:left; font-family: "GRL"; font-size: 24px; color: #f27; display: block; margin-top:25px; margin-bottom:25px; }
-.post h4, .post h5 { text-align:left; font-family: "GRL"; font-size: 18px; color: #f27; display: block; }
-.post a { color: #f27; text-decoration:none; }
-.post a:hover { color: #f27; text-decoration:underline; }
+.post h3 { text-align:left; font-family: "GRL"; font-size: 24px; color: rgb(91,89,164); display: block; margin-top:25px; margin-bottom:25px; }
+.post h4, .post h5 { text-align:left; font-family: "GRL"; font-size: 18px; color: rgb(91,89,164); display: block; }
+.post a { color: rgb(91,89,164); text-decoration:none; }
+.post a:hover { color: rgb(91,89,164); text-decoration:underline; }
 .post .date { margin-bottom: 10px; }
 .post ul { list-style:disc; margin-bottom:30px; }
 .post li { list-style: disc; margin-left:30px; margin-bottom:10px; line-height: 155%; }
@@ -104,15 +104,15 @@ header h1 a {  color:#555;}
 
 #related { font-family: "Open Sans"; font-size:12pt; margin-top:30px; margin-bottom:80px; }
 #related h3 { font-family: "GRL"; font-size: 24px; color: #555; display: inline-block; margin-top:20px; margin-bottom:12px; }
-#related a { color: #f27; text-decoration:none; }
-#related a:hover { color: #f27; text-decoration:underline; }
+#related a { color: rgb(91,89,164); text-decoration:none; }
+#related a:hover { color: rgb(91,89,164); text-decoration:underline; }
 #related .posts li { margin-left: 25px; margin-bottom:8px; }
 #related .posts li:before { content: "-> "; color: #999; }
 
 .archive { font-family: "Open Sans"; font-size:12pt; }
 .archive h2 { font-family: "GRL"; font-size: 32px; color: #555; display: inline-block; margin-top:40px; margin-bottom:30px; }
-.archive a { color: #f27; text-decoration:none; }
-.archive a:hover { color: #f27; text-decoration:underline; }
+.archive a { color: rgb(91,89,164); text-decoration:none; }
+.archive a:hover { color: rgb(91,89,164); text-decoration:underline; }
 .archive li { margin-bottom:10px; }
 .archive span { float:right; color: #555;}
 
