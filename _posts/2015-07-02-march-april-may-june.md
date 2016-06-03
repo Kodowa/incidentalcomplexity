@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "March / April / May / June"
+title: "Eve Dev Diary (March - June)"
 author: "Jamie Brandon"
 tags: []
 ---

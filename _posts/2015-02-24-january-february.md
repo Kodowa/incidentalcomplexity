@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "January / February: GUIs, time, joins and aggregates"
+title: "Dev Diary: January - February: GUIs, time, joins and aggregates"
 author: "Jamie Brandon"
 tags: []
 ---
