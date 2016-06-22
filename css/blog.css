@@ -75,7 +75,6 @@ header h1 { display:block; font-size: 18pt; font-family: "GRL"; text-align: cent
 header h1 a {  color:#555;}
 .nav { display:block; font-size:12pt; font-family:"GRL"; margin-top:6px; }
 .nav li { display:inline-block; }
-.nav li + li { margin-left: 5px;}
 .nav a {color: rgb(91,89,164); color: #555; }
 
 #blogposts { margin:0 auto; width:700px; padding-bottom:100px; }
@@ -121,11 +120,13 @@ header h1 a {  color:#555;}
 
 .hiring h4 { margin-top:20px; }
 
+.logo {margin-bottom: 10px;}
+
 @media only screen
 and (max-width : 1350px) {
   #blogposts { width: 600px; }
   .post img, .post object, .post iframe { max-width: 600px;}
-  .nav li {display: inherit; margin-bottom: 10px; margin-left: 0px;}
+  .nav li {display: list-item; margin-bottom: 10px; margin-left: 0px;}
 }
 
 
