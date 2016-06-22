@@ -125,6 +125,7 @@ header h1 a {  color:#555;}
 and (max-width : 1350px) {
   #blogposts { width: 600px; }
   .post img, .post object, .post iframe { max-width: 600px;}
+  .nav li {display: inherit; margin-bottom: 10px; margin-left: 0px;}
 }
 
 
