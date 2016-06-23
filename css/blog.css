@@ -140,7 +140,7 @@ and (max-width : 1260px) {
 }*/
 
 @media only screen
-and (max-width : 700px) {
+and (max-width : 850px) {
   #blogposts { width:100%; }
   header { width:100%; position:static; padding:0 15px; margin-bottom:40px; margin-top:20px; }
   header h1 { display:inline-block; }
