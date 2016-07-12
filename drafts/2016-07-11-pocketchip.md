@@ -27,13 +27,13 @@ In our [latest Dev Diary](http://incidentalcomplexity.com/2016/06/30/apr/), we s
 
 Check it out!
 
-![WikiGrid](../images/pocketchip1.jpg)
+![EvePocketChip]({{ site.url }}/images/pocketchip1.jpg)
 
 ###### (image courtesy Mark R. Hacker)
 
 I wasn't very familiar with this device before now, but apparently it's an ultra-low-cost computer akin to the Raspberry Pi. The CHIP sports a 1GHz SOC, and 512 MB of RAM, so it's not exactly an anemic machine. Still, it's the weakest machine to ever run Eve, and to my knowledge, this represents the first time that Eve has been compiled to ARM. Mark reports that since the CHIP runs Debian, all he had to do was follow the standard build instructions to compile natively to ARM on the device. However, he noted that starting Eve actually took 10 minutes, so you need some patience. Despite this, Mark reports that the REPL runs fine in the Iceweasel browser.
 
-![WikiGrid](../images/pocketchip3.jpg)
+![EvePocketChip]({{ site.url }}/images/pocketchip3.jpg)
 
 ###### (image courtesy Mark R. Hacker)
 
