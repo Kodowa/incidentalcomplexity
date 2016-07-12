@@ -1,11 +1,9 @@
-```
 ---
 layout: post
 title: "Eve on a PocketCHIP"
 author: "Corey Montella"
 tags: []
 ---
-```
 
 In our [latest Dev Diary](http://incidentalcomplexity.com/2016/06/30/apr/), we showed off the latest Eve REPL. Well, not too long after, [Mark R. Hacker](https://twitter.com/markrhacker1) managed to get Eve and the REPL running on his Pocket Chip.
 
