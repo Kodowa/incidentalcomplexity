@@ -35,4 +35,4 @@ I wasn't very familiar with this device before now, but apparently it's an ultra
 
 (image courtesy Mark R. Hacker)
 
-Mark is currently working on getting this version of Eve working on his PocketCHIP, so we'll check back with him later for an update on his progress.
+Mark is currently working on getting the newest version of Eve working on his PocketCHIP, so we'll check back with him later for an update on his progress.
