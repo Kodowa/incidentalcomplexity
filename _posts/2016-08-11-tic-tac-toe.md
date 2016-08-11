@@ -5,7 +5,7 @@ author: "Joshua Cole"
 tags: []
 ---
 
-_(Editor's Note: Keep in mind as you're reading, this post is an executable Eve program. See the raw text [here](https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-09-tic-tac-toe.md))_
+_(Editor's Note: Keep in mind as you're reading, this post is an executable Eve program. See the raw text [here](https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-11-tic-tac-toe.md))_
 
 ![Tic-tac-toe in Eve]({{ site.url }}/images/tic-tac-toe.gif)
 
