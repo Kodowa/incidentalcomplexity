@@ -170,7 +170,7 @@ Draw the board
   bind
     [#div board @container style: [font-family: "sans-serif"], children:
       [#div #status board class: "status", style: [text-align: "center", width: 150, padding-bottom: 10]]
-      [#div class: "board" children:
+      [#div class: "board" style: [color: "black"] children:
         [#div class: "row" sort: row children:
           [#div #cell class: "cell" cell text: contents sort: column style:
             [display: "inline-block" width: "50px" height: "50px" border: "1px solid black" background: "white" font-size: "2em" line-height: "50px" text-align: "center"]]]]
