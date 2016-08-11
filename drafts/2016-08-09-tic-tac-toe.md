@@ -15,19 +15,19 @@ Last week on the [mailing list](https://groups.google.com/forum/#!forum/eve-talk
 
 [1]: https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!topic/eve-talk/UQkW7KDdz3M
 
-This analysis (and future breakdowns) will be written inline in Eve to make the discussion flow more naturally. Since our blog is capable of rendering Markdown, we can provide a pleasant reading experience directly from the source code. Right now, the Eve parser is compatible with [GitHub-Flavored Markdown][2].
+This analysis (and future breakdowns) will be written inline in Eve to make the discussion flow more naturally. Since Eve is a superset of [GitHub-Flavored Markdown][2] which our blog is capable of rendering, we can provide a pleasant reading experience directly from the source code.
 
 [2]: https://guides.github.com/features/mastering-markdown/
 
 ###  Game logic
 
-Tic-Tac-Toe is a classic game played by two players, "X" and "O", who take turns marking their letter on a 3x3 grid. The first player to mark 3 adjacent cells with their letter wins. The game can potentially result in a draw, where all grid cells are marked, but neither player has 3 adjacent cells. To build this game in Eve, we need several parts:
+Tic-Tac-Toe is a classic game played by two players, "X" and "O", who take turns marking their letter on a 3x3 grid. The first player to mark 3 adjacent cells in a line wins. The game can potentially result in a draw, where all grid cells are marked, but neither player has 3 adjacent cells. To build this game in Eve, we need several parts:
 
 - A game board with cells
 - A way to mark a cell as 'X' or 'O'
 - A way to recognize that a player has won the game.
 
-To begin, we initialize the board. We commit an object named `@board` to hold our global state and create a set of `#cell`s. These `#cell`s will keep track of the moves players have made. Common connect-N games (a generalized tic-tac-toe for any NxN grid) are scored along 4 axes (horizontal, vertical, the diagonals, and the anti-diagonal). We group cells together along each axis up front to make scoring easier later. This process is made much cleaner by the addition of new math expressions like `range[from, to]`. This is a small part of our effort to expand the standard library based on usage. If you're interested in helping shape this, stop by our [RFCs repository][3] or jump right in on our discussion of [standard string expressions][4].
+To begin, we initialize the board. We commit an object named `@board` to hold our global state and create a set of `#cell`s. These `#cell`s will keep track of the moves players have made. Common connect-N games (a generalized tic-tac-toe for any NxN grid) are scored along 4 axes (horizontal, vertical, the diagonal, and the anti-diagonal). We group cells together along each axis up front to make scoring easier later. This process is made much cleaner by the addition of new math expressions like `range[from, to]`. This is a small part of our effort to expand the standard library based on usage. If you're interested in helping shape this, stop by our [RFCs repository][3] or jump right in on our discussion of [standard string expressions][4].
 
 [3]: https://github.com/witheve/rfcs/
 [4]: https://github.com/witheve/rfcs/issues/5
@@ -45,15 +45,15 @@ each with a row and column index.
     // generate the cells
     i = range[from: 0, to: size]
     j = range[from: 0, to: size]
-    
+
  commit
     board = [@board size player: starting-player]
     [#cell board row: i column: j]
 ```
 
-A subtlety here is the last line, `[#cell board row: i column: j]`. This line actually generates all 9 cells. How? Well it has to do with Eve's set semantics. It might seem strange that we repeat an identical `range` function twice, but we do this to generate two disparate sets, `i` and `j`. These sets have no relation to each other, so when we put them in the same object, we are telling Eve we want the [cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of the elements. This means that if `i = {0 1 2}` and `j = {0,1,2}`, then `i x j = {(0,0), (0,1), ... (2,1), (2,2)}`. These are exactly the indices we need for our grid! Thus, due to Eve's semantics, with a single line we can achieve our goal.
+A subtlety here is the last line, `[#cell board row: i column: j]`. Thanks to our relational semantics, this line actually generates all 9 cells. Since the sets of values computed in `i` and `j` have no relation to each other, when we use them together we get the [cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of their values. This means that if `i = {0, 1, 2}` and `j = {0, 1, 2}`, then `i x j = {(0, 0), (0, 1), ... (2, 1), (2, 2)}`. These are exactly the indices we need for our grid!
 
-Now we call attention to some special cell: diagonal and anti-diagonal cells. The diagonal cells are (0,0), (1,1), and (2,2). Notice anything about them?
+Now we tag some special cell groupings: diagonal and anti-diagonal cells. The diagonal cells are (0, 0), (1, 1), and (2, 2). Notice anything about them?
 
 Diagonal cells have a row index equal to its column index
 ```
@@ -64,9 +64,9 @@ Diagonal cells have a row index equal to its column index
     cells += #diagonal
 ```
 
-The anti-diagonal cells are (0,2), (1,1), and (2,0). Again, do you notice anything about these cells?
+Similarly, the anti-diagonal cells are (0, 2), (1, 1), and (2, 0).
 
-Anti-diagonal cells satisfy the equation `row + col = N - 1`, 
+Anti-diagonal cells satisfy the equation `row + col = N - 1`,
 where N is the size of the board.
 ```
   match
@@ -94,7 +94,7 @@ The game can end in a tie, where no player has N in a row.
                      // Check for an anti-diagonal win
                      else if cell = [#anti-diagonal row column player]
                        N = count[given: cell, per: player] then (player, cell)
-                     // If all cells are filled  but there are no winners
+                     // If all cells are filled but there are no winners
                      else if cell = [#cell player]
                        N * N = count[given: cell] then ("nobody", cell)
   commit
@@ -102,10 +102,9 @@ The game can end in a tie, where no player has N in a row.
     cell += #winner
 ```
 
-We use the `count` aggregate in the above block. Count returns the number of elements (the cardinality)
-of `given`. The optional `per` attribute allows you to specify a grouping. 
+We use the `count` aggregate in the above block. Count returns the number of discrete values (the cardinality) of the variables in `given`. The optional `per` attribute allows you to specify groupings, which yield one result for each set of values in the group.
 
-In `count[given: cell, per: player]`, since we group by `player`, count returns two values: the count of `X` elements and the count of `O` elements. This can be read "count the cells per player". In another line, we group by `column` and `player`. This will return `N * 2` results: one result for every player for every column. Like wise with the row case. By equating this with N, we only ensure the winning player is only returned when it has N elements in the given direction.
+For example, in `count[given: cell, per: player]` we group by `player`, which returns two values: the count of cells marked by player `X` and those marked by `O`. This can be read "count the cells per player". In the scoring block, we group by `column` and `player`. This will return the count of cells marked by a player in a particular column. Like wise with the row case. By equating this with N, we ensure the winning player is only returned when she has marked N cells in the given direction.
 
 This is how Eve works without looping. Rather than writing a nested `for` loop and iterating over the cells, we can use Eve's semantics to our advantage.
 
@@ -175,10 +174,10 @@ Draw the board
 
 Winning cells are drawn in a different color
 ```
-  match 
+  match
     winning-cells = [#cell #winner]
     cell-elements = [#div cell: winning-cells, style]
-  bind 
+  bind
     style.color := "red"
 ```
 
@@ -202,7 +201,7 @@ When the game is won, display the winner
     status.text += "{{winner}} wins! Click anywhere to restart!"
 ```
 
-Along the way to making this demo, many new standard library expressions were added, the execution strategy for aggregates was overhauled, parser bugs were fixed, and dependency ordering glitches resolved. We even began to appreciate how literate programming will work in Eve (the post you are reading right now is an executable Eve program). 
+Along the way to making this demo, many new standard library expressions were added, the execution strategy for aggregates was overhauled, parser bugs were fixed, and dependency ordering glitches resolved. We even began to appreciate how literate programming will work in Eve (the post you are reading right now is an executable Eve program).
 
 The human-compiled version of tic-tac-toe was completed in only about half an hour, and required very few changes to get working once the platform caught up. The latest iteration of Eve is still very much in its infancy, but even now its showing a lot of promise for teasing out simple and general solutions to complicated problems. As one of its creators, I'm obviously a biased party when discussing Eve, so feedback such as RubenSandwich's is invaluable in helping us make the language more robust. If you find the time to try Eve yourself, please don't hesitate to share your experiences with us on the [mailing list][5].
 
