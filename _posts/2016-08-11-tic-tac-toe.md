@@ -8,7 +8,7 @@ tags: []
 _(Editor's Note: Keep in mind as you're reading, this post is an executable Eve program. See the raw text [here](https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-11-tic-tac-toe.md))_
 
 ![Tic-tac-toe in Eve]({{ site.url }}/images/tic-tac-toe.gif)
-
+{% raw %}
 Last week on the mailing list, [RubenSandwich](https://github.com/rubensandwich) posted an interactive demo capable of [playing and scoring tic-tac-toe matches][1]. He provided some great feedback about the issues he ran into along the way. Now that the language is becoming more stable, our first priority is seeing it used and addressing the problems that surface. To that end, his troubles became our guide to making Eve a little friendlier for writing interactive applications in general. Today we'll look at a simplified version of tic-tac-toe that takes into account his feedback.
 
 [1]: https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!topic/eve-talk/UQkW7KDdz3M
@@ -200,7 +200,6 @@ Display the current player if the game isn't won
 
 When the game is won, display the winner
 
-{% raw %}
 ```
   match
     status = [#status board]
@@ -208,10 +207,11 @@ When the game is won, display the winner
   bind
     status.text += "{{winner}} wins! Click anywhere to restart!"
 ```
-{% endraw %}
+
 
 Along the way to making this demo, many new standard library expressions were added, the execution strategy for aggregates was overhauled, parser bugs were fixed, and dependency ordering glitches resolved. We even began to appreciate how literate programming will work in Eve (the post you are reading right now is an executable Eve program).
 
 The human-compiled version of tic-tac-toe was completed in only about half an hour, and required very few changes to get working once the platform caught up. The latest iteration of Eve is still very much in its infancy, but even now its showing a lot of promise for teasing out simple and general solutions to complicated problems. As one of its creators, I'm obviously a biased party when discussing Eve, so feedback such as RubenSandwich's is invaluable in helping us make the language more robust. If you find the time to try Eve yourself, please don't hesitate to share your experiences with us on the [mailing list][5].
 
 [5]: https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!forum/eve-talk
+{% endraw %}
