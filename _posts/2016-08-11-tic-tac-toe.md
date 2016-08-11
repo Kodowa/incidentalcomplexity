@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Breaking Down Tic-Tac-Toe"
+title: "Breaking Down: Tic-Tac-Toe"
 author: "Joshua Cole"
 tags: []
 ---
