@@ -51,6 +51,10 @@ each with a row and column index.
     [#cell board row: i column: j]
 ```
 
+A subtlety here is the last line, `[#cell board row: i column: j]`. This line actually generates all 9 cells. How? Well it has to do with Eve's set semantics. It might seem strange that we repeat an identical `range` function twice, but we do this to generate two disparate sets, `i` and `j`. These sets have no relation to each other, so when we put them in the same object, we are telling Eve we want the [cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of the elements. This means that if `i = {0 1 2}` and `j = {0,1,2}`, then `i x j = {(0,0), (0,1), ... (2,1), (2,2)}`. These are exactly the indices we need for our grid! Thus, due to Eve's semantics, with a single line we can achieve our goal.
+
+Now we call attention to some special cell: diagonal and anti-diagonal cells. The diagonal cells are (0,0), (1,1), and (2,2). Notice anything about them?
+
 Diagonal cells have a row index equal to its column index
 ```
   match
@@ -59,6 +63,8 @@ Diagonal cells have a row index equal to its column index
   bind
     cells += #diagonal
 ```
+
+The anti-diagonal cells are (0,2), (1,1), and (2,0). Again, do you notice anything about these cells?
 
 Anti-diagonal cells satisfy the equation `row + col = N - 1`, 
 where N is the size of the board.
@@ -100,6 +106,8 @@ We use the `count` aggregate in the above block. Count returns the number of ele
 of `given`. The optional `per` attribute allows you to specify a grouping. 
 
 In `count[given: cell, per: player]`, since we group by `player`, count returns two values: the count of `X` elements and the count of `O` elements. This can be read "count the cells per player". In another line, we group by `column` and `player`. This will return `N * 2` results: one result for every player for every column. Like wise with the row case. By equating this with N, we only ensure the winning player is only returned when it has N elements in the given direction.
+
+This is how Eve works without looping. Rather than writing a nested `for` loop and iterating over the cells, we can use Eve's semantics to our advantage.
 
 We first search every row, then every column. Finally we check the diagonal and anti-diagonal. To do this, we leverage the `#diagonal` and `#anti-diagonal` tags we created earlier; instead of selecting `[#cell]`, we can select on `[#diagonal]` and `[#anti-diagonal]` to select only a subset of cells.
 
