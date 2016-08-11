@@ -113,7 +113,7 @@ This is how Eve works without looping. Rather than writing a nested `for` loop a
 We first search every row, then every column. Finally we check the diagonal and anti-diagonal. To do this, we leverage the `#diagonal` and `#anti-diagonal` tags we created earlier; instead of selecting `[#cell]`, we can select on `[#diagonal]` and `[#anti-diagonal]` to select only a subset of cells.
 
 
-## React to Events
+### React to Events
 
 Next, we handle user input. Any time a cell is directly clicked, we:
 
