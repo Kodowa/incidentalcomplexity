@@ -9,7 +9,7 @@ _(Editor's Note: Keep in mind as you're reading, this post is an executable Eve 
 
 ![Tic-tac-toe in Eve]({{ site.url }}/images/tic-tac-toe.gif)
 
-Last week on the [mailing list](https://groups.google.com/forum/#!forum/eve-talk), [RubenSandwich](https://github.com/rubensandwich) posted an interactive demo capable of [playing and scoring tic-tac-toe matches][1]. He provided some great feedback about the issues he ran into along the way. Now that the language is becoming more stable, our first priority is seeing it used and addressing the problems that surface. To that end, his troubles became our guide to making Eve a little friendlier for writing interactive applications in general. Today we'll look at a simplified version of tic-tac-toe that takes into account his feedback.
+Last week on the mailing list, [RubenSandwich](https://github.com/rubensandwich) posted an interactive demo capable of [playing and scoring tic-tac-toe matches][1]. He provided some great feedback about the issues he ran into along the way. Now that the language is becoming more stable, our first priority is seeing it used and addressing the problems that surface. To that end, his troubles became our guide to making Eve a little friendlier for writing interactive applications in general. Today we'll look at a simplified version of tic-tac-toe that takes into account his feedback.
 
 [1]: https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!topic/eve-talk/UQkW7KDdz3M
 
