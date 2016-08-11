@@ -1,11 +1,9 @@
-```
 ---
 layout: post
 title: "Breaking Down Tic-Tac-Toe"
 author: "Joshua Cole"
 tags: []
 ---
-```
 
 _(Editor's Note: Keep in mind as you're reading, this post is an executable Eve program. See the raw text [here](https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-09-tic-tac-toe.md))_
 
