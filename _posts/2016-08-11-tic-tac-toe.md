@@ -32,6 +32,7 @@ To begin, we initialize the board. We commit an object named `@board` to hold ou
 
 The game board is square, with a given `size`. It contains size ^ 2 cells,
 each with a row and column index.
+
 ```
   match
     [#session-connect]
@@ -54,6 +55,7 @@ A subtlety here is the last line, `[#cell board row: i column: j]`. Thanks to ou
 Now we tag some special cell groupings: diagonal and anti-diagonal cells. The diagonal cells are (0, 0), (1, 1), and (2, 2). Notice anything about them?
 
 Diagonal cells have a row index equal to its column index
+
 ```
   match
     cells = [#cell row column]
@@ -66,6 +68,7 @@ Similarly, the anti-diagonal cells are (0, 2), (1, 1), and (2, 0).
 
 Anti-diagonal cells satisfy the equation `row + col = N - 1`,
 where N is the size of the board.
+
 ```
   match
     cells = [#cell row column]
@@ -77,6 +80,7 @@ where N is the size of the board.
 
 A game is won when a player marks N cells in a row, column, or diagonal.
 The game can end in a tie, where no player has N in a row.
+
 ```
   match
     board = [@board size: N, not(winner)]
@@ -120,6 +124,7 @@ Next, we handle user input. Any time a cell is directly clicked, we:
 Then update the cell to reflect its new owner, and switch board's `player` to the next player.
 
 Click on a cell to make your move
+
 ```
   match
     [#click #direct-target element: [#div cell]]
@@ -155,6 +160,7 @@ A reset consists of:
 We've implemented the game logic, but now we need to actually draw the board so players have something to see and interact with. Our general strategy will be that the game board is a `#div` with one child `#div` for each cell. Each cell will be drawn with an "X", "O", or empty string as text. We also add a `#status` div, which we'll write game state into later. Our cells have the CSS inlined, but you could just as easily link to an external file.
 
 Draw the board
+
 ```
   match
     board = [@board]
@@ -171,6 +177,7 @@ Draw the board
 ```
 
 Winning cells are drawn in a different color
+
 ```
   match
     winning-cells = [#cell #winner]
@@ -182,6 +189,7 @@ Winning cells are drawn in a different color
 Finally, we fill the previously mentioned `#status` div with our current game state. If no winner has been declared, we remind the competitors of whose turn it is, and once a winner is found we announce her newly-acquired bragging rights.
 
 Display the current player if the game isn't won
+
 ```
   match
     status = [#status board]
@@ -191,6 +199,7 @@ Display the current player if the game isn't won
 ```
 
 When the game is won, display the winner
+
 ```
   match
     status = [#status board]
