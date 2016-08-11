@@ -200,13 +200,15 @@ Display the current player if the game isn't won
 
 When the game is won, display the winner
 
+{% raw %}
 ```
   match
     status = [#status board]
     winner = board.winner
   bind
-    status.text += "\{\{winner\}\} wins! Click anywhere to restart!"
+    status.text += "{{winner}} wins! Click anywhere to restart!"
 ```
+{% endraw %}
 
 Along the way to making this demo, many new standard library expressions were added, the execution strategy for aggregates was overhauled, parser bugs were fixed, and dependency ordering glitches resolved. We even began to appreciate how literate programming will work in Eve (the post you are reading right now is an executable Eve program).
 
