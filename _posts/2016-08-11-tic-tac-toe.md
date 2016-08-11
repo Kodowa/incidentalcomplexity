@@ -195,7 +195,7 @@ Display the current player if the game isn't won
     status = [#status board]
     not(board.winner)
   bind
-    status.text += "It's \{\{board.player\}\}'s turn!"
+    status.text += "It's {{board.player}}'s turn!"
 ```
 
 When the game is won, display the winner
