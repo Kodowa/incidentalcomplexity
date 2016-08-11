@@ -22,7 +22,7 @@ This analysis (and future breakdowns) will be written inline in Eve to make the 
 Tic-Tac-Toe is a classic game played by two players, "X" and "O", who take turns marking their letter on a 3x3 grid. The first player to mark 3 adjacent cells in a line wins. The game can potentially result in a draw, where all grid cells are marked, but neither player has 3 adjacent cells. To build this game in Eve, we need several parts:
 
 - A game board with cells
-- A way to mark a cell as 'X' or 'O'
+- A way to mark a cell as "X" or "O"
 - A way to recognize that a player has won the game.
 
 To begin, we initialize the board. We commit an object named `@board` to hold our global state and create a set of `#cell`s. These `#cell`s will keep track of the moves players have made. Common connect-N games (a generalized tic-tac-toe for any NxN grid) are scored along 4 axes (horizontal, vertical, the diagonal, and the anti-diagonal). We group cells together along each axis up front to make scoring easier later. This process is made much cleaner by the addition of new math expressions like `range[from, to]`. This is a small part of our effort to expand the standard library based on usage. If you're interested in helping shape this, stop by our [RFCs repository][3] or jump right in on our discussion of [standard string expressions][4].
