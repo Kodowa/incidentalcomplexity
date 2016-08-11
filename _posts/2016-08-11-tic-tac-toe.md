@@ -5,7 +5,7 @@ author: "Joshua Cole"
 tags: []
 ---
 
-_(Editor's Note: Keep in mind as you're reading, this post is an executable Eve program. See the raw text [here](https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-11-tic-tac-toe.md))_
+_(Editor's Note: Keep in mind as you're reading, this post is an executable Eve program. See the raw text [here](https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-11-tic-tac-toe.md). This is our first example of [literate programming](https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#program-structure) in Eve, so let us know what you think!)_
 
 ![Tic-tac-toe in Eve]({{ site.url }}/images/tic-tac-toe.gif)
 {% raw %}
