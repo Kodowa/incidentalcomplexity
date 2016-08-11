@@ -30,7 +30,7 @@ To begin, we initialize the board. We commit an object named `@board` to hold ou
 [3]: https://github.com/witheve/rfcs/
 [4]: https://github.com/witheve/rfcs/issues/5
 
-The game board is square, with a given `size`. It contains size ^ 2 cells,
+The game board is square, with a given `size`. It contains `size ^ 2` cells,
 each with a row and column index.
 
 ```
