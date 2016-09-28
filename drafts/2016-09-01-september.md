@@ -15,6 +15,8 @@ Eve in typescript
 
 #### Word Choice Adjustments
 
+In August, we tentatively settled on the term "context" in place of "bag" to describe a partition of facts. After testing "context" for a couple weeks, we came  to the conclusion that it just wasn't the right word. It just didn't fit the concept. Instead, we've decided on "database", which is a much more obvious and standard choice. We've found that "database" engenders an intuition close to the actual concept. 
+
 ```
 bag -> context -> database
 ```
@@ -25,7 +27,11 @@ editing experience
 
 automatic table of contents generation
 
-### Documentation
+#### Eve on Windows
+
+### Community
+
+#### Community Eve Repositories
 
 #### Handbook
 
