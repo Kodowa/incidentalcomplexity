@@ -5,7 +5,7 @@ author: "Corey Montella"
 tags: []
 ---
 
-(Eve is a new programming language, and this is our development blog. If you’re new to Eve, [start here](https://github.com/witheve/Eve))
+_(Eve is a new programming language, and this is our development blog. If you’re new to Eve, [start here](https://github.com/witheve/Eve))_
 
 When we last left off in [August][0.1], we were iterating on the just-released community preview. In September, we improved the editor, worked on documentation, made some adjustments to the language, and also put Eve up on the Web.
 
