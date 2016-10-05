@@ -15,7 +15,7 @@ When we last left off in [August][0.1], we were iterating on the just-released c
 
 #### Editor
 
-A lot of work has gone into imagining the editing experience for Eve. Here is [Tic-Tac-Toe][2.0] displayed in the editor:
+A lot of work has gone into imagining the editing experience for Eve. Here is [Tic-Tac-Toe][2.0] opened in the editor:
 
 ![Eve editor]({{ site.url }}/images/editor.png)
 
