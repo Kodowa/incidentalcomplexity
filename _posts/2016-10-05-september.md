@@ -89,11 +89,11 @@ Therefore, we're removing that sugar, and instead we'll be using `@` exclusively
 
 ```
 search
- db = if [#foo] then @db1
-      else @db2
+  db = if [#foo] then @db1
+       else @db2
 
 bind db
- [#bar]
+  [#bar]
 ```
 
 Here, we're assigning a database to a variable based on a condition. If the condition is satisfied, `[#bar]` is bound to `@db1`. If the condition is not satisfied, `[#bar]` is bound to `@db2`.
