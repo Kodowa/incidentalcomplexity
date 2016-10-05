@@ -117,4 +117,6 @@ The quick start guide is coming along nicely. It's gone through a few iterations
 
 [7.0]: https://witheve.github.io/docs/guides/quickstart/
 
-That's all for September. But as I said earlier, we have some exciting stuff in the pipeline for October.
+That's all for September. But as I said earlier, we have some exciting stuff in the pipeline for October. As always, we hope you give Eve a try and tell us what you think on the [mailing list][8.0]!
+
+[8.0]: https://groups.google.com/forum/#!forum/eve-talk 
