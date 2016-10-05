@@ -1,11 +1,9 @@
-```
 ---
 layout: post
 title: "Dev Diary (September 2016)"
 author: "Corey Montella"
 tags: []
 ---
-```
 
 (Eve is a new programming language, and this is our development blog. If you’re new to Eve, [start here](https://github.com/witheve/Eve))
 
