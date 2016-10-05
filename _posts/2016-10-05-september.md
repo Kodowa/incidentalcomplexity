@@ -37,7 +37,7 @@ Now the editing experience is customized to the task at hand. This opens up some
 
 ##### Document Editing
 
-We've improved the editing experience with in-browser WYSIWYG support. One of the slight drawbacks of being [CommonMark compatible][2.2] is having to type code fences for every block of code. Not only is this sometimes tedious, but backticks and tildes are not even on some international keyboards. Fear not: if you write code in our editor (and we hope you will, but you don't have to) you can create a code block with a nifty shortcut.  
+We've improved the editing experience with in-browser WYSIWYG support. One of the slight drawbacks of being [CommonMark compatible][2.2] is having to type code fences for every block of code. Not only is this sometimes tedious, but backticks and tildes are not even on some international keyboards. Fear not: if you write code in our editor (and we hope you will, but you don't have to) you can create a code block with a nifty shortcut. Furthermore, since we render Markdown in the editor, the code fences don't clutter your code.
 
 ![Eve editor]({{ site.url }}/images/editor2.png)
 
@@ -45,11 +45,11 @@ We've improved the editing experience with in-browser WYSIWYG support. One of th
 
 ##### Comments
 
-Finally, the editor has an area for comments. These aren't code comments (although maybe they could be, we just don’t know how well that would work yet). Rather, you can think of this area as a place for collaborative comments from team members, similar to Google Docs. This area can also contain comments from Eve itself:
+Finally, the editor has an area for comments. These aren't code comments (although maybe they could be, we just don’t know how well that would work yet). Rather, you can think of this area as a place for collaborative comments from team members, similar to Google Docs. This area can also contain warnings and errors from the Eve compiler:
 
 ![Eve editor comments]({{ site.url }}/images/comments.jpg)
 
-Here, you can see a compiler error displayed next to the block that generates it. It's not hooked up here, but we've shown previously how errors like this can be [fixed automatically][2.3] with the click of a button.
+Here, you can see a compiler error displayed next to the block that generates it. It's not hooked up here, but we've shown previously how errors like this can be [fixed automatically][2.3] with the click of a button. We'll be incorporating more of those ideas in the next month.
 
 [2.3]: http://incidentalcomplexity.com/2016/08/03/july/#error-handling
 
