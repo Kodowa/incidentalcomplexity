@@ -55,7 +55,7 @@ Here, you can see a compiler error displayed next to the block that generates it
 
 #### Eve on the Web
 
-Another big development this month is a version of Eve written in TypeScript. This has the notable advantage over the C/Lua version of being able to work on every platform, including Windows. Also, in this version we've started to add some debugging tools. Here's an example of a performance report, which displays performance statistics for each block:
+Another big development this month is a version of [Eve written in TypeScript][3.0]. This has the notable advantage over the C/Lua version of being able to work on every platform, including Windows. Also, in this version we've started to add some debugging tools. Here's an example of a performance report, which displays performance statistics for each block:
 
 ![perf]({{ site.url }}/images/perf.png)
 
@@ -65,6 +65,7 @@ We've also added some [testing facilities][3.1] for language-level sanity checks
 
 We'll have a lot more to talk about on this front in a couple of weeks, so stay tuned.
 
+[3.0]: https://github.com/witheve/Eve/tree/ts-merge
 [3.1]: https://github.com/witheve/Eve/tree/ts-merge/test
 
 #### Word Choice Adjustments
