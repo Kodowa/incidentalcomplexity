@@ -27,7 +27,7 @@ On the left we display the table of contents, in the center is the rendered prog
 
 The table of contents (TOC) is one of the more interesting features of the editor. The TOC is generated using the headers in the document, which allows you to bookmark key sections of the program. Clicking on an entry in the TOC moves the corresponding section into focus, so this is a nice way to navigate through a larger program.
 
-But we can go one step beyond this. One criticism of [literate programs][2.1] is that an ordering that makes narrative sense doesn't necessarily make sense while editing a program. For example, in the Tic-Tac-Toe, we talk about winning the game in two entirely different sections. That's okay - the editor allows us to display only the sections we care about:
+But we can go one step beyond this. One criticism of [literate programs][2.1] is that an ordering that makes narrative sense doesn't necessarily make sense while editing a program. For example, in Tic-Tac-Toe, we talk about winning the game in two entirely different sections. That's okay - instead of jumping around between sections, we can display only the sections we care about:
 
 ![Eve editor elision]({{ site.url }}/images/markdown-elision.gif)
 
