@@ -1,16 +1,23 @@
 ```
 ---
 layout: post
-title: "Literate Programming and Eve"
+title: "Writing Programs for Humans"
 author: "Corey Montella"
 tags: []
 ---
 ```
 
+### Unicode
 
+### Permissive variable names
+
+### Explicit function arguments
+
+### Localization
+
+### Literate Programming
 
 ### What is Literate Programming?
-
 
 Literate programming is best explained by its creator Donald Knuth. In his [influential paper][2], he explains: 
 
@@ -22,9 +29,7 @@ This description fits with the ethos of Eve - that programming is primarily mean
 
 We've been toying with literate programming in various forms for a while now. The clearest example was the EveMarkdown experiment from January. This incarnation of Eve to the form of a rich document editor that could be used to create reactive documents (documents that are backed by data and update as the underlying data changes).  
 
-
 We haven't written many Eve programs so far, but of the larger ones our average LOC per block is 8 with a standard deviation of 3.8 lines.
-
 
 We can actually do a step better than literate programming as presented by Knuth. In his 
 
