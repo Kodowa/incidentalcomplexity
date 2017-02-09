@@ -79,7 +79,7 @@ You can read some follow-up discussion, as well as view the results of the surve
 
 **Copenhagen, January 25**
 
-The Eve meetup group in Copenhagen, founded by Zubaier Quaraishi, held its [second meetup](https://www.meetup.com/evecph/events/237131433/) in January. There was a [followup discussion](https://groups.google.com/forum/#!topic/eve-talk/zAXkukWgEXM) on the mailing list as well.
+The Eve meetup group in Copenhagen, founded by Zubair Quaraishi, held its [second meetup](https://www.meetup.com/evecph/events/237131433/) in January. There was a [followup discussion](https://groups.google.com/forum/#!topic/eve-talk/zAXkukWgEXM) on the mailing list as well.
 
 If you'd like to host an Eve meetup in your area, let us know how we can help. We're very encouraged to see this kind of spontaneous engagement, so thanks again to Ruben and Zubair for making these meetups a success!
 
