@@ -42,10 +42,10 @@ If you're familiar with the Eve syntax, this is equivalent to:
 
 ```
 search
-a = [#person]
-b = [#person]
-a.age > b.age
-result = a.age + b.age
+  a = [#person]
+  b = [#person]
+  a.age > b.age
+  result = a.age + b.age
 
 commit
  [age1: a.age, age2: b.age, result]
