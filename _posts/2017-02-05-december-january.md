@@ -67,17 +67,17 @@ After that we have a couple more projects in mind, including a robot car and an 
 
 We are very happy to see meetups being organized by members of the Eve community. In January we saw two meetups, one in Pittsburgh, PA and another in Copenhagen, Denmark.
 
-## Pittsburgh, January 17
+##### Pittsburgh, January 17
 
 Ruben Niculcea organized a [meetup](https://www.meetup.com/Pittsburgh-Code-Supply/events/235492181/) in Pittsburgh Pennsylvania, hosted by Pittsburgh Code & Supply Co. The presentation was recorded, and you can view it below: 
 
-https://www.youtube.com/watch?v=GRSFMLc_AfM
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GRSFMLc_AfM" frameborder="0" allowfullscreen></iframe>
 
 Or, if you prefer you can view Ruben's slides directly [here](https://docs.google.com/presentation/d/1honhRiF6TVWz9kGh90WG3hKWJmgRe9MhyRGoYrOFgFo/edit?usp=sharing)
 
 You can read some follow-up discussion, as well as view the results of the survey mentioned in the video here: https://groups.google.com/forum/#!topic/eve-talk/oBIq-KgAjSQ
 
-## Copenhagen, January 25
+##### Copenhagen, January 25
 
 The Eve meetup group in Copenhagen, founded by Zubaier Quaraishi, held its [second meetup](https://www.meetup.com/evecph/events/237131433/) in January. There was a [followup discussion](https://groups.google.com/forum/#!topic/eve-talk/zAXkukWgEXM) on the mailing list as well.
 
