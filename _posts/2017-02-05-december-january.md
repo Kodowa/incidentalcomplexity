@@ -75,7 +75,7 @@ Ruben Niculcea organized a [meetup](https://www.meetup.com/Pittsburgh-Code-Suppl
 
 Or, if you prefer you can view Ruben's slides directly [here](https://docs.google.com/presentation/d/1honhRiF6TVWz9kGh90WG3hKWJmgRe9MhyRGoYrOFgFo/edit?usp=sharing)
 
-You can read some follow-up discussion, as well as view the results of the survey mentioned in the video here: https://groups.google.com/forum/#!topic/eve-talk/oBIq-KgAjSQ
+You can read some follow-up discussion, as well as view the results of the survey mentioned in the video [here](https://groups.google.com/forum/#!topic/eve-talk/oBIq-KgAjSQ). 
 
 **Copenhagen, January 25**
 
