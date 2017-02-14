@@ -91,6 +91,7 @@ bind @browser
 ```
 
 #### Subpages
+
 ##### Home Page
 
 When the app specifies that we're on the home page, we want to inject the home page contents into the `#page-contents` from the page template.
