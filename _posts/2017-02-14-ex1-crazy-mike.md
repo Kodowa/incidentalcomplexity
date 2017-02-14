@@ -8,13 +8,13 @@ tags: []
 _(Eve is a new programming language, and this is our development blog. If you’re new to Eve, [start here](http://play.witheve.com))_
 
 
-## What is this?
+### What is this?
 
 This small app is pretty straightforward, consisting of a simple webpage with four subpages. The purpose is to demonstrate some basic webpage structure, show how a navigation bar could be implemented, how it changes the view between the different subpages, and how to inject page contents into the page view as you navigate from one subpage to another. You can play with this example live [here](http://play.witheve.com/#gist:0049b5b77a1e01b0124c96c820ff3374-crazy-mikes.eve).
 
-## Page Layout
+### Page Layout
 
-### Containers
+#### Containers
 
 Since I want this app to have a constant hero image and nav bar above the page, that means the nav bar and image are going to be static while the page contents are going to change.
 
@@ -26,7 +26,7 @@ bind @browser
     [#page-contents]]
 ```
 
-### Subpages
+#### Subpages
 
 We also need to know which pages we're going to have. Crazy Mike sells a modest selection of repossessed electronics:
 
@@ -38,7 +38,7 @@ commit
   [#page page:"stereos" name:"Stereos"]
 ```
 
-### Initial Landing Site
+#### Initial Landing Site
 
 We also want to make sure that when a user reaches the site, they start on the homepage.
 
@@ -47,8 +47,10 @@ commit
   [#app page:"homepage"]
 ```
 
-## The Nav Bar
-### Drawing the Nav Bar
+### The Nav Bar
+
+#### Drawing the Nav Bar
+
 While the hero image was easy, the nav bar gets its own section because it needs a little more love than a background. It needs to make a button for each page of the website (those pages were committed in the Page Template section)
 
 ```
@@ -62,7 +64,8 @@ bind @browser
 
 ```
 
-### Navigation
+#### Navigation
+
 We start on the home page, but when you click a button on the nav bar, we want to navigate to that page.
 
 ```
@@ -74,7 +77,8 @@ commit
   view.page := page
 ```
 
-### Highlighting the Active Page
+#### Highlighting the Active Page
+
 Purely as a style issue, let's change the background color of the nav bar button of whichever page we're on. You could also use this block to add a new class to nav-btn and use CSS to set the new background color, but this is a little more terse without obfuscating the goal.
 
 ```
@@ -86,9 +90,10 @@ bind @browser
   nav-btn.style += [background:"#606060"]
 ```
 
-## Subpages
-### Home Page
-When the app specifies that we're on the home page, we want to inject the home page contents into the #`page-contents` from the page template.
+### Subpages
+#### Home Page
+
+When the app specifies that we're on the home page, we want to inject the home page contents into the `#page-contents` from the page template.
 
 ```
 search @session @browser
@@ -104,8 +109,9 @@ bind @browser
   ]
 ```
 
-### Computers
-Much like the home page, when the app specifies that we want to navigate to the Computers tab, we want to inject that page into #`page-contents`.
+#### Computers
+
+Much like the home page, when the app specifies that we want to navigate to the Computers tab, we want to inject that page into `#page-contents`.
 
 ```
 search @session @browser
@@ -119,8 +125,9 @@ bind @browser
     [#p text:"One of our many fine products, this War Operations Plan Response supercomputer was repossessed from the US Dept. of Defense in 1984. Comes with classic games such as chess, checkers, backgammon, poker, tic-tac-toe, and Global Thermonuclear War, though it has been known not to play. Open box, comes as-is. Strict no return policy."]]
 ```
 
-### Televisions
-Once more, when we navigate to the Televisions tab, it gets injected into #`page-contents`.
+#### Televisions
+
+Once more, when we navigate to the Televisions tab, it gets injected into `#page-contents`.
 
 ```
 search @session @browser
@@ -136,8 +143,9 @@ bind @browser
 
 ```
 
-### Stereos
-When we navigate to the Stereos tab, it gets injected into #`page-contents`.
+#### Stereos
+
+When we navigate to the Stereos tab, it gets injected into `#page-contents`.
 
 ```
 search @session @browser
@@ -152,7 +160,8 @@ bind @browser
   ]
 ```
 
-## Styles
+### Styles
+
 A little CSS to clean things up and make the page more readable.
 
 ```css
