@@ -10,16 +10,18 @@ _(Eve is a new programming language, and this is our development blog. If you’
 
 ### What is this?
 
-This small app is pretty straightforward, consisting of a simple webpage with four subpages. The purpose is to demonstrate some basic webpage structure, show how a navigation bar could be implemented, how it changes the view between the different subpages, and how to inject page contents into the page view as you navigate from one subpage to another. You can play with this example in your browser [here](http://play.witheve.com/#gist:0049b5b77a1e01b0124c96c820ff3374-crazy-mikes.eve).
+This small app is pretty straightforward, consisting of a simple webpage with four subpages. The purpose is to demonstrate some basic webpage structure, show how a navigation bar could be implemented, how it changes the view between the different subpages, and how to inject page contents into the page view as you navigate from one subpage to another. 
+
+You can play with this example in your browser [here](http://play.witheve.com/#gist:0049b5b77a1e01b0124c96c820ff3374-crazy-mikes.eve).
 
 ### Page Layout
 
 #### Containers
 
-I want this app to have three containers: a hero image and nav bar above the main page, and page contents which are going to change. I draw the basic page structure here and worry about details like drawing the individual tabs for the subpages later. The hero image and the nav bar also have their classes set here for CSS because their style never changes. The individual pages may require different styles, so their classes are bound later.
+I want this app to have three containers: a hero image, a nav bar above the page container, and page contents which are going to change depending on the active section. I draw the basic page structure here and worry about details like drawing the individual tabs for the subpages later. The hero image and the nav bar also have their classes set here because their style never changes. The individual pages may require different styles, so their classes are bound later.
 
 ```
-bind @browser
+commit @browser
   [#div class:"app-wrapper" children:
     [#div class:"hero-image"]
     [#div class:"nav-bar" #nav-bar]
@@ -30,12 +32,14 @@ bind @browser
 
 Crazy Mike sells a modest selection of repossessed electronics. I can set all the pages the site is going to have right here, and because I separated this from the page containers above, if I want to add another page and have it appear as a tab on the navigation bar, I can simply add it to this list.
 
+Each page has a name, which is displayed as a label on the navigation button; and an order, which indicates its position in the nav bar.
+
 ```
 commit
-  [#page page:"homepage" name:"Home"]
-  [#page page:"computers" name:"Computers"]
-  [#page page:"televisions" name:"Televisions"]
-  [#page page:"stereos" name:"Stereos"]
+  [#page name: "Home" order: 1]
+  [#page name: "Televisions" order: 3]
+  [#page name: "Computers" order: 2]
+  [#page name: "Stereos" order: 4]
 ```
 
 #### Initial Landing Site
@@ -44,7 +48,7 @@ The #`app` record is where I've decided to keep track of which page is being vie
 
 ```
 commit
-  [#app page:"homepage"]
+  [#app page:"Home"]
 ```
 
 ### The Navigation Bar
@@ -55,12 +59,11 @@ While the hero image was easy, the nav bar gets its own section because it needs
 
 ```
 search @session @browser
-  [#page page name]
+  page = [#page]
   nav-bar = [#nav-bar]
 
 bind @browser
-  nav-bar.children += [#div class:"nav-btn" page text:name]
-
+  nav-bar.children += [#div sort: page.order, class:"nav-btn", page text: page.name]
 ```
 
 #### Navigation
@@ -69,11 +72,11 @@ We start on the home page, but when you click a button on the nav bar, we want t
 
 ```
 search @browser @session @event
-  click = [#click element:[#div class:"nav-btn" page]]
+  click = [#click element:[#div page class:"nav-btn"]]
   view = [#app]
 
 commit
-  view.page := page
+  view.page := page.name
 ```
 
 #### Highlighting the Active Page
@@ -83,7 +86,7 @@ Purely as a style issue, I want to change the background color of the nav bar bu
 ```
 search @session @browser
   [#app page]
-  nav-btn = [#div class:"nav-btn" page]
+  nav-btn = [#div page class:"nav-btn"]
 
 bind @browser
   nav-btn.style += [background:"#606060"]
@@ -97,16 +100,15 @@ When the app specifies that we should be looking at the home page, the contents 
 
 ```
 search @session @browser
-  [#app page:"homepage"]
+  [#app page: "Home"]
   view = [#page-contents]
 
 bind @browser
-  view <- [class:"main-page" children:
-    [#h1 text:"Welcome to Crazy Mike's!"]
-      [#p text:"Located on the scenic Pulaski Highway in East Baltimore, Crazy Mike's has the region's best selection of used electronics, and our prices are INSANE!"]
-    [#p text:"Hours: Tue-Sat 2pm-4am"]
-    [#p text:"Contact: (410) 768-7000, Ask for Mike"]
-  ]
+  view <- [class: "main-page" children:
+    [#h1 text: "Welcome to Crazy Mike's!"]
+      [#p text: "Located on the scenic Pulaski Highway in East Baltimore, Crazy Mike's has the region's best selection of used electronics, and our prices are INSANE!"]
+    [#p text: "Hours: Tue-Sat 2pm-4am"]
+    [#p text: "Contact: (410) 768-7000, Ask for Mike"]]
 ```
 
 #### Computers
@@ -115,14 +117,14 @@ Much like the home page, when the app specifies that we want to navigate to the 
 
 ```
 search @session @browser
-  [#app page:"computers"]
+  [#app page: "Computers"]
   view = [#page-contents]
 
 bind @browser
-  view <- [class:"main-page" children:
-    [#p text:"Need to compute things? We can help."]
+  view <- [class: "main-page" children:
+    [#p text: "Need to compute things? We can help."]
     [#div class:("computer", "pic")]
-    [#p text:"One of our many fine products, this War Operations Plan Response supercomputer was repossessed from the US Dept. of Defense in 1984. Comes with classic games such as chess, checkers, backgammon, poker, tic-tac-toe, and Global Thermonuclear War, though it has been known not to play. Open box, comes as-is. Strict no return policy."]]
+    [#p text: "One of our many fine products, this War Operations Plan Response supercomputer was repossessed from the US Dept. of Defense in 1984. Comes with classic games such as chess, checkers, backgammon, poker, tic-tac-toe, and Global Thermonuclear War, though it has been known not to play. Open box, comes as-is. Strict no return policy."]]
 ```
 
 #### Televisions
@@ -131,16 +133,14 @@ Once more, when we navigate to the Televisions tab, it gets injected into #`page
 
 ```
 search @session @browser
-  [#app page:"televisions"]
+  [#app page: "Televisions"]
   view = [#page-contents]
 
 bind @browser
   view <- [class:"main-page" children:
-    [#p text:"This is where the TVs live - get you one!"]
-    [#div class:"tv pic"]
-    [#p text:"Forget the internet, this baby is the real series of tubes. Perfect for your LaserDisc collection."]
-  ]
-
+    [#p text: "This is where the TVs live - get you one!"]
+    [#div class: "tv pic"]
+    [#p text: "Forget the internet, this baby is the real series of tubes. Perfect for your LaserDisc collection."]  ]
 ```
 
 #### Stereos
@@ -149,14 +149,14 @@ When we navigate to the Stereos tab, it gets injected into #`page-contents`.
 
 ```
 search @session @browser
-  [#app page:"stereos"]
+  [#app page: "Stereos"]
   view = [#page-contents]
 
 bind @browser
-  view <- [class:"main-page" children:
-    [#p text:"The hottest audio equipment in town!"]
-    [#div class:"radio pic"]
-    [#p text:"New stock arriving daily, priced to move."]
+  view <- [class: "main-page" children:
+    [#p text: "The hottest audio equipment in town!"]
+    [#div class: "radio pic"]
+    [#p text: "New stock arriving daily, priced to move."]
   ]
 ```
 
