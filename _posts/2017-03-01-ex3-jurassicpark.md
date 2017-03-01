@@ -11,8 +11,6 @@ tags: []
 
 This app demonstrates the use of a custom form component in a basic log in application. The app contains three views: a login form, a registration form, and a user profile form that displays the information entered during registration. These forms are built using a custom form component, which is defined at the end of the program. The form component allows for the concise definition of forms by defining common behavior like form submission and resetting.
 
-You can play with this example in your browser [here](http://play.witheve.com/#gist:56fda335208ba82af8e327f95a0b9efc-ex3-jurassicpark.eve)
-
 ### Application Set Up
 
 The app contains the current page, as well as the current user. Initially, though, there is no user, so we just need to specify the current page.
@@ -20,7 +18,7 @@ The app contains the current page, as well as the current user. Initially, thoug
 ```
 bind @browser
   [#div #app class: "app-wrapper" page: "login" children: 
-    [#div text: "Jurassic Park System Security Interface"]]
+    [#div sort: 0 text: "Jurassic Park System Security Interface"]]
 ```
 
 ### Pages
@@ -35,12 +33,12 @@ search @browser
   
 bind @browser
   app.children +=
-    [#div children:
-    [#form name: "Login" sections: 
-      [#section fields: 
-        [#field sort: 2 type: "password" field: "password"]
-        [#field sort: 1 type: "input" field: "username"]]]
-    [#button #signup text: "Sign Up" ]]
+    [#div sort: 1 children:
+      [#form name: "Login" sections: 
+        [#section fields: 
+          [#field sort: 2 type: "password" field: "password"]
+          [#field sort: 1 type: "input" field: "username"]]]
+      [#button #signup text: "Sign Up" ]]
 ```
 
 A successful login is one where the username and password entered in the login form match some user/password combination stored in the system. For simplicity, passwords are stored as plain text, so we just need to search for a `#user` with a matching username and password. If one is found, we set it as the user attribute in the `#app` record.
@@ -177,6 +175,19 @@ commit @browser
   app.class += "uh-uh-uh"
 ```
 
+Clicking anywhere returns to the login screen
+
+```
+search @browser @session @event
+  [#click]
+  app = [#app class: "uh-uh-uh"]
+  
+commit @browser
+  app.class += "app-wrapper"
+  app.class -= "uh-uh-uh"
+  app.children += [#div sort: 0 text: "Jurassic Park System Security Interface"]
+  app.page := "login"
+```
 
 ### A Custom Form Element
 
@@ -277,6 +288,8 @@ commit @browser
 
 Form values are saved as a `#submission` when the submit button is clicked. This submission has a lifetime equal to that of the `#click`, so a submission must be committed to a record by the user. This allows the user to implement custom handling logic.
 
+One thing this form component does not handle is form validation. In a future example, we will demonstrate how certain fields can be required, while others are optional. This form will submit any fields that are filled, while omitting any that are not. If a form is handled expecting fields that aren't submitted, then the submission will simply be ignored.
+
 ```eve
 search @browser @event @session
   click = [#click element: [#submit form]]
@@ -329,6 +342,12 @@ commit
 ```
 
 #### Styles
+
+
+```css
+{there is currently a bug that causes the first CSS block in an Eve program to be disregarded, so for a good time, leave this here}
+```
+
 
 ```css
 .application-container {
@@ -420,9 +439,9 @@ commit
 }
 
 .uh-uh-uh {
- width: 300px;
- height: 610px;
- background-image: url(http://i.imgur.com/TpxM57T.gif); 
+ width: 320px;
+ height: 520px;
+ background-image: url(http://i.imgur.com/yz53s4N.gif); 
  background-color: #FFF;
 }
 ```
