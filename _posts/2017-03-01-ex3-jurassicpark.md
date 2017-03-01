@@ -7,11 +7,6 @@ tags: []
 
 ![Example 3]({{ site.url }}/images/ex3.png)
 
-
-```css
-{there is currently a bug that causes the first CSS block in an Eve program to be disregarded, so for a good time, leave this here}
-```
-
 ### What is this?
 
 This app demonstrates the use of a custom form component in a basic log in application. The app contains three views: a login form, a registration form, and a user profile form that displays the information entered during registration. These forms are built using a custom form component, which is defined at the end of the program. The form component allows for the concise definition of forms by defining common behavior like form submission and resetting.
