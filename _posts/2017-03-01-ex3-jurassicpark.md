@@ -12,13 +12,13 @@ tags: []
 {there is currently a bug that causes the first CSS block in an Eve program to be disregarded, so for a good time, leave this here}
 ```
 
-## What is this?
+### What is this?
 
 This app demonstrates the use of a custom form component in a basic log in application. The app contains three views: a login form, a registration form, and a user profile form that displays the information entered during registration. These forms are built using a custom form component, which is defined at the end of the program. The form component allows for the concise definition of forms by defining common behavior like form submission and resetting.
 
 You can play with this example in your browser [here](http://play.witheve.com/#gist:56fda335208ba82af8e327f95a0b9efc-ex3-jurassicpark.eve)
 
-## Application Set Up
+### Application Set Up
 
 The app contains the current page, as well as the current user. Initially, though, there is no user, so we just need to specify the current page.
 
@@ -28,9 +28,9 @@ bind @browser
     [#div text: "Jurassic Park System Security Interface"]]
 ```
 
-## Pages
+### Pages
 
-### Log In Form
+#### Log In Form
 
 The log in form contains two input boxes, one for the username and another for a password. We must explicitly sort the fields (using a `sort` attribute) to display them in a specific order.
 
@@ -85,7 +85,7 @@ commit @browser
   app.page := "signup"
 ```
 
-### Sign Up Form
+#### Sign Up Form
 
 The user registration page requests the name, department, a username and password.
 
@@ -134,7 +134,7 @@ commit @browser
   app.page := "login"
 ```
 
-### Profile Page
+#### Profile Page
 
 The profile page displays information relating to the current user profile. It is accessed after a successful submission of the login form, which creates a user attribute in the #app.
 
@@ -164,7 +164,7 @@ commit @browser
 ```
 
 
-### An easter egg
+#### An easter egg
 
 We can specify custom behavior by special casing search conditions and adding new side effects. In this block, we hijack the login process when the username is "dnedry". Instead of displaying the typical "login failed" message, we give the user a surprise.
 
@@ -183,7 +183,7 @@ commit @browser
 ```
 
 
-## A Custom Form Element
+### A Custom Form Element
 
 Forms have a title and one or more sections. Each section has an optional name, and contains one or more fields. Each field additionally has the input type of that field (input, radio button, drop down list, etc.).
 
@@ -278,7 +278,7 @@ commit @browser
   field-container.children.value := none
 ```
 
-### Save Input to Records
+#### Save Input to Records
 
 Form values are saved as a `#submission` when the submit button is clicked. This submission has a lifetime equal to that of the `#click`, so a submission must be committed to a record by the user. This allows the user to implement custom handling logic.
 
@@ -298,7 +298,7 @@ bind @browser
   field-container.children.value := none
 ```
 
-### Custom Input Types
+#### Custom Input Types
 
 Render password fields
 
@@ -322,9 +322,9 @@ bind @browser
   button.class += "button"
 ```
 
-## Appendix
+### Appendix
 
-### Test Data
+#### Test Data
 
 ```
 commit
@@ -333,7 +333,7 @@ commit
   [#user username: "hwu" name: "Henry Wu" department: "Genetics" password: "slartibartfast"]
 ```
 
-### Styles
+#### Styles
 
 ```css
 .application-container {
