@@ -11,7 +11,7 @@ tags: []
 
 This app demonstrates the use of a custom form component in a basic log in application. The app contains three views: a login form, a registration form, and a user profile form that displays the information entered during registration. These forms are built using a custom form component, which is defined at the end of the program. The form component allows for the concise definition of forms by defining common behavior like form submission and resetting.
 
-You can play with this example in your browser [here](https://gist.github.com/cmontella/56fda335208ba82af8e327f95a0b9efc).
+You can play with this example in your browser [here](http://play.witheve.com/#gist:56fda335208ba82af8e327f95a0b9efc-ex3-jurassicpark.eve).
 
 ### Application Set Up
 
