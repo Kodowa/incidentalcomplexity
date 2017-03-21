@@ -11,7 +11,7 @@ tags: []
 
 This example demonstrates saving state across different pages, and advanced sorting using the `range[]` function. On the "control" page, you can set a schedule of army matchups for the day. Click on an army and then click on the slot you want to place that army. This matchup is saved, and displayed on the "broadcast" page.
 
-You can play with this example in your browser [here](http://play.witheve.com/#/root/139ae7d-ex5-battleschool.eve).
+You can play with this example in your browser [here](http://play.witheve.com/#gist:139ae7d8cff02032258ccdb87afbd01f-ex5-battleschool.eve).
 
 ### Page Layout
 
