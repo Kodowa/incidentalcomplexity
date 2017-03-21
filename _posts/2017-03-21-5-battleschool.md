@@ -7,13 +7,13 @@ tags: []
 
 ![Example 5]({{ site.url }}/images/ex5.png)
 
-## What is this?
+### What is this?
 
 This example demonstrates saving state across different pages, and advanced sorting using the `range[]` function. On the "control" page, you can set a schedule of army matchups for the day. Click on an army and then click on the slot you want to place that army. This matchup is saved, and displayed on the "broadcast" page.
 
-## Page Layout
+### Page Layout
 
-### Containers
+#### Containers
 
 This one's pretty simple; I want a nav bar at the top to let me manually go to the different pages, and an app window where those pages are rendered.
 
@@ -23,7 +23,7 @@ commit @browser
   [#div class:"app-window"]
 ```
 
-### Pages
+#### Pages
 
 For every page I want, I make a record with an attribute of `target` to specify which each page is called.
 
@@ -33,7 +33,7 @@ commit
   [#page target:"Control"]
 ```
 
-### Nav Bar Buttons
+#### Nav Bar Buttons
 
 By abstracting this step out, I can define all the pages I want as in the block before, and then here find those pages and create a button on the nav bar for each of them.
 
@@ -57,7 +57,7 @@ commit
   window.target := target
 ```
 
-### Starting Page
+#### Starting Page
 
 This commits a record called #`app-window` whose attribute `target` specifies which page gets rendered. In this case, when the app starts up, I want the landing view to be the Broadcast page.
 
@@ -66,7 +66,7 @@ commit
   [#app-window target:"Broadcast"]
 ```
 
-### Sci-Fi Font
+#### Sci-Fi Font
 
 It's not the future if there's not futuristic-looking text.
 
@@ -75,9 +75,9 @@ commit @browser
   [#link href:"https://fonts.googleapis.com/css?family=Orbitron|Play" rel:"stylesheet"]
 ```
 
-## Broadcast
+### Broadcast
 
-### Drawing the Page
+#### Drawing the Page
 
 The Broadcast page is meant to serve much like the departures or arrivals screen at an airport - it is purely an informative screen showing which armies have been scheduled in which rooms. There are 9 total battle rooms, so I use the `range` function to generate 9 rooms, each of which has two sides labeled A and B. There's also a #`versus` block whose text will change based on whether or not there are armies scheduled to that room.
 
@@ -99,7 +99,7 @@ bind @browser
     ]
 ```
 
-### Drawing Upcoming Battles
+#### Drawing Upcoming Battles
 
 This block checks to see if there's an army assigned to a room and will inject a card for that army into its room slot, but only if there's another army that has been assigned to the opposing side in that room. Having only an A side or a B side will fail the search. If both sides are accounted for however, the search will pass for both of those armies, and so both cards will get injected.
 
@@ -161,9 +161,9 @@ bind @browser
   versus <- [#div class:"empty-room" text:"No battle scheduled"]
 ```
 
-## Control
+### Control
 
-### Drawing the Page
+#### Drawing the Page
 
 The Control page is laid out to be displayed on a smaller device - perhaps a smart phone or a tablet - and is used to assign which armies will fight in which rooms. Again, for the nine rooms, the range function is used to identify and number them, and each room is given two sides. A list of all the available armies - that is, those which have not been assigned to a room - is also drawn.
 
@@ -204,7 +204,7 @@ bind @browser
   window.children += [#div class:("army-tab", uniform) text:name]
 ```
 
-### Selecting
+#### Selecting
 
 In order to be able to assign armies to slots, there needs to be a mechanism to select both elements. I've chosen to demonstrate selection in two different ways to cover some of the possibilities of how this might be achieved, and because armies each have a record stored in the session database, I used them to show selection by modifying a session record. The intended workflow here is to click an army to highlight it, then choose a slot to assign them to, or go the other way around and click a battle slot to highlight it, then choose an army to assign there. That means I only want to highlight an element if there's nothing else already selected - otherwise, I'm probably trying to assign an army. This block searches for a click on an army tab and, as long as that army isn't already highlighted, nor any battle slots, adds the #`highlighted` tag to the record of the clicked army.
 
@@ -232,7 +232,7 @@ commit @browser
   battle-slot += #highlighted
 ```
 
-### Assigning
+#### Assigning
 
 Once an army is #`highlighted`, if a battle slot gets clicked, the highlighted army gets assigned to that particular slot, which corresponds to both a `room` and a `side`.
 
@@ -259,7 +259,7 @@ commit
   army.side := side
 ```
 
-### Unselecting
+#### Unselecting
 
 A click anywhere deselects anything. This works if you're just clicking around the page and want to deselect something, or if you click to assign an army somewhere. The assigning workflow still occurs, but the final click deselects everything so that no residual highlights are left over.
 
@@ -272,7 +272,7 @@ commit @session @browser
   highlighted -= #highlighted
 ```
 
-### Unassigning
+#### Unassigning
 
 If there's an army in a slot that's clicked, this block removes that army from that slot.
 
@@ -286,7 +286,7 @@ commit
   in-slot.side := none
 ```
 
-### Highlight Styling
+#### Highlight Styling
 
 When either an army or a battle slot is #`highlighted`, I want to add a class to it so I can use CSS to add a visual marker to it. Because I add the #`highlighted` tag to armies and battle slots differently, I need two different blocks to handle those classes. In the case of a highlighted army, the army is highlighted but its corresponding army tab gets the new class apended.
 
@@ -309,7 +309,7 @@ bind @browser
   battle-slot.class += "highlighted"
 ```
 
-## Army Data
+### Army Data
 
 Each army is listed here with its name, its three colors, and a uniform color.
 
@@ -337,14 +337,15 @@ commit
   [#army name:"Spider" color1:"green" color2:"black" color3:"purple" uniform:"purple"]
 ```
 
-## Styles
+### Styles
+
 There's a lot of CSS this time around because of a greater need for media queries on this example, so it's been split up into the style sheets for each page
 
 ```css
 {for a good time, leave this here}
 ```
 
-### Broadcast Page
+#### Broadcast Page
 ```css
 
 .program {
@@ -702,7 +703,7 @@ There's a lot of CSS this time around because of a greater need for media querie
 }
 ```
 
-### Control Page
+#### Control Page
 ```css
 .control {
   display: flex;
