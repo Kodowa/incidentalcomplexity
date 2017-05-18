@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Eve Documentation</title>
-    <link>http://docs.witheve.com/posts/index.xml</link>
+    <link>http://incidentalcomplexity.com/posts/index.xml</link>
     <description>Recent content in Posts on Eve Documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://docs.witheve.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://incidentalcomplexity.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>A Declarative Clock in Eve</title>
-      <link>http://docs.witheve.com/posts/2016-07-21-clock/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-07-21-clock/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-07-21-clock/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-07-21-clock/</guid>
       <description>
 
 &lt;p&gt;_This post has been updated. See the original &lt;a href=&#34;https://github.com/Kodowa/incidentalcomplexity/blob/5fbce96aecc7172166d130406e9e3c42bbbb27dc/_posts/2016-07-21-clock.md&#34;&gt;here&lt;/a&gt;._&lt;/p&gt;
@@ -140,10 +140,10 @@ bind
     
     <item>
       <title>Breaking Down: Tic-Tac-Toe</title>
-      <link>http://docs.witheve.com/posts/2016-08-11-tic-tac-toe/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-08-11-tic-tac-toe/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-08-11-tic-tac-toe/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-08-11-tic-tac-toe/</guid>
       <description>
 
 &lt;p&gt;_(Editor&amp;rsquo;s Note: Keep in mind as you&amp;rsquo;re reading, this post is an executable Eve program. See the raw text &lt;a href=&#34;https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-11-tic-tac-toe.md&#34;&gt;here&lt;/a&gt;. This is our first example of &lt;a href=&#34;https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#program-structure&#34;&gt;literate programming&lt;/a&gt; in Eve, so let us know what you think!)_&lt;/p&gt;
@@ -345,10 +345,10 @@ The game can end in a tie, where no player has N in a row.&lt;/p&gt;
     
     <item>
       <title>Community Spotlight: Eve on a PocketCHIP</title>
-      <link>http://docs.witheve.com/posts/2016-07-12-pocketchip/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-07-12-pocketchip/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-07-12-pocketchip/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-07-12-pocketchip/</guid>
       <description>&lt;p&gt;In our &lt;a href=&#34;http://incidentalcomplexity.com/2016/06/30/apr/&#34;&gt;latest Dev Diary&lt;/a&gt;, we showed off the latest Eve REPL. Well, not too long after, &lt;a href=&#34;https://twitter.com/markrhacker1&#34;&gt;Mark R. Hacker&lt;/a&gt; managed to get Eve and the REPL running on his PocketCHIP.&lt;/p&gt;
 
 &lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
@@ -385,10 +385,10 @@ The game can end in a tie, where no player has N in a row.&lt;/p&gt;
     
     <item>
       <title>Dev Diary (August 2016)</title>
-      <link>http://docs.witheve.com/posts/2016-08-31-august/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-08-31-august/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-08-31-august/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-08-31-august/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;This post has been updated. See the original &lt;a href=&#34;https://github.com/Kodowa/incidentalcomplexity/blob/6d461b59f7530ade2225a24f8bcc01b4eb1d8fc9/_posts/2016-08-31-august.md&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
@@ -605,10 +605,10 @@ bind
     
     <item>
       <title>Dev Diary (Dec): more zzjoin, communication, process spawning</title>
-      <link>http://docs.witheve.com/posts/2015-01-08-dec/</link>
+      <link>http://incidentalcomplexity.com/posts/2015-01-08-dec/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2015-01-08-dec/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2015-01-08-dec/</guid>
       <description>
 
 &lt;p&gt;Yet more turkey was had. What did they ever do to us?&lt;/p&gt;
@@ -641,10 +641,10 @@ bind
     
     <item>
       <title>Dev Diary (December 2016 - January 2017)</title>
-      <link>http://docs.witheve.com/posts/2017-02-05-december-january/</link>
+      <link>http://incidentalcomplexity.com/posts/2017-02-05-december-january/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2017-02-05-december-january/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2017-02-05-december-january/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://play.witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -739,10 +739,10 @@ commit
     
     <item>
       <title>Dev Diary (February 2017)</title>
-      <link>http://docs.witheve.com/posts/2017-03-08-february/</link>
+      <link>http://incidentalcomplexity.com/posts/2017-03-08-february/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2017-03-08-february/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2017-03-08-february/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://play.witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -882,10 +882,10 @@ Some examples of these interfaces at work are in the renderer, which turns Eve &
     
     <item>
       <title>Dev Diary (March 2017) - v0.3 alpha pre-release</title>
-      <link>http://docs.witheve.com/posts/2017-04-06-march/</link>
+      <link>http://incidentalcomplexity.com/posts/2017-04-06-march/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2017-04-06-march/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2017-04-06-march/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://play.witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -1005,10 +1005,10 @@ npm install
     
     <item>
       <title>Dev Diary (November 2016)</title>
-      <link>http://docs.witheve.com/posts/2016-12-06-november/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-12-06-november/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-12-06-november/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-12-06-november/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://play.witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -1145,10 +1145,10 @@ npm install
     
     <item>
       <title>Dev Diary (October 2016)</title>
-      <link>http://docs.witheve.com/posts/2016-11-18-october/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-11-18-october/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-11-18-october/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-11-18-october/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://play.witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -1257,10 +1257,10 @@ Enter views. Views are a way to visualize a block&amp;rsquo;s output right under
     
     <item>
       <title>Dev Diary (September 2016)</title>
-      <link>http://docs.witheve.com/posts/2016-10-05-september/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-10-05-september/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-10-05-september/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-10-05-september/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;https://github.com/witheve/Eve&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -1359,10 +1359,10 @@ bind db
     
     <item>
       <title>Dev Diary: January - February: GUIs, time, joins and aggregates</title>
-      <link>http://docs.witheve.com/posts/2015-02-24-jan-feb/</link>
+      <link>http://incidentalcomplexity.com/posts/2015-02-24-jan-feb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2015-02-24-jan-feb/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2015-02-24-jan-feb/</guid>
       <description>
 
 &lt;p&gt;Better late than never.&lt;/p&gt;
@@ -1430,10 +1430,10 @@ bind db
     
     <item>
       <title>Eve Alpha v0.2.3</title>
-      <link>http://docs.witheve.com/posts/2016-12-12-release-0.2.3/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-12-12-release-0.2.3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-12-12-release-0.2.3/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-12-12-release-0.2.3/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://play.witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -1519,10 +1519,10 @@ bind db
     
     <item>
       <title>Eve Alpha v0.3 preview 2</title>
-      <link>http://docs.witheve.com/posts/2017-04-18-release-0.3p2/</link>
+      <link>http://incidentalcomplexity.com/posts/2017-04-18-release-0.3p2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2017-04-18-release-0.3p2/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2017-04-18-release-0.3p2/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://play.witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
@@ -1591,10 +1591,10 @@ bind db
     
     <item>
       <title>Eve Dev Diary (April 2016)</title>
-      <link>http://docs.witheve.com/posts/2016-06-30-apr/</link>
+      <link>http://incidentalcomplexity.com/posts/2016-06-30-apr/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://docs.witheve.com/posts/2016-06-30-apr/</guid>
+      <guid>http://incidentalcomplexity.com/posts/2016-06-30-apr/</guid>
       <description>
 
 &lt;h3 id=&#34;ui&#34;&gt;UI&lt;/h3&gt;
