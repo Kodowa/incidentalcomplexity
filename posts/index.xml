@@ -384,6 +384,94 @@ The game can end in a tie, where no player has N in a row.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Dev Diary (April 2017)</title>
+      <link>http://incidentalcomplexity.com/posts/2017-05-15-april/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://incidentalcomplexity.com/posts/2017-05-15-april/</guid>
+      <description>
+
+&lt;p&gt;In April we continued our effort to release v0.3 of Eve. On April 18th we released a second preview of the v0.3 platform, which included several long-requested features. However, toward the end of the month we shifted focus to revamping documentation and making the &amp;ldquo;getting started&amp;rdquo; experience for Eve more accessible to new users. Let&amp;rsquo;s take a look at each of these.&lt;/p&gt;
+
+&lt;h2 id=&#34;platform&#34;&gt;Platform&lt;/h2&gt;
+
+&lt;p&gt;We released a second preview of the v0.3 runtime, featuring the ability to embed Eve-rendered elements into an application; and streamlined watchers with built in support for more DOM events and triggers in the HTML watcher. These are covered in detail in the release notes, but I&amp;rsquo;ll take a moment now to highlight how multiple parent roots work.&lt;/p&gt;
+
+&lt;h3 id=&#34;embedding-eve-rendered-elements-in-your-application&#34;&gt;Embedding Eve-rendered Elements in Your Application&lt;/h3&gt;
+
+&lt;p&gt;We&amp;rsquo;ve received some requests from people who would like to use Eve to render specific elements in an already existing project. To date, you could only attach Eve-rendered elements to the document root. With v0.3, you&amp;rsquo;ll be able to embed any piece of Eve-rendered UI into your application arbitrarily. First, you add a reference to the parent element into Eve:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Program&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;witheve&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;program&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Program&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;my program&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;htmlWatcher&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;program&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;attach&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;html&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;someElement&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;querySelector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;#eve-wrapper&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;htmlWatcher&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addExternalRoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;my-root&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;someElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;From within Eve, you can search for that element and add children to it, as you would any other record:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-eve&#34; data-lang=&#34;eve&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;search&lt;/span&gt;
+  &lt;span class=&#34;nv&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+
+&lt;span class=&#34;kr&#34;&gt;bind&lt;/span&gt;
+  &lt;span class=&#34;nv&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;children&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ui&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;text&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;text&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;Hello!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Eve behaves as expected, updating the embedded element as records change. For new users, this is a nice way to introduce Eve to an existing project; instead of porting an application from scratch, you can dip your toes in the water and build a new component in Eve, then inject it into your project wherever you want. As you get more comfortable with Eve, you can use it in more of you application.&lt;/p&gt;
+
+&lt;h3 id=&#34;eve-syntax-returns&#34;&gt;Eve Syntax Returns&lt;/h3&gt;
+
+&lt;p&gt;When we initially released the v0.3 preview, it notably didn&amp;rsquo;t include a parser for the Eve syntax. We had planned on eventually adding the syntax back, but it wasn&amp;rsquo;t our main priority because the Javascript DSL served as an adequate replacement for the time being. However, because we received a number of requests to add it back in, we decided to bump adding the syntax higher up on the list. That work is generally completed, and you&amp;rsquo;ll see it in the next v0.3 preview.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;d like to say thanks to everyone who gave their input regarding the syntax. When we released it with v0.2, we didn&amp;rsquo;t know how it would be received, so we were happy to see that people liked it enough to request it return with v0.3. As always, we&amp;rsquo;re developing Eve in the open, so your feedback has a big impact on how we prioritize work.&lt;/p&gt;
+
+&lt;h2 id=&#34;web-presence&#34;&gt;Web Presence&lt;/h2&gt;
+
+&lt;p&gt;Before we can officially release v0.3, a lot of work needs to be done on the usability and documentation side of things. To this end, we revamped our website to make it more accessible to people unfamiliar but curious about Eve. A big part of this effort was actually coming up with a one-sentence pitch, describing Eve in a nutshell.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-new-pitch-for-eve&#34;&gt;A new pitch for Eve&lt;/h3&gt;
+
+&lt;p&gt;Here&amp;rsquo;s our new one sentence pitch for Eve:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Eve is a modern relational language for writing data-driven programs without the boilerplate.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The intended audience for this pitch is generally the HackerNews crowd &amp;ndash; developers who are curious about languages and likely to try something new to the scene. Eve has even deeper aspirations (such as being a language for non-programmers), but this pitch is directed more toward explaining what Eve is today. We wanted to pack as much information into this one sentence as possible, so you can get a general idea of the concepts important to Eve after reading it. This is actually easier said than done, so I&amp;rsquo;ll break down how we went about this.&lt;/p&gt;
+
+&lt;p&gt;The first thing we did was look at how other languages described themselves. We picked about a half dozen languages and chose our favorite pitches between them. Some, like Python, had very nebulous pitches: &amp;ldquo;Python is a programming language that lets you work quickly and integrate systems more effectively.&amp;rdquo; I think for anyone whose used Python, this is an accurate description of the language, but it doesn&amp;rsquo;t really say how Python lets you work quickly. Others, like Haskell, were very specific: &amp;ldquo;An advanced, purely functional programming language&amp;rdquo;. That&amp;rsquo;s definitely Haskell in a nutshell.&lt;/p&gt;
+
+&lt;p&gt;We wanted our pitch to tell the reader what Eve is, what makes it unique, and why one would use it over other languages. From the pitch, you can see we arrived at these traits&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Modern&lt;/strong&gt; - It was important for us to note that Eve is a new take on programming, specifically on &amp;ldquo;relational languages&amp;rdquo;. On its own, relational may connote SQL, which is not what we want to do. By claiming that we are &amp;ldquo;modern&amp;rdquo; we hope to tell the reader that Eve is an updated approach to things they may have seen in the past.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Relational language&lt;/strong&gt; - there were several candidates to describe what &lt;em&gt;kind&lt;/em&gt; of language Eve is. Pattern matching, logic, declarative. We decided on &amp;ldquo;relational&amp;rdquo; because relations are a concept central to programming in Eve, and we wanted to highlight this fact upfront.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Data-driven&lt;/strong&gt; - data is also a central concept to Eve, so having this word in our pitch was important to us. Of course, data is important in all programs, but claiming the language is &amp;ldquo;data-driven&amp;rdquo; gets across the idea that the language paradigm is not imperative.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Without the boilerplate&lt;/strong&gt; - our central thesis in developing Eve is that current approaches to programming are hampered by incidental complexity. A lot of this complexity is driven by simple boilerplate - code that stands between you and the inherent complexity of your programming task. Boilerplate is a pain point for many developers, something we all understand is frustrating, but that we deal with nonetheless. If you&amp;rsquo;re not sure about a modern relational language for writing data-driven programs, hopefully you can understand the value of a  language without boilerplate.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-eve-homepage&#34;&gt;The Eve Homepage&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/newsite.png&#34; alt=&#34;New Homepage&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to be revamping our various web properties (the website, blog, and docs) in the coming weeks. We started the process with the &lt;a href=&#34;http://witheve.com&#34;&gt;homepage&lt;/a&gt;, giving it a fresh coat of paint and some new content. The various links still relate back to v0.2 content, but we&amp;rsquo;ll be updating those to a consistent look with refreshed content in the coming weeks.&lt;/p&gt;
+
+&lt;h2 id=&#34;community&#34;&gt;Community&lt;/h2&gt;
+
+&lt;h3 id=&#34;eve-around-the-world&#34;&gt;Eve Around the World&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Copenhagen, June&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Zubair Quraishi is again hosting an Eve meetup in Copenhagen, scheduled for sometime in June. We&amp;rsquo;ll post another update when he&amp;rsquo;s set a firm date.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;San Francisco, Wednesday May 31 7:00 PM&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to be holding our first &lt;a href=&#34;https://www.meetup.com/witheve/&#34;&gt;official Eve meetup&lt;/a&gt; at the Eve office in downtown San Francisco on May 31 at 7:00 PM. If you are interested in attending &lt;a href=&#34;https://www.meetup.com/witheve/&#34;&gt;RSVP on meetup.com&lt;/a&gt;, or if you have any ideas of what you&amp;rsquo;d like to learn, drop me a line via &lt;a href=&#34;mailto:corey@kodowa.com&#34;&gt;e-mail&lt;/a&gt; or &lt;a href=&#34;https://twitter.com/with_eve&#34;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Dev Diary (August 2016)</title>
       <link>http://incidentalcomplexity.com/posts/2016-08-31-august/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -1586,291 +1674,6 @@ bind db
 &lt;ul&gt;
 &lt;li&gt;Add &lt;a href=&#34;https://github.com/witheve/Eve/pull/823/commits/58af002ec4c3807b0a91e3ee148e6f7a5359387a&#34;&gt;&lt;code&gt;string.codepoint_length(text:string)&lt;/code&gt;&lt;/a&gt; function.&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Eve Dev Diary (April 2016)</title>
-      <link>http://incidentalcomplexity.com/posts/2016-06-30-apr/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://incidentalcomplexity.com/posts/2016-06-30-apr/</guid>
-      <description>
-
-&lt;h3 id=&#34;ui&#34;&gt;UI&lt;/h3&gt;
-
-&lt;p&gt;In March we revisited &lt;a href=&#34;http://incidentalcomplexity.com/2016/06/03/oct-nov/&#34;&gt;GridEve&lt;/a&gt;, adapting it to fit more in line with the ethos of Eve; GridEve had a runtime based on data-flow, instead of the relational model we ultimately want. What we liked most about GridEve was the immediate usefulness of the grid model, so we decided to marry that with a relational engine in a new project: WikiGrid. In the last update, we looked at some interaction-level details of WikiGrid. Now, I&amp;rsquo;ll show some of our ideas about how the relational model can fit in a grid world.&lt;/p&gt;
-
-&lt;h4 id=&#34;querying-with-grids&#34;&gt;Querying with Grids&lt;/h4&gt;
-
-&lt;p&gt;One obvious possibility is just to have relational functions and to allow the user to write them in cells. But that doesn&amp;rsquo;t really take advantage of the relational nature of the Eve platform &amp;ndash; you could do this in any language. Eventually, we stumbled upon a really simple yet absolutely cool idea: give semantic meaning to cell adjacency. Consider this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/wikigrid2.png&#34; alt=&#34;WikiGrid&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Here, the cell &lt;code&gt;person&lt;/code&gt; means &amp;ldquo;select all the entities tagged person&amp;rdquo;. The adjacent cell &lt;code&gt;age&lt;/code&gt; means &amp;ldquo;select the attribute age for the adjacent collection&amp;rdquo; i.e. &lt;code&gt;person.age&lt;/code&gt;, which returns the set of all ages of &amp;ldquo;person&amp;rdquo;s in the system.&lt;/p&gt;
-
-&lt;p&gt;Building under that, we use a reserved word &lt;code&gt;without&lt;/code&gt;, an alias for the anti-join operator. The adjacent blocks &lt;code&gt;width&lt;/code&gt; and &lt;code&gt;height&lt;/code&gt; mean &lt;code&gt;person.width&lt;/code&gt; and &lt;code&gt;person.height&lt;/code&gt;. So the overall query will select all entities with a &amp;ldquo;person&amp;rdquo; tag and an attribute age, that do not have width or height attributes.&lt;/p&gt;
-
-&lt;p&gt;In textual form, this would be written:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(query [age]
-  (fact name :tag &amp;quot;person&amp;quot; :age)
-  (not
-    (fact name :tag &amp;quot;person&amp;quot; :width :height))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This was very exciting for us, because you could basically write out a complicated query with no syntax. This was by far our fastest way to write a query yet. Here&amp;rsquo;s what writing one of these looks like in WikiGrid:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/wikigrid4.gif&#34; alt=&#34;WikiGrid&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Here, we mark off a 5x4 area as a macro cell. Then we name the macro cell &amp;ldquo;test&amp;rdquo; and give it a &amp;ldquo;Formula Grid&amp;rdquo; type. If you look closely at the autocomplete that pops up, you&amp;rsquo;ll see the cell can take on many types: table, code, image, text, chart, drawing, etc. Most of these weren&amp;rsquo;t wired up yet, but it illustrated the idea that cells can contain anything.&lt;/p&gt;
-
-&lt;p&gt;So let&amp;rsquo;s put it all together and see how it works when it&amp;rsquo;s hooked up to an evaluator. The runtime in this example was our new Clojure runtime from last month.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/wikigrid5.gif&#34; alt=&#34;WikiGrid&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We start out in a grid and name it &amp;ldquo;Chris&amp;rdquo; by adding an attribute cell. Each grid represents a single entity, so any attributes added to the grid are attached to that entity. Grids start out nameless, so giving it a name provides a handle to the grid. We then add two more attributes: an &lt;code&gt;age&lt;/code&gt; and &lt;code&gt;tag&lt;/code&gt;. The &lt;code&gt;tag&lt;/code&gt; attribute is a convention used to group similar entities. By adding the tag &amp;ldquo;person&amp;rdquo;, we are now able to talk about collections of &amp;ldquo;person&amp;rdquo;s by joining on that tag.&lt;/p&gt;
-
-&lt;p&gt;Next, we create a formula grid, and we query for &lt;code&gt;person.age&lt;/code&gt;. The result of the query shows up in the bottom half of the formula grid as we type. Chris is the only result, since he&amp;rsquo;s the only entity in the system, so let&amp;rsquo;s add some more.&lt;/p&gt;
-
-&lt;p&gt;Chris has a friend named Rob, so we add him as a new entity under &lt;code&gt;chris.friend&lt;/code&gt;. We then navigate to Rob’s grid, which was automatically created when we added Rob as a friend of Chris. Now we just add &lt;code&gt;rob.age&lt;/code&gt; and &lt;code&gt;rob.tag&lt;/code&gt; and he shows up in the formula grid. We can do the same thing for Chris&amp;rsquo; other friend Bob, and we see he is added as well.&lt;/p&gt;
-
-&lt;p&gt;This is a relatively simple example, but we can write arbitrarily complex queries this way:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/wikigrid3.png&#34; alt=&#34;WikiGrid&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This query draws the name and age of a person in HMTL. The name is in one div, styled red, while the age is in another div, styled blue.&lt;/p&gt;
-
-&lt;h3 id=&#34;platform-work&#34;&gt;Platform Work&lt;/h3&gt;
-
-&lt;h4 id=&#34;language&#34;&gt;Language&lt;/h4&gt;
-
-&lt;p&gt;We added more language features to the runtime, including &lt;code&gt;choose&lt;/code&gt;, &lt;code&gt;not&lt;/code&gt;, and various aggregates.&lt;/p&gt;
-
-&lt;h5 id=&#34;choose&#34;&gt;Choose&lt;/h5&gt;
-
-&lt;p&gt;The &lt;code&gt;choose&lt;/code&gt; statement works kind of like an &lt;code&gt;if&lt;/code&gt; statement in other languages; it has multiple arms, one of which is evaluated based on a condition. For us, each arm is its own sub-query. The condition for evaluation is whether or not there are any results in the sub-query. The first arm of the &lt;code&gt;choose&lt;/code&gt; with a result is the one that gets evaluated, so this is one case where order does matter in Eve. Take a look at this example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(query [grade score]
-  (fact name :score)
-  (choose [grade score]
-    (query
-      (&amp;gt;= score 90)
-      (= grade &amp;quot;A&amp;quot;))
-    (query
-      (&amp;gt;= score 80)
-      (= grade &amp;quot;B&amp;quot;))
-    (query
-      (&amp;gt;= score 70)
-      (= grade &amp;quot;C&amp;quot;))
-    (query
-      (&amp;gt;= score 60)
-      (= grade &amp;quot;D&amp;quot;))
-    (query
-      (&amp;gt; score 0)
-      (= grade &amp;quot;F&amp;quot;))))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here, we are assigning a letter grade given a numerical score. The &lt;code&gt;choose&lt;/code&gt; statement itself has its own &lt;a href=&#34;http://incidentalcomplexity.com/2016/06/10/jan-feb/&#34;&gt;projection&lt;/a&gt;, so you can decide which variables internal to the &lt;code&gt;choose&lt;/code&gt; are accessible in the parent query.&lt;/p&gt;
-
-&lt;h5 id=&#34;not&#34;&gt;Not&lt;/h5&gt;
-
-&lt;p&gt;The &lt;code&gt;not&lt;/code&gt; statement is an anti-join operator. Its body is a query, and any results within are excluded from the parent query. For instance:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(query [names]
-  (fact names :tag &amp;quot;person&amp;quot;)
-  (not
-    (fact names :tag &amp;quot;employee&amp;quot;)))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;will return all of the entities tagged &amp;ldquo;person&amp;rdquo; that are not also tagged &amp;ldquo;employee&amp;rdquo;.&lt;/p&gt;
-
-&lt;h5 id=&#34;aggregates&#34;&gt;Aggregates&lt;/h5&gt;
-
-&lt;p&gt;We got some aggregates working for this version as well. Aggregates work just like regular functions, except they can change the cardinality of the output. So &lt;code&gt;sum&lt;/code&gt; takes in a set of cardinality N and returns a set of cardinality 1. You have to keep this in mind, or your results might not be what you expect (something we didn’t really like. We later found better semantics for aggregates, which I’ll talk about in a future post). Here is an example of &lt;code&gt;sum&lt;/code&gt; in practice:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(query [sum-result]
-  (fact e :score)
-  (= sum-result (sum score)))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will store the sum of all the scores in sum-result.&lt;/p&gt;
-
-&lt;h4 id=&#34;repl-github-https-github-com-witheve-eve-experiments-tree-e73b18d8111d5ddb73427bcb00f0501fdc9b8f2f&#34;&gt;REPL (&lt;a href=&#34;https://github.com/witheve/eve-experiments/tree/e73b18d8111d5ddb73427bcb00f0501fdc9b8f2f&#34;&gt;github&lt;/a&gt;)&lt;/h4&gt;
-
-&lt;p&gt;The REPL received a visual overhaul and several additional features. First, let&amp;rsquo;s take a look at the new layout.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/repl4.png&#34; alt=&#34;REPL&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;You can immediately see some new features here. First, we&amp;rsquo;ve changed the layout a little. We have a toolbar on the left, and the REPL &amp;ldquo;cards&amp;rdquo; on the right. We have a button to get another column of cards, which gives us a restricted grid layout.&lt;/p&gt;
-
-&lt;p&gt;While the REPL is still written in Typescript, we&amp;rsquo;ve bootstrapped several elements. On the side, we have a space to see all the entities and tags in the system. If we click on an entity, we can see its attributes table. If we click on a tag, we can see a list of all entities with that tag (you can see an example of this in the GIF below).&lt;/p&gt;
-
-&lt;p&gt;These are supported by two queries that listen for entities and tags:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// get all entities that are not system entities
-(query [entities attributes values]
-  (fact-btu entities attributes values)
-    (not
-      (fact entities :tag &amp;quot;system&amp;quot;)))
-      
-// get all tags that are not also system tags
-(query [tag entity],
-  (fact entity :tag tag)
-    (not
-      (fact entity :tag &amp;quot;system&amp;quot;)))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The client leaves these queries open, so it continuously receives updates as new entities and tags are added.&lt;/p&gt;
-
-&lt;p&gt;We also added various views to the output. The view defaults to the results table, which displays the current state of the results. You can also see this History, which logs the incremental changes to the table. This is just a local history according to the client, but eventually this will be a history according to the server. This will allow features like the ability to see the state of the table at an arbitrary time.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/repl5.png&#34; alt=&#34;REPL&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The info tab displays information from the compiler about the query for debugging purposes. So far, we display the intermediate expansion of the query, as well as Eve bytecode.&lt;/p&gt;
-
-&lt;p&gt;We also added a chat system. This required some notion of a user, so we added something quick and dirty. If you try to use the REPL yourself, the first thing you&amp;rsquo;ll see is a login screen. When you submit a username and password here (use eve/eve), we compare it against the users stored in the Eve DB (obviously this is not secure at all, it was just a proof of concept).&lt;/p&gt;
-
-&lt;p&gt;Now that you&amp;rsquo;ve logged in, you can send and receive messages:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/repl1.gif&#34; alt=&#34;REPL&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This whole process is also supported by the Eve backend. When you send a message, we add a new fact into the database, containing the message text, as well as your user ID and the local machine timestamp:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(query []
-  (insert-fact! &amp;quot;${uuid()}&amp;quot; :tag &amp;quot;system&amp;quot;
-                            :tag &amp;quot;repl-chat&amp;quot;
-                            :message &amp;quot;${message}&amp;quot;
-                            :user &amp;quot;${repl.user.id}&amp;quot;
-                            :timestamp &amp;quot;${t}&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Every other client is listening for new messages:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(query [id user message time]
-  (fact id :tag &amp;quot;repl-chat&amp;quot;
-           :message message
-           :user user
-           :timestamp time))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Right now we still have more work to do to draw UI, so the messages are displayed using Typescript. But soon we&amp;rsquo;ll be able to bootstrap this whole process (actually, if you want to see what a full chat component looks like in our latest sytanx, you can check it out &lt;a href=&#34;https://github.com/witheve/lueve/blob/master/examples/chat.eve&#34;&gt;here&lt;/a&gt;. This version even has the ability to support multiple channels.).&lt;/p&gt;
-
-&lt;h5 id=&#34;build-instructions&#34;&gt;Build instructions:&lt;/h5&gt;
-
-&lt;p&gt;If you&amp;rsquo;d like to try out the REPL yourself, it&amp;rsquo;s pretty easy to get running. We&amp;rsquo;ve tested this under Windows 10 and OSX El Capitan, but I don&amp;rsquo;t see any reason it shouldn&amp;rsquo;t run under Linux.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;First, you&amp;rsquo;ll need the following dependencies: Node.js, Clojure, &lt;a href=&#34;http://leiningen.org/&#34;&gt;Leinengen&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Next , clone the Eve repo from &lt;a href=&#34;https://github.com/witheve/eve-experiments/tree/e73b18d8111d5ddb73427bcb00f0501fdc9b8f2f&#34;&gt;this commit&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Then cd into where you cloned Eve. Download node dependencies and compile the REPL:&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt; npm install
-&amp;gt; npm run dev
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ol&gt;
-&lt;li&gt;When the REPL is finished building, you can kill that process and cd into the &lt;code&gt;/server&lt;/code&gt; directory. Then, all you need to do is:&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt; lein run
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This will compile and run the server. When it&amp;rsquo;s finished, you&amp;rsquo;ll have a REPL hosted at &lt;code&gt;http://localhost:8081/repl&lt;/code&gt;. The REPL was developed in Chrome, on Windows, but I&amp;rsquo;ve also verified it working on Firefox and Edge.&lt;/p&gt;
-
-&lt;h4 id=&#34;ui-drawing&#34;&gt;UI Drawing&lt;/h4&gt;
-
-&lt;p&gt;We also added the capability to specify UI with our syntax, obviating the need for HTML or CSS. We are interested in writing useful tools for ourselves in Eve, so we decided to write a little CI report generator.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;(define-ui ci-run-result
-  (fact test-run :tag &amp;quot;testrun&amp;quot; :number pr-number :branch :user :title :text description :additions :deletions)
-  (fact test-result :tag &amp;quot;testresult&amp;quot; :run test-run :test :result)
-  (fact-btu test-result &amp;quot;result&amp;quot; :tick)
-  (= test-order (+ 100 (sort tick)))
-  (= delta-text (str &amp;quot;(+&amp;quot; additions &amp;quot; / -&amp;quot; deletions &amp;quot;)&amp;quot;))
-  (= pr (str &amp;quot;#&amp;quot; pr-number))
-  (= url (str &amp;quot;https://github.com/witheve/eve-experiments/pull/&amp;quot; pr-number))
-  (= branch-url (str &amp;quot;https://github.com/witheve/eve-experiments/tree/&amp;quot; branch))
-  (= user-url (str &amp;quot;https://github.com/&amp;quot; user))
-  (= test-class (str &amp;quot;test &amp;quot; result))
-
-  (ui [title pr pr-number url user user-url delta-text branch branch-url description]
-      (div :id run-tile :parent &amp;quot;root&amp;quot; :ix pr-number :class &amp;quot;test-run&amp;quot;)
-      (h3 :id header :parent run-tile :ix 1)
-        (div :parent header :ix 0 :class &amp;quot;spacer&amp;quot; :text title)
-        (a :parent header :ix 1 :text pr :href url)
-      (div :id user-tile :parent run-tile :ix 2 :class &amp;quot;run-info&amp;quot;)
-        (div :parent user-tile :ix 0 :text delta-text)
-        (div :parent user-tile :ix 1 :text &amp;quot;in&amp;quot;)
-        (a :parent user-tile :ix 2 :text branch :href branch-url)
-        (div :parent user-tile :ix 3 :text &amp;quot;by&amp;quot;)
-        (a :parent user-tile :ix 4 :class &amp;quot;user&amp;quot; :text user :href user-url)
-      (blockquote :parent run-tile :ix 3 :class &amp;quot;description&amp;quot; :text description))
-
-  (ui [run-tile test test-class test-order]
-      (div :id test-tile :parent run-tile :ix test-order :class test-class)
-      (div :parent test-tile :ix 0 :text test)))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It&amp;rsquo;s pretty simple when you break it down. You can think of the code in two phases. The first phase, we collect all the information necessary to render the cards:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  // Get the test runs and their results. Joins via test-run
-  (fact test-run :tag &amp;quot;testrun&amp;quot; :number pr-number :branch :user :title :text description :additions :deletions)
-  (fact test-result :tag &amp;quot;testresult&amp;quot; :run test-run :test :result)
-
-  // Sort results by tick order
-  (fact-btu test-result &amp;quot;result&amp;quot; :tick)
-
-  // Format some strings
-  (= test-order (+ 100 (sort tick)))
-  (= delta-text (str &amp;quot;(+&amp;quot; additions &amp;quot; / -&amp;quot; deletions &amp;quot;)&amp;quot;))
-  (= pr (str &amp;quot;#&amp;quot; pr-number))
-  (= url (str &amp;quot;https://github.com/witheve/eve-experiments/pull/&amp;quot; pr-number))
-  (= branch-url (str &amp;quot;https://github.com/witheve/eve-experiments/tree/&amp;quot; branch))
-  (= user-url (str &amp;quot;https://github.com/&amp;quot; user))
-  (= test-class (str &amp;quot;test &amp;quot; result))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;In the second phase, we take the data and display them:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// Draws a commit card. This card is repeated once for every commit
-(ui [title pr pr-number url user user-url delta-text branch branch-url description]
-
-    // Attaches the card to the DOM root
-    (div :id run-tile :parent &amp;quot;root&amp;quot; :ix pr-number :class &amp;quot;test-run&amp;quot;)
-    // Draws the header
-    (h3 :id header :parent run-tile :ix 1)
-      (div :parent header :ix 0 :class &amp;quot;spacer&amp;quot; :text title)
-      (a :parent header :ix 1 :text pr :href url)
-
-    // Draws the line &amp;quot;(+{adds}/-{removes}) in {branch} by {user}&amp;quot;
-    (div :id user-tile :parent run-tile :ix 2 :class &amp;quot;run-info&amp;quot;)
-      (div :parent user-tile :ix 0 :text delta-text)
-      (div :parent user-tile :ix 1 :text &amp;quot;in&amp;quot;)
-      (a :parent user-tile :ix 2 :text branch :href branch-url)
-      (div :parent user-tile :ix 3 :text &amp;quot;by&amp;quot;)
-      (a :parent user-tile :ix 4 :class &amp;quot;user&amp;quot; :text user :href user-url)
-    // Draws the commit message
-    (blockquote :parent run-tile :ix 3 :class &amp;quot;description&amp;quot; :text description))
-
-// Draws the test results. This block is repeated once for every test
-(ui [run-tile test test-class test-order]
-    (div :id test-tile :parent run-tile :ix test-order :class test-class)
-    (div :parent test-tile :ix 0 :text test)))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is the result:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;{{ site.url }}/images/evel-ci.png&#34; alt=&#34;Eve CI&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And we did all this in Eve without having to write separate HTML! The result is completely live, so any new commits are displayed as soon as the tests complete.&lt;/p&gt;
-
-&lt;p&gt;The two-phase nature of this query (get some data -&amp;gt; do something with that data) is a general pattern we&amp;rsquo;ve found very useful for both reading and writing Eve programs. In newer versions of the Eve syntax, we make this pattern more explicit.&lt;/p&gt;
-
-&lt;h3 id=&#34;moving-forward&#34;&gt;Moving Forward&lt;/h3&gt;
-
-&lt;p&gt;This is the last post in our backlog of development diaries. Moving forward, we&amp;rsquo;ll keep a monthly cadence of dev diaries starting July. To cover our work in May and June, we have some special news, which we will be talking about shortly. As time goes by, and as Eve grows, I hope to keep the blog updated with more features like example Eve programs, community spotlights, tutorials, etc. So stay tuned!&lt;/p&gt;
 </description>
     </item>
     

@@ -2,10 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-05-15-april/</loc>
-  </url>
-  
-  <url>
     <loc>http://incidentalcomplexity.com/posts/2016-07-21-clock/</loc>
   </url>
   
@@ -15,6 +11,10 @@
   
   <url>
     <loc>http://incidentalcomplexity.com/posts/2016-07-12-pocketchip/</loc>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-05-15-april/</loc>
   </url>
   
   <url>

@@ -1,5 +1,3 @@
-#COOKIECOOKASDASDAS{}
-
 #eve-pallette {
   /* Default */
   color: rgb(74,64,136);
@@ -235,10 +233,10 @@ h2 {
 .sub-layer { margin-top: 30px; }
 
 .header-wrapper { }
-header > .logo { display: flex; flex: 0 0 auto; align-items: center; padding: 0; }
-header > .logo > img { max-width: 60px; }
-header > .logo > h1 { margin: 0; margin-left: 18px; padding: 0; height: 26px; margin-top: -32px; }
-header > .logo > h1 > img { height: 100%; }
+.logo { display: flex; flex: 0 0 auto; align-items: center; padding: 0; }
+.logo > img { max-width: 60px; }
+.logo > h1 { margin: 0; margin-left: 18px; padding: 0; height: 26px; margin-top: -32px; }
+.logo > h1 > img { height: 100%; }
 
 nav { flex: none; display: flex; flex-direction: row-reverse; }
 nav > * { flex: 0 0 auto; padding: 10px 20px; margin: 0; text-decoration: none; color: rgb(74, 64, 136); transition: background 0.1s ease-out; }

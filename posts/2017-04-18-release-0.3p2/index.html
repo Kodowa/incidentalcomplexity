@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Eve Alpha v0.3 preview 2 - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2017-04-18-release-0.3p2/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2017-04-18-release-0.3p2/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+      <div id="sidebar" class="nav-collapse">
+          <ul class="sidebar-menu">
+            
+            
+              
+                <li class="sub-menu active">
+                  <a href="http://incidentalcomplexity.com/posts/" class="">
+                      
+                      <span class="colored">Posts</span>
+                      <span class="menu-arrow arrow_carrot-right"></span>
+                  </a>
+                  <ul class="sub">
+                    
+                      <li><a href="http://incidentalcomplexity.com/posts/2017-05-15-april/"> Dev Diary (April 2017) </a> </li>
+                      
+                    
+                      <li><a href="http://incidentalcomplexity.com/posts/2017-04-06-march/"> Dev Diary (March 2017) - v0.3 alpha pre-release </a> </li>
+                      
+                    
+                      <li class="active selected"><a href="http://incidentalcomplexity.com/posts/2017-04-18-release-0.3p2/"> Eve Alpha v0.3 preview 2 </a> </li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p><em>(Eve is a new programming language, and this is our development blog. If you’re new to Eve, <a href="http://play.witheve.com">start here</a>)</em></p>
+
+<p>Now that we&rsquo;ve got the v0.3 preview out the door, we&rsquo;re ramping up to a more regular release schedule. In that spirit, today we&rsquo;re releasing the second preview of Eve v0.3, which largely improves built in watchers, but contains some other goodies as well.</p>
+
+<p>If you want to try out this version, we have two routes:</p>
+
+<ul>
+<li>If you&rsquo;re new to Eve and want to start a new Eve application, you should follow the instructions at <a href="https://github.com/witheve/eve-starter">eve-starter</a>. This repository contains everything you need to start an Eve project, and some small examples demonstrating the JavaScript DSL.</li>
+<li>If you&rsquo;d like to integrate Eve into an existing JavaScript project, download the npm package. You can find instructions <a href="https://github.com/witheve/Eve#integrating-eve-into-an-existing-project">here</a>.</li>
+</ul>
+
+<p>If you&rsquo;re used to running Eve, you may be looking for the editor and Eve syntax. We&rsquo;re not finished working on those yet, so they are not included in this preview. If you&rsquo;d like to use those, please stick with the v0.2.3 branch, and we&rsquo;ll keep you updated as to when those make it into the main branch. There <strong>will</strong> be breaking changes though, so any code you write now will have to be rewritten to a degree (for instance, some tags will be changing and databases are being removed from the language.)</p>
+
+<h3 id="what-s-new">What&rsquo;s new?</h3>
+
+<p>Let&rsquo;s take a look at some of the bigger improvements.</p>
+
+<h4 id="embedding-eve-elements-in-your-app">Embedding Eve Elements in Your App</h4>
+
+<p>You can now embed Eve rendered elements into your non-Eve application. This is accomplished with the <code>addExternalRoot(tag:string, element:HTMLElement)</code> function, which registers an arbitrary root element to serve as parents to Eve-rendered elements. This block creates a record tagged &ldquo;my-root&rdquo; in Eve:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">import</span> <span class="p">{</span><span class="nx">Program</span><span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;witheve&quot;</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">program</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Program</span><span class="p">(</span><span class="s2">&quot;my program&quot;</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">htmlWatcher</span> <span class="o">=</span> <span class="nx">program</span><span class="p">.</span><span class="nx">attach</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">someElement</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#eve-wrapper&quot;</span><span class="p">);</span>
+<span class="nx">htmlWatcher</span><span class="p">.</span><span class="nx">addExternalRoot</span><span class="p">(</span><span class="s2">&quot;my-root&quot;</span><span class="p">,</span> <span class="nx">someElement</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Now you can access that element from within Eve, giving you the ability to use it as a parent for child elements rendered by Eve. This block searches for that record, and that adds a div with some text as a child:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">program</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;render into #eve-wrapper&quot;</span><span class="p">,</span> <span class="p">({</span><span class="nx">find</span><span class="p">,</span> <span class="nx">record</span><span class="p">})</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">my_root</span> <span class="o">=</span> <span class="nx">find</span><span class="p">(</span><span class="s2">&quot;my-root&quot;</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">[</span>
+    <span class="nx">my_root</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;children&quot;</span><span class="p">,</span> <span class="p">[</span>
+      <span class="nx">record</span><span class="p">(</span><span class="s2">&quot;html/element&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">tagname</span><span class="o">:</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s2">&quot;hello, world!&quot;</span><span class="p">})</span>
+    <span class="p">])</span>
+  <span class="p">];</span>
+<span class="p">})</span>
+</code></pre></div>
+
+<p>This scenario works well if you have an already existing application, and you&rsquo;d like to use Eve to render certain elements.</p>
+
+<h4 id="watchers">Watchers</h4>
+
+<p>We&rsquo;ve added and streamlined various watchers that interact with the browser. We&rsquo;re now at the point where v0.3 is caught up to v0.2.x in terms of the available watchers. Additionally, we&rsquo;ve added support for more DOM events and triggers in the HTML watcher:</p>
+
+<ul>
+<li><code>button</code> attribute to all mouse events (values <code>left</code>, <code>right</code>, <code>middle</code>, <code>4</code>, and <code>5</code>.</li>
+<li><code>double-click</code>, <code>mouse-down</code>, and <code>mouse-up</code> events.</li>
+<li><code>html/listener/context-menu</code> tag. If an element with this tag is right clicked, the default context menu will not be shown, allowing you to render your own. You can grab page-relative mouse position off of any of the mouse events as <code>page-x</code> and <code>page-y</code>.</li>
+<li><code>key-press</code> event, with support for printable characters and the following control keys: <code>tab</code>, <code>enter</code>, <code>shift</code>, <code>control</code>, <code>alt</code>, <code>escape</code>, <code>left</code>, <code>up</code>, <code>right</code>, <code>down</code>, and <code>meta</code>.</li>
+<li><code>focus</code> and <code>blur</code> events.</li>
+</ul>
+
+<h4 id="standard-library">Standard Library</h4>
+
+<p>The first v0.3 preview revamped the function definition interface, but still had some limitations. Now you can create expressions with multiple outputs, so we are in a position to bring v0.3 back to parity with v0.2.</p>
+
+<ul>
+<li>Add <a href="https://github.com/witheve/Eve/pull/823/commits/58af002ec4c3807b0a91e3ee148e6f7a5359387a"><code>string.codepoint_length(text:string)</code></a> function.</li>
+</ul>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Dev Diary (March 2017) - v0.3 alpha pre-release - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2017-04-06-march/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2017-04-06-march/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+      <div id="sidebar" class="nav-collapse">
+          <ul class="sidebar-menu">
+            
+            
+              
+                <li class="sub-menu active">
+                  <a href="http://incidentalcomplexity.com/posts/" class="">
+                      
+                      <span class="colored">Posts</span>
+                      <span class="menu-arrow arrow_carrot-right"></span>
+                  </a>
+                  <ul class="sub">
+                    
+                      <li><a href="http://incidentalcomplexity.com/posts/2017-05-15-april/"> Dev Diary (April 2017) </a> </li>
+                      
+                    
+                      <li class="active selected"><a href="http://incidentalcomplexity.com/posts/2017-04-06-march/"> Dev Diary (March 2017) - v0.3 alpha pre-release </a> </li>
+                      
+                    
+                      <li><a href="http://incidentalcomplexity.com/posts/2017-04-18-release-0.3p2/"> Eve Alpha v0.3 preview 2 </a> </li>
+                      
+                    
+                  </ul>
+                </li>
+              
+            
+          </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p><em>(Eve is a new programming language, and this is our development blog. If you’re new to Eve, <a href="http://play.witheve.com">start here</a>)</em></p>
+
+<p>Last month we updated you with some changes happening to the Eve runtime, including the addition of a Javascript DSL. Today we&rsquo;re happy to announce a pre-release version of Eve v0.3 alpha. This &ldquo;pre-release&rdquo; is meant for members of the Eve community to preview the features of v0.3 before it&rsquo;s ready for a broader audience (for example, docs, guides, and tools like the editor still need more work). We think you&rsquo;ll appreciate some of the new features, so let&rsquo;s take a look at what is new!</p>
+
+<h3 id="platform">Platform</h3>
+
+<p>The big news today is that the runtime refactor we began earlier this year is capable of running full Eve programs. It still needs a lot of usability, documentation, and tooling work before it&rsquo;s ready for an official release; nonetheless, this runtime already accomplishes many of the objectives identified earlier this year, like improving Eve&rsquo;s extensibility. So we&rsquo;re moving the runtime-refactor branch over to master, and making this version more accessible to the community. We&rsquo;ll continue to work on this branch and release a more complete v0.3 later this year.</p>
+
+<p>To get the pre-release you have a couple of options:</p>
+
+<ol>
+<li>Download the npm package with <code>npm install witheve@preview</code></li>
+<li>Clone the <a href="https://github.com/witheve/eve-starter">eve-starter repository</a>:</li>
+</ol>
+
+<pre><code>git clone git@github.com:witheve/eve-starter.git
+cd eve-starter
+npm install
+</code></pre>
+
+<p>The eve-starter repository is new, and demonstrates how a project can use Eve as a dependency. Whereas the v0.2 example programs were bundled with the Eve runtime, these example programs have no special privilege. Feel free to use this as a starting point for your own Eve project.</p>
+
+<p>Here&rsquo;s what&rsquo;s new in the v0.3 pre-release.</p>
+
+<h4 id="javascript-dsl">Javascript DSL</h4>
+
+<p>We&rsquo;ve talked a little about this before, but Eve now has a Javascript DSL. Right now, this is the only interface to the v0.3 runtime (the Eve syntax will be coming with the official release). The DSL has the same semantics as the Eve syntax, and even closely mirrors its form as well. Here is a translation guide between the Eve syntax and the DSL:</p>
+
+<p><strong>Basics</strong></p>
+
+<pre><code>- find a record: find(&quot;person&quot;, {salary}) &lt;-&gt; search [#person salary]
+- bind/commit:   return[record(&quot;person&quot;, {salary})] &lt;-&gt; bind [#person salary]
+- functions:     lib.math.sin(number) &lt;-&gt; sin[degrees: number]
+- aggregates:    gather(person).per(person.dept).count() &lt;-&gt; count[given: person, per: person.dept]
+</code></pre>
+
+<p><strong>Sub-Blocks</strong></p>
+
+<pre><code>- not:    not(() =&gt; person.salary) &lt;-&gt; not(person.salary)
+- choose: choose(() =&gt; { person.salary; return 1; }, () =&gt; 0) &lt;-&gt; if person.salary then 1 else 0
+- union:  union(() =&gt; person.salary, () =&gt; person.wage) &lt;-&gt; if person.salary then person.salary if person.wage then person.wage
+</code></pre>
+
+<p><strong>Update Operators</strong></p>
+
+<pre><code>- Add a value:         person.add(&quot;salary&quot;, 10) &lt;-&gt; person.salary += 10
+- Remove a value:      person.remove(&quot;salary, 10) &lt;-&gt; person.salary -= 10
+- Set a value:         person.remove(&quot;salary&quot;).add(&quot;salary&quot;, 10) &lt;-&gt; person.salary := 10
+- Remove an attribute: person.remove(&quot;salary&quot;) &lt;-&gt; person.salary := none
+- Remove a record:     person.remove() &lt;-&gt; person := none
+</code></pre>
+
+<p>Again, docs are sparse at the moment, but we&rsquo;ve put together a <a href="https://github.com/witheve/docs/blob/master/guides/dsl.md">basic guide</a> for the DSL, which should get you started.</p>
+
+<h4 id="importing-exporting-data">Importing/Exporting Data</h4>
+
+<p>One of the most common requests after the v0.2 release of Eve was &ldquo;How do I get my data into Eve?&rdquo;. People wanted to use Eve to work with data they already had, but at the time Eve was intentionally siloed from the rest of the world. Now working with external data is much easier thanks to the DSL; if you can get your data into Javascript, you can get it into Eve.</p>
+
+<p><strong>Importing Data into Eve</strong></p>
+
+<p>Getting data into Eve is accomplished with the <code>inputEAVs()</code> interface, which allows you to insert a raw entity, attribute, value triple into the Eve database. EAVs are the core dataype in Eve, and define everything from clicks to your application interface. Combined with the <code>appendAsEAVS()</code> function, which turns an object into an array of EAVs, you can now turn regular Javascript objects into Eve records.</p>
+
+<p><strong>Exporting Data from Eve</strong></p>
+
+<p>The opposite is true as well &ndash; you can turn Eve records into Javascript objects. This is accomplished through a watcher block. These operate as normal bind blocks, except they allow you to use a callback function to respond to changes in records (diffs). This allows you the opportunity to react to those changes using native Javascript functions and libraries. Here is an example watcher that calls out to a function external to Eve every time an <code>#email/send</code> record is created.</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">program</span>
+ <span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="s2">&quot;Send emails&quot;</span><span class="p">,</span> <span class="p">({</span><span class="nx">find</span><span class="p">,</span> <span class="nx">record</span><span class="p">})</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">email</span> <span class="o">=</span> <span class="nx">find</span><span class="p">(</span><span class="s2">&quot;email/send&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">[</span>
+     <span class="nx">record</span><span class="p">({</span><span class="nx">to</span><span class="o">:</span> <span class="nx">email</span><span class="p">.</span><span class="nx">to</span><span class="p">,</span> <span class="nx">from</span><span class="o">:</span> <span class="nx">email</span><span class="p">.</span><span class="nx">from</span><span class="p">,</span> <span class="nx">subject</span><span class="o">:</span> <span class="nx">email</span><span class="p">.</span><span class="nx">subject</span><span class="p">,</span> <span class="nx">body</span><span class="o">:</span> <span class="nx">email</span><span class="p">.</span><span class="nx">body</span><span class="p">})</span>
+    <span class="p">];</span>
+ <span class="p">})</span>
+ <span class="p">.</span><span class="nx">asObjects</span><span class="o">&lt;</span><span class="p">{</span><span class="nx">to</span><span class="o">:</span><span class="nx">string</span><span class="p">,</span> <span class="nx">from</span><span class="o">:</span><span class="nx">string</span><span class="p">,</span> <span class="nx">subject</span><span class="o">:</span><span class="nx">string</span><span class="p">,</span> <span class="nx">body</span><span class="o">:</span><span class="nx">string</span><span class="p">}</span><span class="o">&gt;</span><span class="p">((</span><span class="nx">diff</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">email</span> <span class="k">of</span> <span class="nx">diff</span><span class="p">.</span><span class="nx">adds</span><span class="p">)</span> <span class="p">{</span>
+     <span class="kd">let</span> <span class="p">{</span><span class="nx">to</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">body</span><span class="p">}</span> <span class="o">=</span> <span class="nx">email</span><span class="p">;</span>
+     <span class="nx">sendAnEmail</span><span class="p">(</span><span class="nx">to</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">body</span><span class="p">);</span>
+    <span class="p">}</span>
+ <span class="p">});</span>
+</code></pre></div>
+
+<p>As part of our documentation efforts, we&rsquo;re going to be posting a series of short, to-the-point examples demonstrating how to connect to common sources of data (csv, APIs maybe even a serial port), so users can get started working with their data. Please let us know on the <a href="https://groups.google.com/forum/#!topic/eve-talk/2TyfPDxcu08">mailing list</a> which data sources most interest you. Also, if you get any examples working yourself, be sure to let us know as well.</p>
+
+<h3 id="community">Community</h3>
+
+<h4 id="contributions">Contributions</h4>
+
+<p>Thanks to everyone who contributed pull requests last month!</p>
+
+<ul>
+<li><a href="https://github.com/wilk">@wilk</a></li>
+<li><a href="https://github.com/shamrin">@shamrin</a></li>
+<li><a href="https://github.com/christopherdumas">@christopherdumas</a></li>
+<li><a href="https://github.com/thSoft">@thSoft</a></li>
+</ul>
+
+<h4 id="eve-around-the-world">Eve Around the World</h4>
+
+<p><strong>Berkeley, March 17</strong></p>
+
+<p>Chris gave a talk at UC Berkeley&rsquo;s <a href="http://bid.berkeley.edu/">BiD Lab</a> about how programming language design could learn a thing or two from video games like Minecraft and Zelda: Breath of the Wild. Unfortunately, his talk wasn&rsquo;t recorded, but we&rsquo;ll release it in blog form later this month for anyone who couldn&rsquo;t attend.</p>
+
+<p><strong>San Francisco, March 25</strong></p>
+
+<p>Last month <a href="https://twitter.com/anfedorov">Andrey Fedorov</a> of the <a href="http://2020salon.blogspot.com/"><sup>20</sup>&frasl;<sub>20</sub> Salon</a> was kind enough to invite me to their meetup to talk about and demo Eve. We had a great time talking about Loopy, AirTable, and various other projects related and not related to Eve. Hopefully we can do it again when we have more to show here.</p>
+
+<p><strong>Copenhagen, April 26</strong></p>
+
+<p>Zubair Quraishi is again hosting an Eve meetup in Copenhagen, scheduled for April 26. You can view all the relevant details on the <a href="https://www.meetup.com/evecph/events/238989298/">meetup page</a>, or join the <a href="https://groups.google.com/forum/#!topic/eve-talk/CXdWqgokhVI">discussion</a> on the mailing list.</p>
+
+<p><strong>San Francisco, May TBD</strong></p>
+
+<p>We&rsquo;re going to be holding our first official Eve meetup at the Eve office in downtown San Francisco in May. We don&rsquo;t have any concrete details yet, but we wanted to let you know this is in the works. If you are interested in attending or have any ideas of what you&rsquo;d like to learn, drop me a line via <a href="mailto:corey@kodowa.com">e-mail</a> or <a href="https://twitter.com/with_eve">Twitter</a>. We&rsquo;ll let you know when plans are finalized.</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+
