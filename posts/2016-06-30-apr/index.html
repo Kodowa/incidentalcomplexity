@@ -126,7 +126,7 @@
 
 <p>One obvious possibility is just to have relational functions and to allow the user to write them in cells. But that doesn&rsquo;t really take advantage of the relational nature of the Eve platform &ndash; you could do this in any language. Eventually, we stumbled upon a really simple yet absolutely cool idea: give semantic meaning to cell adjacency. Consider this:</p>
 
-<p><img src="{{ site.url }}/images/wikigrid2.png" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid2.png" alt="WikiGrid" /></p>
 
 <p>Here, the cell <code>person</code> means &ldquo;select all the entities tagged person&rdquo;. The adjacent cell <code>age</code> means &ldquo;select the attribute age for the adjacent collection&rdquo; i.e. <code>person.age</code>, which returns the set of all ages of &ldquo;person&rdquo;s in the system.</p>
 
@@ -142,13 +142,13 @@
 
 <p>This was very exciting for us, because you could basically write out a complicated query with no syntax. This was by far our fastest way to write a query yet. Here&rsquo;s what writing one of these looks like in WikiGrid:</p>
 
-<p><img src="{{ site.url }}/images/wikigrid4.gif" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid4.gif" alt="WikiGrid" /></p>
 
 <p>Here, we mark off a 5x4 area as a macro cell. Then we name the macro cell &ldquo;test&rdquo; and give it a &ldquo;Formula Grid&rdquo; type. If you look closely at the autocomplete that pops up, you&rsquo;ll see the cell can take on many types: table, code, image, text, chart, drawing, etc. Most of these weren&rsquo;t wired up yet, but it illustrated the idea that cells can contain anything.</p>
 
 <p>So let&rsquo;s put it all together and see how it works when it&rsquo;s hooked up to an evaluator. The runtime in this example was our new Clojure runtime from last month.</p>
 
-<p><img src="{{ site.url }}/images/wikigrid5.gif" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid5.gif" alt="WikiGrid" /></p>
 
 <p>We start out in a grid and name it &ldquo;Chris&rdquo; by adding an attribute cell. Each grid represents a single entity, so any attributes added to the grid are attached to that entity. Grids start out nameless, so giving it a name provides a handle to the grid. We then add two more attributes: an <code>age</code> and <code>tag</code>. The <code>tag</code> attribute is a convention used to group similar entities. By adding the tag &ldquo;person&rdquo;, we are now able to talk about collections of &ldquo;person&rdquo;s by joining on that tag.</p>
 
@@ -158,7 +158,7 @@
 
 <p>This is a relatively simple example, but we can write arbitrarily complex queries this way:</p>
 
-<p><img src="{{ site.url }}/images/wikigrid3.png" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid3.png" alt="WikiGrid" /></p>
 
 <p>This query draws the name and age of a person in HMTL. The name is in one div, styled red, while the age is in another div, styled blue.</p>
 
@@ -221,7 +221,7 @@
 
 <p>The REPL received a visual overhaul and several additional features. First, let&rsquo;s take a look at the new layout.</p>
 
-<p><img src="{{ site.url }}/images/repl4.png" alt="REPL" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/repl4.png" alt="REPL" /></p>
 
 <p>You can immediately see some new features here. First, we&rsquo;ve changed the layout a little. We have a toolbar on the left, and the REPL &ldquo;cards&rdquo; on the right. We have a button to get another column of cards, which gives us a restricted grid layout.</p>
 
@@ -246,7 +246,7 @@
 
 <p>We also added various views to the output. The view defaults to the results table, which displays the current state of the results. You can also see this History, which logs the incremental changes to the table. This is just a local history according to the client, but eventually this will be a history according to the server. This will allow features like the ability to see the state of the table at an arbitrary time.</p>
 
-<p><img src="{{ site.url }}/images/repl5.png" alt="REPL" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/repl5.png" alt="REPL" /></p>
 
 <p>The info tab displays information from the compiler about the query for debugging purposes. So far, we display the intermediate expansion of the query, as well as Eve bytecode.</p>
 
@@ -254,7 +254,7 @@
 
 <p>Now that you&rsquo;ve logged in, you can send and receive messages:</p>
 
-<p><img src="{{ site.url }}/images/repl1.gif" alt="REPL" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/repl1.gif" alt="REPL" /></p>
 
 <p>This whole process is also supported by the Eve backend. When you send a message, we add a new fact into the database, containing the message text, as well as your user ID and the local machine timestamp:</p>
 
@@ -383,7 +383,7 @@
 
 <p>Here is the result:</p>
 
-<p><img src="{{ site.url }}/images/evel-ci.png" alt="Eve CI" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/evel-ci.png" alt="Eve CI" /></p>
 
 <p>And we did all this in Eve without having to write separate HTML! The result is completely live, so any new commits are displayed as soon as the tests complete.</p>
 

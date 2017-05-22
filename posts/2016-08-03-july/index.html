@@ -186,13 +186,13 @@ go!
 
 <p>One of the principal benefits of Eve is that it reacts and updates values automatically as new data becomes available. For example, when an event like a <code>click</code> or <code>keydown</code> occurs, Eve records that event as a fact in the Eve DB. This fact exists for a single instant, a “tic” of compiler time. In that instant, any block selecting on that event can react to it.</p>
 
-<p><img src="{{ site.url }}/images/dogeve.gif" alt="Events in Eve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/dogeve.gif" alt="Events in Eve" /></p>
 
 <p>This login system (which demonstrates several events including <code>keydown</code>,<code>click</code>, and <code>onChange</code>) was written entirely in Eve. Clicking on the login button in the top right triggers Eve to create a <code>#click</code> fact that records the clicked element&rsquo;s ID as well as the time it was clicked. This fact supports the login modal that appears at the bottom of the screen. When the user types the username into the textbox, the <code>value</code> attribute of that element changes on each <code>#keydown</code> event. Finally, when the credentials are submitted, the values in the username/password <code>#textbox</code> elements compared against stored username/passwords in the system.</p>
 
 <p>Below is an analogue <a href="https://github.com/witheve/Eve/blob/c75727d86c0df367678eec6d7d1dd9a5d56c356b/examples/clock.eve">clock in Eve</a> that reacts to changes in <code>#time</code>, which is an object in the system that represents the current time with <code>hours</code>, <code>minutes</code>, and <code>seconds</code>, attributes.</p>
 
-<p><img src="{{ site.url }}/images/eveclock.gif" alt="A Clock in Eve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/eveclock.gif" alt="A Clock in Eve" /></p>
 
 <p>The <code>#time</code> object changes every second, which in turn causes a change in the <code>#clock-hands</code> objects, which finally causes the drawing to update.</p>
 
@@ -202,7 +202,7 @@ go!
 
 <p>If you&rsquo;ve ever seen a <a href="http://codegolf.stackexchange.com/questions/1956/generate-the-longest-error-message-in-c">C++ template error</a>, you&rsquo;ve felt the pain of indecipherable error messages. As with our syntax, we recognize that error messages need to be distinctly designed for humans. Take this example:</p>
 
-<p><img src="{{ site.url }}/images/errorExample.gif" alt="Error handling in Eve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/errorExample.gif" alt="Error handling in Eve" /></p>
 
 <p>Here, the user types <code>#cool</code>, which is syntactically incorrect. The compiler returns an error message pointing out the line and character of the error, and the reason for the error. This is where most compilers call it a day. We go several steps further, providing a suggestion on how to correct the error, and in this case we can even offer a &ldquo;Fix it for me&rdquo; button that applies the fix automatically and re-evaluates the program.</p>
 
@@ -218,7 +218,7 @@ go!
 
 <p>Eve supports Unicode!</p>
 
-<p><img src="{{ site.url }}/images/unicode.jpg" alt="Eve ♥ Unicode" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/unicode.jpg" alt="Eve ♥ Unicode" /></p>
 
 <p>This is a fun <a href="https://github.com/witheve/Eve/blob/master/examples/unicode.eve">example</a>, but Unicode can be important in certain domains where notation is standardized (e.g. the number π in math), but moreover it&rsquo;s crucial for making Eve usable in languages other than English.</p>
 
@@ -247,15 +247,15 @@ go!
 
 <h4 id="todomvc-code-21">TodoMVC - <a href="https://github.com/witheve/Eve/blob/master/examples/todomvc.eve">Code</a></h4>
 
-<p><img src="{{ site.url }}/images/evetodomvc.png" alt="Eve - TODO MVC" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/evetodomvc.png" alt="Eve - TODO MVC" /></p>
 
 <h4 id="tic-tac-toe-code-21">Tic-Tac-Toe - <a href="https://github.com/witheve/Eve/blob/master/examples/todomvc.eve">Code</a></h4>
 
-<p><img src="{{ site.url }}/images/tic-tac-toe.gif" alt="Eve - Tic-Tac-Toe" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/tic-tac-toe.gif" alt="Eve - Tic-Tac-Toe" /></p>
 
 <h4 id="flappy-bird-code-23">Flappy Bird - <a href="https://github.com/witheve/Eve/blob/master/examples/flappy.eve">Code</a></h4>
 
-<p><img src="{{ site.url }}/images/flippy-flop.gif" alt="Eve - Flappy Bird" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/flippy-flop.gif" alt="Eve - Flappy Bird" /></p>
 
 
 			</div>

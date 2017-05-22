@@ -136,7 +136,7 @@
 
 <p>Eve processes can now communicate with each other. Unlike <a href="http://www.bloom-lang.net/">Bloom</a> we don&rsquo;t have a special message table for communication. Instead, processes can dynamically subscribe to views in other processes, creating a local copy which is asynchronously updated. Compared to direct messaging, this allows <a href="http://lambda-the-ultimate.org/node/2978">observation without cooperation</a> and enables easier composition of processes.</p>
 
-<p><a href="{{ site.url }}/images/chat.png"><img src="{{ site.url }}/images/chat.png" alt="Chat" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/chat.png"><img src="http://incidentalcomplexity.com/posts/images/chat.png" alt="Chat" /></a></p>
 
 <p>Under the hood, it&rsquo;s still just plain old messaging and doesn&rsquo;t attempt to hide the realities of distributed communication. The subscriber sends a subscription request and the remote process sends back timestamped diffs continuously until the connection is broken. It&rsquo;s not yet clear exactly what consistency guarantees we will provide for eg multiple subscriptions to different views in the same process. We will have a better idea once we build more distributed programs and see what kind of patterns emerge.</p>
 

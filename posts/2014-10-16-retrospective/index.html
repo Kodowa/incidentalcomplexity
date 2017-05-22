@@ -148,7 +148,7 @@
 
 <p>The initial language was a clojure-like pattern-matching functional language run in a simple interpreter. Outputs were updated live as input data changed, using traditional <a href="http://www.umut-acar.org/self-adjusting-computation">SAC</a>.</p>
 
-<p><a href="{{ site.url }}/images/1.png"><img src="{{ site.url }}/images/1.png" alt="SAC and trees" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/1.png"><img src="http://incidentalcomplexity.com/posts/images/1.png" alt="SAC and trees" /></a></p>
 
 <p>There was only a single global tree data-structure that was traversed and modified by the program. Every piece of state in the program had to live somewhere in this tree. Input was added into a special location in the data-structure and output was read from another. Functions could be passed &lsquo;cursors&rsquo; that allowed them to mutate part of the tree, creating a kind of mutable variable. These cursors could not be stored in the tree itself so it was not possible to create cycles.</p>
 
@@ -194,7 +194,7 @@
 
 <p>We replaced all the clojure data-structures (vectors, maps, sets) with tables - indexed multi-sets that were displayed as an Excel-like grid. Setting columns as unique keys allowed imitating the semantics of vectors, maps, sets and multi-sets while still having the same interface. This interface was more familiar to non-programmers and unique keys were more easily understood than having the same operations behave differently on different data-structures.</p>
 
-<p><a href="{{ site.url }}/images/2.png"><img src="{{ site.url }}/images/2.png" alt="SAC and tables" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/2.png"><img src="http://incidentalcomplexity.com/posts/images/2.png" alt="SAC and tables" /></a></p>
 
 <p>We also replaced the interpreter with a compiler, for reasons that are now unclear. Perhaps the editor was too slow when running user tests?</p>
 
@@ -217,7 +217,7 @@
 
 <p>The editor developed enough that we could use it to build todomvc (which took around ten minutes to write) and live update todomvc as rules were edited. Rules were written in an If-This-Then-That style which went down somewhat better than the computation oriented interface we had before.</p>
 
-<p><a href="{{ site.url }}/images/5.png"><img src="{{ site.url }}/images/5.png" alt="Madlibs" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/5.png"><img src="http://incidentalcomplexity.com/posts/images/5.png" alt="Madlibs" /></a></p>
 
 <p>Interestingly, since the rules read almost like English, we started getting complaints that they were ungrammatical. Rules like &lsquo;if [time = T] do &hellip;&rsquo; were met with the objection that there is always a current time and it&rsquo;s not a matter of &lsquo;if&rsquo;. I suspect many natural language interfaces run into the same uncanny valley problem.</p>
 
@@ -289,7 +289,7 @@ The algorithm was <a href="http://www.faqs.org/patents/app/20140089292">patented
 
 <p>The editor moved from a fill-in-the-blanks textual representation to a more Excel-like representation. Showing the intermediate data and interacting with it directly seems to be easier for most people than dealing with variables. There is no loss of power compared to the previous editor but it is much less dense. It works for editing code but we will have to find some more compact representation for when users are browsing code.</p>
 
-<p><a href="{{ site.url }}/images/3.png"><img src="{{ site.url }}/images/3.png" alt="Spreadsheet" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/3.png"><img src="http://incidentalcomplexity.com/posts/images/3.png" alt="Spreadsheet" /></a></p>
 
 <h3 id="today">Today</h3>
 

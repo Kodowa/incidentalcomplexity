@@ -126,25 +126,25 @@
 
 <p>In March, we spent a lot of time looking at ways to improve the NL interface, <a href="http://incidentalcomplexity.com/2016/06/14/nlqp/">due to feedback</a> we received on WikiEve. We started by considering a controlled natural language interface, which would drastically simplify the NL problem while still being readable. However, we soon arrived at something that felt more akin to Excel formulas.</p>
 
-<p><img src="{{ site.url }}/images/formula1.png" alt="Formula" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/formula1.png" alt="Formula" /></p>
 
 <p>A user of the NL interface might have asked this as &ldquo;What is the average number of moons per planet?&rdquo;. The formula version is a little awkward to read, but an English reader without any coding experience could figure out what this sentence means.</p>
 
 <p>One issue with this introduces a scoping problem. The NL interface was designed to figure out the extent of functions like average and count. Is this <code>average(count(moons)) per plant</code> or <code>average(count(moons per planet))</code>? This version makes that explicit</p>
 
-<p><img src="{{ site.url }}/images/formula2.png" alt="Formula" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/formula2.png" alt="Formula" /></p>
 
 <p>Another thing the NL interface did was find relations between words that were not directly related. In a previous post we looked at the example <code>sum salary per department</code>. Here, <code>salary</code> and <code>department</code> are only related through the employees. This version makes that explicit</p>
 
-<p><img src="{{ site.url }}/images/formula3.png" alt="Formula" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/formula3.png" alt="Formula" /></p>
 
 <p>Even a version closer to Excel is still not that bad. Excel has proven that people are capable of writing formulas in this style, so with the right tools and guidance, they should be able to write something like this:</p>
 
-<p><img src="{{ site.url }}/images/formula4.png" alt="Formula" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/formula4.png" alt="Formula" /></p>
 
 <p>We even started experimenting with how a user might write multi-step queries. In Excel, you would reference the result of another cell, using a cell address like <code>A3</code>. Here, you can reference different steps of a calculation. This helps guide the user to break down complicated queries into smaller steps. If you read the queries from top to bottom, it&rsquo;s pretty clear what&rsquo;s going on here. The grammar is not true English, but it&rsquo;s close enough to feel familiar.</p>
 
-<p><img src="{{ site.url }}/images/formula5.png" alt="Formula" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/formula5.png" alt="Formula" /></p>
 
 <p>In the end, we didn&rsquo;t implement any of these formula concepts in a working system. After about a week of riffing on this concept, we arrived at a different take that was much more promising.</p>
 
@@ -158,19 +158,19 @@ GridEve was one of the first versions that had the property of being immediately
 
 <p>The UI is a combination of GridEve and WikiEve. The user is initially presented with a grid of cells. Each cell is square and fixed, in contrast to Excel, where they can be resized. Cells in WikiGrid can contain anything, such as text, tables, formulas, or even cards from WikiEve</p>
 
-<p><img src="{{ site.url }}/images/wikigrid1.png" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid1.png" alt="WikiGrid" /></p>
 
 <p>Even though the grid is fixed, you can select multiple cells and turn them into a &ldquo;macro cell&rdquo;, which offers some interesting interactions. Here, a user is navigating using a keyboard.</p>
 
-<p><img src="{{ site.url }}/images/wikigrid1.gif" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid1.gif" alt="WikiGrid" /></p>
 
 <p>And here, a user is selecting various cells. When any occupied cells (the large white ones) fall in the selection window, only those are selected. When only empty cells are in the selection window, they are selected.</p>
 
-<p><img src="{{ site.url }}/images/wikigrid2.gif" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid2.gif" alt="WikiGrid" /></p>
 
 <p>Finally, we see how sub-grids can be embedded in a cell. It&rsquo;s grids all the way down. The ghosting cursor was an experiment to see if hiding gridlines made it look cleaner.</p>
 
-<p><img src="{{ site.url }}/images/wikigrid3.gif" alt="WikiGrid" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikigrid3.gif" alt="WikiGrid" /></p>
 
 <p>That’s it for the UI. In <a href="http://incidentalcomplexity.com/2016/06/22/mar2/">Part 2</a> we’ll take a look at how the platform changed in March.</p>
 

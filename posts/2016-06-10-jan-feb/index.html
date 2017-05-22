@@ -182,13 +182,13 @@
 
 <p>In CardWiki, a card was just a piece of UI that represented an entity, collection, or query result. The cards themselves can be thought of as living wiki articles, that update in real-time as edits are made. Like wikis, these cards could contain plain text and formatting (Markdown in this case, hence the moniker) that had no specific semantic meaning to a program. Unlike a wiki, semantic meaning could be added in the form of inline queries. The existence of inline queries in a card provided the basis for computation in the system, much like this contemporary <a href="https://s3.amazonaws.com/worrydream.com/ClimateChange/Video/06-autocomplete.mov">demo</a> by Bret Victor.</p>
 
-<p><img src="{{ site.url }}/images/wikieve1.gif" alt="WikiEve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikieve1.gif" alt="WikiEve" /></p>
 
 <p>Here we are editing a card relating to the entity <code>Josh</code>. The beginning of an inline query is indicated by typing <code>=</code>. As in CardWiki, queries are stated using natural english and are parsed by a special [natural language query parser](). This sentence adds two tags (<code>test data</code> and <code>employee</code>) to Josh and then queries for his <code>salary</code>.</p>
 
 <p>We can create whole documents this way.</p>
 
-<p><img src="{{ site.url }}/images/wikieve2.gif" alt="WikiEve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikieve2.gif" alt="WikiEve" /></p>
 
 <p>There&rsquo;s a lot going on here, so I&rsquo;ll break it down. This is a card for the entity <code>Chris</code>. We see that he belongs to two collections, <code>test data</code> and <code>employee</code>. He has two attributes, <code>department</code> and <code>salary</code>, whose values are respectively <code>engineering</code> and <code>10</code>. At the bottom is a summary table of all the properties associate with this card.</p>
 
@@ -202,19 +202,19 @@
 
 <p>Okay, so now we&rsquo;re back to talking about WikiEve. Through refactoring MarkdownEve, we moved closer to the card model Chris originally proposed in the CardWiki experiment. Take a look:</p>
 
-<p><img src="{{ site.url }}/images/wikieve3.png" alt="WikiEve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikieve3.png" alt="WikiEve" /></p>
 
 <p>This is the WikiEve workspace. What we see here are several cards lined up next to each other. This is actually a stack, where a card is a child to the one on the left. In this screen, we started with this Home card, then opened Moon, then Europa and so on. Instead of inlining data in text, attributes are housed in a grid. Each card has a default image and description attributes, which maintains the wiki-esque feel.</p>
 
-<p><img src="{{ site.url }}/images/wikieve4.png" alt="WikiEve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikieve4.png" alt="WikiEve" /></p>
 
 <p>The key interaction model with this version, as with CardWiki and MediumEve, is the natural language interface. Here, we searched for <code>&quot;moons grouped by planet&quot;</code> and got a list of exactly what I asked for. If I click on <code>&quot;The Moon&quot;</code> I can open its card right there and edit it.</p>
 
-<p><img src="{{ site.url }}/images/wikieve4.gif" alt="WikiEve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikieve4.gif" alt="WikiEve" /></p>
 
 <p>Adding new attributes to cards is achieved by clicking the <code>+</code> in the top right of the card. This opens a panel with options of attributes to add to the card. The options are property (which I&rsquo;ve been calling attribute), a list, a description, an image, or a document.</p>
 
-<p><img src="{{ site.url }}/images/wikieve5.gif" alt="WikiEve" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/wikieve5.gif" alt="WikiEve" /></p>
 
 <p>In this example, we&rsquo;re adding some <a href="https://www.bart.gov/stations">BART</a> stops to the collection <code>station</code>. An advanced feature that&rsquo;s shown here is editing one of the entities we just added to the list, <code>colma</code>. When we click on <code>colma</code> in the list, a modal card appears for that entity that can be edited.</p>
 

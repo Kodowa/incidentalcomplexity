@@ -263,13 +263,13 @@ bind
 
 <p>We added syntax highlighting to the built-in editor!</p>
 
-<p><img src="{{ site.url }}/images/syntax-highlighting.png" alt="Eve Syntax Highlighting" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/syntax-highlighting.png" alt="Eve Syntax Highlighting" /></p>
 
 <h4 id="eve-and-markdown">Eve and Markdown</h4>
 
 <p>One key feature of the Eve programming model is that the order of statements doesn&rsquo;t matter. A nice implication of this property is that we can write Eve code in an order that makes sense for a human, as opposed to writing code in an order that is imposed by the compiler or runtime. This idea is the basis for <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, a practice for writing programs introduced by Donald Knuth in 1981. The idea behind literate programming is to treat a program as a document of prose written to a human audience, with code interspersed throughout. In writing this way, a programmer can use prose and formal methods to reinforce one another, leading to programs that are (in principle) easier to maintain. We talk about some of the benefits of literate programming <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#program-structure">here</a>.</p>
 
-<p><img src="{{ site.url }}/images/EveMD.png" alt="Eve Syntax Highlighting" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/EveMD.png" alt="Eve Syntax Highlighting" /></p>
 
 <p>Whereas other literate programming implementations require a &ldquo;tangle&rdquo; step to turn a literate program into a compilable program, Eve&rsquo;s semantics mean a <code>*.eve</code> file can be rendered as markdown or executed by Eve without any additional compilation steps. We accomplish this by being <a href="http://commonmark.org/">CommonMark</a> compatible; Eve programs are written just as you would write any markdown document, but code blocks containing Eve code are actually executable.</p>
 
@@ -289,7 +289,7 @@ bind
 
 <p>An idea we keep coming back to is the concept of &ldquo;views&rdquo;. Views are small graphical elements that represent records in the system. By default, they are just small squares, but a programmer can imbue them with properties (position, color, size, shape, etc.) to visualize the records they represent. For example, a graph can be constructed out of views by applying height and position properties to them, like in this example:</p>
 
-<p><img src="{{ site.url }}/images/pixels2.gif" alt="Eve Syntax Highlighting" /></p>
+<p><img src="http://incidentalcomplexity.com/posts/images/pixels2.gif" alt="Eve Syntax Highlighting" /></p>
 
 <p>Here, we use <code>#pixel</code> (views used to be called pixels, so this would currently be accessed using <code>#view</code>) to inspect some records. Three views are displayed, one for each <code>#clock-hand</code>. In this case, since we&rsquo;re inspecting records, the views display the attributes and values for each of the records. Then, we change to a different mode and look at the history of a specific attribute on <code>#clock-hand</code>s, namely <code>x2</code>. This results in three graphs illustrating how <code>x2</code> changes for each <code>#clock-hand</code> over time.</p>
 

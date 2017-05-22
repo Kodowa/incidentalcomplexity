@@ -126,25 +126,25 @@
 
 <p>Despite our mistakes, we still managed to build a relational database, a programming language, an IDE and a UI editor from scratch in three months. In June we adopted a more incremental process - making changes via shims or feature gates to ensure we always have a stable platform to build on. At the time of writing we are able to implement much of <a href="https://foursquare.com/">Foursquare</a>:</p>
 
-<p><a href="{{ site.url }}/images/mamj-foursquare.png"><img src="{{ site.url }}/images/mamj-foursquare.png" alt="Foursquare" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/mamj-foursquare.png"><img src="http://incidentalcomplexity.com/posts/images/mamj-foursquare.png" alt="Foursquare" /></a></p>
 
 <p>Aggregation and sorting continue to be tricky to nail down, so they are currently banished to a separate view type. To reduce the overhead of having to create all these extra views we added workspaces which can contain multiple anonymous views.</p>
 
-<p><a href="{{ site.url }}/images/mamj-workspace.png"><img src="{{ site.url }}/images/mamj-workspace.png" alt="Workspace" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/mamj-workspace.png"><img src="http://incidentalcomplexity.com/posts/images/mamj-workspace.png" alt="Workspace" /></a></p>
 
 <p>Previous versions of Eve were fairly keyboard-heavy. For this version we built an entirely mouse-driven interface for the query editor. This reduces the scope for error for non-technical users, but the code is still very difficult to read and understand. We have a much more promising idea in the works.</p>
 
-<p><a href="{{ site.url }}/images/mamj-table.png"><img src="{{ site.url }}/images/mamj-table.png" alt="Table editor" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/mamj-table.png"><img src="http://incidentalcomplexity.com/posts/images/mamj-table.png" alt="Table editor" /></a></p>
 
 <p>The runtime now lives outside the browser, which means that for the first time we can handle multiple users in Eve applications. Currently, all computation happens on the server and clients just render html and pass on UI events (much like <a href="http://nitrogenproject.com/learn">Nitrogen</a>).</p>
 
-<p><a href="{{ site.url }}/images/mamj-multiclient.png"><img src="{{ site.url }}/images/mamj-multiclient.png" alt="Multiple clients" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/mamj-multiclient.png"><img src="http://incidentalcomplexity.com/posts/images/mamj-multiclient.png" alt="Multiple clients" /></a></p>
 
 <p>(The editor itself can still only handle one user since we need some form of version control to handle concurrent code changes.)</p>
 
 <p>The major new feature is a drag-and-drop UI editor which can bind data directly from Eve views.</p>
 
-<p><a href="{{ site.url }}/images/mamj-ui.png"><img src="{{ site.url }}/images/mamj-ui.png" alt="UI editor" /></a></p>
+<p><a href="http://incidentalcomplexity.com/posts/images/mamj-ui.png"><img src="http://incidentalcomplexity.com/posts/images/mamj-ui.png" alt="UI editor" /></a></p>
 
 <p>For July, our goals are:</p>
 
