@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Breaking Down: Tic-Tac-Toe - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2016-08-11-tic-tac-toe/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2016-08-11-tic-tac-toe/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p>_(Editor&rsquo;s Note: Keep in mind as you&rsquo;re reading, this post is an executable Eve program. See the raw text <a href="https://raw.githubusercontent.com/Kodowa/incidentalcomplexity/gh-pages/_posts/2016-08-11-tic-tac-toe.md">here</a>. This is our first example of <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#program-structure">literate programming</a> in Eve, so let us know what you think!)_</p>
+
+<p><img src="{{ site.url }}/images/tic-tac-toe.gif" alt="Tic-tac-toe in Eve" />
+{% raw %}
+Last week on the mailing list, <a href="https://github.com/rubensandwich">RubenSandwich</a> posted an interactive demo capable of <a href="https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!topic/eve-talk/UQkW7KDdz3M">playing and scoring tic-tac-toe matches</a>. He provided some great feedback about the issues he ran into along the way. Now that the language is becoming more stable, our first priority is seeing it used and addressing the problems that surface. To that end, his troubles became our guide to making Eve a little friendlier for writing interactive applications in general. Today we&rsquo;ll look at a simplified version of tic-tac-toe that takes into account his feedback.</p>
+
+<p>This analysis (and future breakdowns) will be written inline in Eve to make the discussion flow more naturally. Since Eve is a superset of <a href="https://guides.github.com/features/mastering-markdown/">GitHub-Flavored Markdown</a> which our blog is capable of rendering, we can provide a pleasant reading experience directly from the source code.</p>
+
+<h3 id="game-logic">Game logic</h3>
+
+<p>Tic-Tac-Toe is a classic game played by two players, &ldquo;X&rdquo; and &ldquo;O&rdquo;, who take turns marking their letter on a 3x3 grid. The first player to mark 3 adjacent cells in a line wins. The game can potentially result in a draw, where all grid cells are marked, but neither player has 3 adjacent cells. To build this game in Eve, we need several parts:</p>
+
+<ul>
+<li>A game board with cells</li>
+<li>A way to mark a cell as &ldquo;X&rdquo; or &ldquo;O&rdquo;</li>
+<li>A way to recognize that a player has won the game.</li>
+</ul>
+
+<p>To begin, we initialize the board. We commit an object named <code>@board</code> to hold our global state and create a set of <code>#cell</code>s. These <code>#cell</code>s will keep track of the moves players have made. Common connect-N games (a generalized tic-tac-toe for any NxN grid) are scored along 4 axes (horizontal, vertical, the diagonal, and the anti-diagonal). We group cells together along each axis up front to make scoring easier later. This process is made much cleaner by the addition of new math expressions like <code>range[from, to]</code>. This is a small part of our effort to expand the standard library based on usage. If you&rsquo;re interested in helping shape this, stop by our <a href="https://github.com/witheve/rfcs/">RFCs repository</a> or jump right in on our discussion of <a href="https://github.com/witheve/rfcs/issues/5">standard string expressions</a>.</p>
+
+<p>The game board is square, with a given <code>size</code>. It contains <code>size ^ 2</code> cells,
+each with a row and column index.</p>
+
+<pre><code>  match
+    [#session-connect]
+
+    // board constants
+    size = 3
+    starting-player = &quot;X&quot;
+
+    // generate the cells
+    i = range[from: 0, to: size]
+    j = range[from: 0, to: size]
+
+ commit
+    board = [@board size player: starting-player]
+    [#cell board row: i column: j]
+</code></pre>
+
+<p>A subtlety here is the last line, <code>[#cell board row: i column: j]</code>. Thanks to our relational semantics, this line actually generates all 9 cells. Since the sets of values computed in <code>i</code> and <code>j</code> have no relation to each other, when we use them together we get the <a href="https://en.wikipedia.org/wiki/Cartesian_product">cartesian product</a> of their values. This means that if <code>i = {0, 1, 2}</code> and <code>j = {0, 1, 2}</code>, then <code>i x j = {(0, 0), (0, 1), ... (2, 1), (2, 2)}</code>. These are exactly the indices we need for our grid!</p>
+
+<p>Now we tag some special cell groupings: diagonal and anti-diagonal cells. The diagonal cells are (0, 0), (1, 1), and (2, 2). Notice anything about them?</p>
+
+<p>Diagonal cells have a row index equal to its column index</p>
+
+<pre><code>  match
+    cells = [#cell row column]
+    row = column
+  bind
+    cells += #diagonal
+</code></pre>
+
+<p>Similarly, the anti-diagonal cells are (0, 2), (1, 1), and (2, 0).</p>
+
+<p>Anti-diagonal cells satisfy the equation <code>row + col = N - 1</code>,
+where N is the size of the board.</p>
+
+<pre><code>  match
+    cells = [#cell row column]
+    [@board size: N]
+    row + column = N - 1
+  bind
+    cells += #anti-diagonal
+</code></pre>
+
+<p>A game is won when a player marks N cells in a row, column, or diagonal.
+The game can end in a tie, where no player has N in a row.</p>
+
+<pre><code>  match
+    board = [@board size: N, not(winner)]
+                     // Check for a winning row
+    (winner, cell) = if cell = [#cell row player]
+                       N = count[given: cell, per: (row, player)] then (player, cell)
+                     // Check for a winning column
+                     else if cell = [#cell column player]
+                       N = count[given: cell, per: (column, player)] then (player, cell)
+                     // Check for a diagonal win
+                     else if cell = [#diagonal row column player]
+                       N = count[given: cell, per: player] then (player, cell)
+                     // Check for an anti-diagonal win
+                     else if cell = [#anti-diagonal row column player]
+                       N = count[given: cell, per: player] then (player, cell)
+                     // If all cells are filled but there are no winners
+                     else if cell = [#cell player]
+                       N * N = count[given: cell] then (&quot;nobody&quot;, cell)
+  commit
+    board.winner := winner
+    cell += #winner
+</code></pre>
+
+<p>We use the <code>count</code> aggregate in the above block. Count returns the number of discrete values (the cardinality) of the variables in <code>given</code>. The optional <code>per</code> attribute allows you to specify groupings, which yield one result for each set of values in the group.</p>
+
+<p>For example, in <code>count[given: cell, per: player]</code> we group by <code>player</code>, which returns two values: the count of cells marked by player <code>X</code> and those marked by <code>O</code>. This can be read &ldquo;count the cells per player&rdquo;. In the scoring block, we group by <code>column</code> and <code>player</code>. This will return the count of cells marked by a player in a particular column. Like wise with the row case. By equating this with N, we ensure the winning player is only returned when she has marked N cells in the given direction.</p>
+
+<p>This is how Eve works without looping. Rather than writing a nested <code>for</code> loop and iterating over the cells, we can use Eve&rsquo;s semantics to our advantage.</p>
+
+<p>We first search every row, then every column. Finally we check the diagonal and anti-diagonal. To do this, we leverage the <code>#diagonal</code> and <code>#anti-diagonal</code> tags we created earlier; instead of selecting <code>[#cell]</code>, we can select on <code>[#diagonal]</code> and <code>[#anti-diagonal]</code> to select only a subset of cells.</p>
+
+<h3 id="react-to-events">React to Events</h3>
+
+<p>Next, we handle user input. Any time a cell is directly clicked, we:</p>
+
+<ol>
+<li>Ensure the cell hasn&rsquo;t already been played</li>
+<li>Check for a winner</li>
+<li>Switch to the next player</li>
+</ol>
+
+<p>Then update the cell to reflect its new owner, and switch board&rsquo;s <code>player</code> to the next player.</p>
+
+<p>Click on a cell to make your move</p>
+
+<pre><code>  match
+    [#click #direct-target element: [#div cell]]
+    not(cell.player)                               // Ensures the cell hasn't been played
+    board = [@board player: current, not(winner)]  // Ensures the game has not been won
+    next_player = if current = &quot;X&quot; then &quot;O&quot;        // Switches to the next player
+                  else &quot;X&quot;
+  commit
+    board.player := next_player
+    cell.player := current
+</code></pre>
+
+<p>Since games of tic-tac-toe are often very short and extremely competitive, it&rsquo;s imperative that it be quick and easy to begin a new match. When the game is over (the board has a <code>winner</code> attribute), a click anywhere on the drawing area will reset the game for another round of play.</p>
+
+<p>A reset consists of:
+- Clearing the board of a <code>winner</code>
+- Clearing all of the cells
+- Removing the <code>#winner</code> tag from the winning cell set</p>
+
+<pre><code>  match
+    [#click #direct-target]
+    board = [@board winner]
+    cell = [#cell player]
+  commit
+    board.winner -= winner
+    cell.player -= player
+    cell -= #winner
+</code></pre>
+
+<h3 id="drawing-the-game-board">Drawing the Game Board</h3>
+
+<p>We&rsquo;ve implemented the game logic, but now we need to actually draw the board so players have something to see and interact with. Our general strategy will be that the game board is a <code>#div</code> with one child <code>#div</code> for each cell. Each cell will be drawn with an &ldquo;X&rdquo;, &ldquo;O&rdquo;, or empty string as text. We also add a <code>#status</code> div, which we&rsquo;ll write game state into later. Our cells have the CSS inlined, but you could just as easily link to an external file.</p>
+
+<p>Draw the board</p>
+
+<pre><code>  match
+    board = [@board]
+    cell = [#cell board row column]
+    contents = if cell.player then cell.player
+              else &quot;&quot;
+  bind
+    [#div board @container style: [font-family: &quot;sans-serif&quot;], children:
+      [#div #status board class: &quot;status&quot;, style: [text-align: &quot;center&quot;, width: 150, padding-bottom: 10]]
+      [#div class: &quot;board&quot; style: [color: &quot;black&quot;] children:
+        [#div class: &quot;row&quot; sort: row children:
+          [#div #cell class: &quot;cell&quot; cell text: contents sort: column style:
+            [display: &quot;inline-block&quot; width: &quot;50px&quot; height: &quot;50px&quot; border: &quot;1px solid black&quot; background: &quot;white&quot; font-size: &quot;2em&quot; line-height: &quot;50px&quot; text-align: &quot;center&quot;]]]]
+</code></pre>
+
+<p>Winning cells are drawn in a different color</p>
+
+<pre><code>  match
+    winning-cells = [#cell #winner]
+    cell-elements = [#div cell: winning-cells, style]
+  bind
+    style.color := &quot;red&quot;
+</code></pre>
+
+<p>Finally, we fill the previously mentioned <code>#status</code> div with our current game state. If no winner has been declared, we remind the competitors of whose turn it is, and once a winner is found we announce her newly-acquired bragging rights.</p>
+
+<p>Display the current player if the game isn&rsquo;t won</p>
+
+<pre><code>  match
+    status = [#status board]
+    not(board.winner)
+  bind
+    status.text += &quot;It's {{board.player}}'s turn!&quot;
+</code></pre>
+
+<p>When the game is won, display the winner</p>
+
+<pre><code>  match
+    status = [#status board]
+    winner = board.winner
+  bind
+    status.text += &quot;{{winner}} wins! Click anywhere to restart!&quot;
+</code></pre>
+
+<p>Along the way to making this demo, many new standard library expressions were added, the execution strategy for aggregates was overhauled, parser bugs were fixed, and dependency ordering glitches resolved. We even began to appreciate how literate programming will work in Eve (the post you are reading right now is an executable Eve program).</p>
+
+<p>The human-compiled version of tic-tac-toe was completed in only about half an hour, and required very few changes to get working once the platform caught up. The latest iteration of Eve is still very much in its infancy, but even now its showing a lot of promise for teasing out simple and general solutions to complicated problems. As one of its creators, I&rsquo;m obviously a biased party when discussing Eve, so feedback such as RubenSandwich&rsquo;s is invaluable in helping us make the language more robust. If you find the time to try Eve yourself, please don&rsquo;t hesitate to share your experiences with us on the <a href="https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!forum/eve-talk">mailing list</a>.</p>
+
+<p>{% endraw %}</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

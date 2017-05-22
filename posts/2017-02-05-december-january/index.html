@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Dev Diary (December 2016 - January 2017) - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2017-02-05-december-january/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2017-02-05-december-january/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p><em>(Eve is a new programming language, and this is our development blog. If you’re new to Eve, <a href="http://play.witheve.com">start here</a>)</em></p>
+
+<p>After a long journey during the year, we closed out 2016 on a high note with the release of Eve Alpha v0.2.3, and some very exciting community engagement. We&rsquo;re looking to keep the momentum going in 2017, so let&rsquo;s take a look at what we&rsquo;ve been doing the past couple months.
+December was really a time of reflection, as we had to consider what to do with the feedback we received following the v0.2 release. Ultimately, it was pretty clear (particularly in <a href="https://groups.google.com/forum/#!topic/eve-talk/vR-4y2kJv4Q">this thread</a>) that general feedback aligned along three directions:</p>
+
+<ol>
+<li>Database explorer/visualizer</li>
+<li>Extensibility</li>
+<li>Real-world examples</li>
+</ol>
+
+<p>Ideally, we&rsquo;d like to build a database explorer for Eve in Eve itself. Unfortunately, the v0.2.x version of Eve lacks some features that would make this possible (like the ability to introspect the compiler, treating code as records). This drove us to embark on an extensive refactor (happening on the <a href="https://github.com/witheve/Eve/tree/refactor-runtime">refactor-runtime brach</a>), which will accomplish a couple of goals simultaneously:</p>
+
+<ul>
+<li><p>Making the runtime incremental. The v0.2 runtime wastes a lot of time doing unnecessary computation. An incremental Eve runtime will be smarter about how it uses resources, computing values only when they need to be updated. This kind of optimization is already showing an order-of-magnitude improvement in performance, making Eve more practical for more resource-intensive programs.</p></li>
+
+<li><p>Making the runtime extensible, meaning new ways to interface with Eve (see the Javascript DSL below, for example), and the ability to get data into and out of Eve. The Javascript DSL in particular means that you’ll be able to integrate Eve into an existing project seamlessly. From there, you can use as little or as much Eve as you want.</p></li>
+
+<li><p>Making the runtime more approachable. We&rsquo;re going to be re-structuring the directory layout, as well as extensively documenting each component. Furthermore, we&rsquo;ll be building the runtime through pull requests, so we have a complete history of its development.</p></li>
+</ul>
+
+<h4 id="dsl">DSL</h4>
+
+<p>As part of the refactor, we&rsquo;ve built a Javascript DSL to write Eve code. The following block is
+Javascript, but it describes an Eve block:</p>
+
+<pre><code>let prog = new Program(&quot;test&quot;);
+ prog.block(&quot;simple block&quot;, ({find, record, lib}) =&gt; {
+    let a = find(&quot;person&quot;);
+    let b = find(&quot;person&quot;);
+    a.age &gt; b.age;
+    let result = a.age + b.age;
+    return [
+     record({age1: a.age, age2: b.age, result})
+    ]
+ });
+</code></pre>
+
+<p>If you&rsquo;re familiar with the Eve syntax, this is equivalent to:</p>
+
+<pre><code>search
+  a = [#person]
+  b = [#person]
+  a.age &gt; b.age
+  result = a.age + b.age
+
+commit
+ [age1: a.age, age2: b.age, result]
+</code></pre>
+
+<p>You can embed these blocks in any Javascript code, allowing you to seamlessly incorporate Eve into existing projects. Documentation is forthcoming, but in the meantime you can see more examples of the DSL in practice in the <a href="https://github.com/witheve/Eve/tree/refactor-runtime/test">tests folder</a> of the refactor branch.</p>
+
+<h4 id="eve-examples">Eve Examples</h4>
+
+<p>While the runtime is being refactored, we will be releasing some larger-scale examples of Eve programs. We&rsquo;ll start with some example mini-programs, each of which illustrate a component of a larger, more complete app. These smaller examples will be hosted on the <a href="https://github.com/witheve/eve-examples">witheve/eve-examples</a> repository.</p>
+
+<p>Development of the first large-scale example is going on in the <a href="https://github.com/witheve/mamarob">witheve/mamarob</a> repository. This example is a food truck management app, which allows a user to manage a food truck menu, take orders, accept payments, and integrate with social media. This app should cover everything you need to know in order to build your own complete Eve application. It&rsquo;s not quite finished yet, but we&rsquo;ll let you know when it&rsquo;s complete!</p>
+
+<p>After that we have a couple more projects in mind, including a robot car and an operations management example. We’ll keep you updated as work on those commences.</p>
+
+<h3 id="community">Community</h3>
+
+<h4 id="eve-around-the-world">Eve Around the World</h4>
+
+<p>We are very happy to see meetups being organized by members of the Eve community. In January we saw two meetups, one in Pittsburgh, PA and another in Copenhagen, Denmark.</p>
+
+<p><strong>Pittsburgh, January 17</strong></p>
+
+<p>Ruben Niculcea organized a <a href="https://www.meetup.com/Pittsburgh-Code-Supply/events/235492181/">meetup</a> in Pittsburgh Pennsylvania, hosted by Pittsburgh Code &amp; Supply Co. The presentation was recorded, and you can view it below:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GRSFMLc_AfM" frameborder="0" allowfullscreen></iframe>
+
+<p>Or, if you prefer you can view Ruben&rsquo;s slides directly <a href="https://docs.google.com/presentation/d/1honhRiF6TVWz9kGh90WG3hKWJmgRe9MhyRGoYrOFgFo/edit?usp=sharing">here</a></p>
+
+<p>You can read some follow-up discussion, as well as view the results of the survey mentioned in the video <a href="https://groups.google.com/forum/#!topic/eve-talk/oBIq-KgAjSQ">here</a>.</p>
+
+<p><strong>Copenhagen, January 25</strong></p>
+
+<p>The Eve meetup group in Copenhagen, founded by Zubair Quraishi, held its <a href="https://www.meetup.com/evecph/events/237131433/">second meetup</a> in January. There was a <a href="https://groups.google.com/forum/#!topic/eve-talk/zAXkukWgEXM">followup discussion</a> on the mailing list as well.</p>
+
+<p>If you&rsquo;d like to host an Eve meetup in your area, let us know how we can help. We&rsquo;re very encouraged to see this kind of spontaneous engagement, so thanks again to Ruben and Zubair for making these meetups a success!</p>
+
+<h4 id="eve-around-the-web">Eve Around the Web</h4>
+
+<p><a href="https://twitter.com/liron">Liron Shapira</a>, finished his six-part series on Eve with a post titled <a href="https://hackernoon.com/why-eve-will-be-perfect-for-realtime-apps-92b965b80ad#.sl1fmo2hv">&ldquo;Eve will be perfect for realtime apps&rdquo;</a>.</p>
+
+<p>Finally, William Taysom wrapped up his <a href="https://groups.google.com/forum/#!searchin/eve-talk/%22Puzzles$20$26$20Paradoxes%22%7Csort:date"><em>Puzzles and Paradoxes</em> series</a> on the mailing list. In total, there are 24 puzzles, which highlight some of the surprising or interesting corners of the Eve language.</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

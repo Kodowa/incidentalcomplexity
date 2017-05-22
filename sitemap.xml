@@ -2,149 +2,189 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-07-21-clock/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-08-11-tic-tac-toe/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-07-12-pocketchip/</loc>
-  </url>
-  
-  <url>
     <loc>http://incidentalcomplexity.com/posts/2017-05-15-april/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-08-31-august/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2015-01-08-dec/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-02-05-december-january/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-03-08-february/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-04-06-march/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-12-06-november/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-11-18-october/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-10-05-september/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2015-02-24-jan-feb/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-12-12-release-0.2.3/</loc>
+    <lastmod>2017-05-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://incidentalcomplexity.com/posts/2017-04-18-release-0.3p2/</loc>
+    <lastmod>2017-04-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-06-30-apr/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-06-10-jan-feb/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2015-10-15-jul-sept/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-08-03-july/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2015-07-02-mar-jun/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-06-22-mar1/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-06-22-mar2/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2014-12-01-nov/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-06-03-oct-nov/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2014-11-05-oct/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2014-10-16-retrospective/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-02-14-ex1-crazy-mike/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-02-21-ex2-sandlot/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-03-01-ex3-jurassicpark/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2017-03-14-4-futurama/</loc>
+    <loc>http://incidentalcomplexity.com/posts/2017-04-06-march/</loc>
+    <lastmod>2017-04-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://incidentalcomplexity.com/posts/2017-03-21-5-battleschool/</loc>
+    <lastmod>2017-03-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-03-14-4-futurama/</loc>
+    <lastmod>2017-03-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-03-08-february/</loc>
+    <lastmod>2017-03-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-03-01-ex3-jurassicpark/</loc>
+    <lastmod>2017-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-02-21-ex2-sandlot/</loc>
+    <lastmod>2017-02-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-02-14-ex1-crazy-mike/</loc>
+    <lastmod>2017-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-02-05-december-january/</loc>
+    <lastmod>2017-02-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-12-12-release-0.2.3/</loc>
+    <lastmod>2016-12-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-12-06-november/</loc>
+    <lastmod>2016-12-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-11-18-october/</loc>
+    <lastmod>2016-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-10-05-september/</loc>
+    <lastmod>2016-10-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-08-31-august/</loc>
+    <lastmod>2016-08-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://incidentalcomplexity.com/posts/2016-08-23-flappy-eve/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/2016-06-14-nlqp/</loc>
-  </url>
-  
-  <url>
-    <loc>http://incidentalcomplexity.com/posts/</loc>
-    <priority>0</priority>
+    <lastmod>2016-08-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://incidentalcomplexity.com/posts/2016-08-19-todoMVC/</loc>
+    <lastmod>2016-08-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-08-11-tic-tac-toe/</loc>
+    <lastmod>2016-08-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-08-03-july/</loc>
+    <lastmod>2016-08-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-07-21-clock/</loc>
+    <lastmod>2016-07-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-07-12-pocketchip/</loc>
+    <lastmod>2016-07-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-06-30-apr/</loc>
+    <lastmod>2016-06-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-06-22-mar1/</loc>
+    <lastmod>2016-06-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-06-22-mar2/</loc>
+    <lastmod>2016-06-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-06-14-nlqp/</loc>
+    <lastmod>2016-06-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-06-10-jan-feb/</loc>
+    <lastmod>2016-06-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2016-06-03-oct-nov/</loc>
+    <lastmod>2016-06-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2015-10-15-jul-sept/</loc>
+    <lastmod>2015-10-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2015-07-02-mar-jun/</loc>
+    <lastmod>2015-07-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2015-02-24-jan-feb/</loc>
+    <lastmod>2015-02-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2015-01-08-dec/</loc>
+    <lastmod>2015-01-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2014-12-01-nov/</loc>
+    <lastmod>2014-12-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2014-11-05-oct/</loc>
+    <lastmod>2014-11-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/2014-10-16-retrospective/</loc>
+    <lastmod>2014-10-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/archive/</loc>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/</loc>
+    <lastmod>2017-05-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://incidentalcomplexity.com/posts/</loc>
+    <lastmod>2017-05-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>

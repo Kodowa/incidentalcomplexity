@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Eve Dev Diary (Jul - Sep) - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2015-10-15-jul-sept/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2015-10-15-jul-sept/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				<p>Whoops, it&rsquo;s October already. Time flies when you&rsquo;re having fun.</p>
+
+<p>We released <a href="https://github.com/Kodowa/Eve">all of our work</a> under the Apache 2.0 License. A ton of work went into the inevitable cross-platform woes - much thanks to everyone that <a href="https://github.com/witheve/eve-experiments/issues">reported bugs</a> and <a href="https://github.com/witheve/eve-experiments/graphs/contributors">contributed fixes</a>.</p>
+
+<p>With the release came an array of basic features that we had neglected so far, including saving/loading Eve programs and importing csv files.</p>
+
+<iframe width="600" height="450" src="https://www.youtube.com/embed/iDyMZZZ2GU4" frameborder="0" allowfullscreen></iframe>
+
+<p>The AST and compiler have been significantly cleaned up. The <a href="https://github.com/witheve/eve-experiments/blob/master/runtime/src/compiler.rs#L507-L1192">new compiler</a> is written using a crude pseudo-Eve as a step towards true bootstrapping. To better support live programming, the compiler can now handle broken or unfinished programs without losing runtime state - freezing any broken views while continuing to run any undamaged views.</p>
+
+<p>The language itself received some new features. Ordered union and difference allow easily expressing non-monotonic logic such as &ldquo;all birds can fly, except penguins can&rsquo;t, except Harry the Rocket Penguin can&rdquo;. The addition of grouping operations and first-class bags has allowed aggregates to treated as normal primitives. Existing primitives have been extended to handle coercion between numeric and string types (hopefully a temporary measure, to stave off the inevitable type system).</p>
+
+<p>Error handling appeared too, or more accurately error ignoring. Reporting errors in a declarative query language is tricky because the programmer does not control the order of operations. Whether an error like division by zero actually occurs can depend on whether the query planner schedules the division earlier or later in the query. The zero in question might be filtered out by another constraint before the query finishes. Currently we treat primitive functions as true relations, so division by zero simply returns no rows, but we report such events in a separate table which can be queried for self-monitoring.</p>
+
+<p>Entering and editing data in a live relational program is surprisingly hard. Myriad corner cases challenge the UX, such as edits that cause the sort position of the edited row to change. The new editor handles these much more smoothly than the old Excel-lookalike.</p>
+
+<iframe width="600" height="450" src="https://www.youtube.com/embed/0FbSIKXkl5Y" frameborder="0" allowfullscreen></iframe>
+
+<p>The default interface for queries is currently a drag-and-drop graph editor.</p>
+
+<iframe width="600" height="450" src="https://www.youtube.com/embed/dz1iWKQQyDg" frameborder="0" allowfullscreen></iframe>
+
+<p>The preview box helps explore partial results within the query, to aid debugging.</p>
+
+<p><a href="{{ site.url }}/images/jas-preview.png"><img src="{{ site.url }}/images/jas-preview.png" alt="Preview box" /></a></p>
+
+<p>This interface is quickly grasped by everyone (with the exception of the grouping/sorting operation which is currently something of a dumping ground for everything that doesn&rsquo;t fit neatly into relational algebra) but the information density is very low and laying out graphs is a legendarily underappreciated problem.</p>
+
+<p>We are also revisiting the old madlib ideas which allow fitting much more code onto the screen at once.</p>
+
+<p><a href="{{ site.url }}/images/jas-madlib.png"><img src="{{ site.url }}/images/jas-madlib.png" alt="Madlib queries" /></a></p>
+
+<p><a href="{{ site.url }}/images/jas-madlib-entry.gif"><img src="{{ site.url }}/images/jas-madlib-entry.gif" alt="Madlib data entry" /></a></p>
+
+<p>This interface works particularly well on mobile, especially when voice entry is enabled.</p>
+
+<p><a href="{{ site.url }}/images/jas-chat.jpeg"><img src="{{ site.url }}/images/jas-chat.jpeg" alt="Madlib mobile repl" /></a></p>
+
+<p>We have several more experiments in progress. More on those in the next post&hellip;</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

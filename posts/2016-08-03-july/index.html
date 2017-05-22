@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Eve Dev Diary (July 2016) - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2016-08-03-july/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2016-08-03-july/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p><em>This post has been updated. See the original <a href="https://github.com/Kodowa/incidentalcomplexity/blob/f44a2392e15d78f9e0047f25054863f7418165b5/_posts/2016-08-03-july.md">here</a></em></p>
+
+<h3 id="eve-platform">Eve Platform</h3>
+
+<p>Our biggest news this month is our community preview of Eve alpha. During May and June we were busy developing Eve in a secondary repository, trying to get it to a state that was more approachable and usable for outsiders. In July, we finally reached a point where we were happy to <a href="https://groups.google.com/forum/#!topic/eve-talk/riE6yy7bBeo">invite the community</a>to play with the platform and provide usability feedback. So far we&rsquo;ve received dozens of comments, issue reports, and suggestions. We&rsquo;re thrilled with the response, and want to thank everyone who has provided valuable feedback. Thanks to you, Eve is in a much better place compared to two weeks ago.</p>
+
+<p>If you&rsquo;d like to try Eve yourself, you can start at our main repository, <a href="https://github.com/witheve/Eve">witheve/Eve</a></p>
+
+<h4 id="syntax">Syntax</h4>
+
+<p>We introduced a new textual syntax this month that targets the first users of the Eve platform: developers. Right now, this syntax is the only interface to Eve, meaning we&rsquo;re not supporting a graphical interface at the moment.</p>
+
+<p>Our mission from the beginning has been to bring the power of computation to everyone, and developers are as much a part of that as anyone else. While my Mother wouldn&rsquo;t want to use this syntax to manage her small business, it does help developers, a very important class of early adopters, engage with the platform as we continue our research on end-user UIs. Chris wrote <a href="http://www.chris-granger.com/2016/07/21/two-years-of-eve/">a post</a>that talks about this in a lot more detail, but the key idea is that the platform has a ton of value even without the UI. When we&rsquo;re ready to present Eve to a wider, less technical audience, we&rsquo;ll already know a lot about how people use Eve because of the developer syntax.</p>
+
+<p>That being said, we want our developer syntax to be approachable; ultimately, we imagine technical non-developers (e.g. scientists, engineers, etc.) will also prefer a textual syntax, so we want it to have certain properties in order to appeal to a wider audience than current languages:</p>
+
+<ol>
+<li><strong>For Humans</strong> - This syntax is designed for humans, so decisions regarding the ergonomics of the syntax are of primary concern.</li>
+<li><strong>Readable</strong> - Since code is read more than written, we want the syntax to be eminently readable.</li>
+<li><strong>Consistent</strong> - The syntax should be consistent with prior knowledge, so that users unfamiliar with Eve can read an Eve program and figure out what&rsquo;s going on at a high level without explicitly knowing the syntax.</li>
+<li><strong>Distinct</strong> - This one is purposefully in contention with goal (3); we want the syntax to be familiar but not <em>too</em> familiar. If our syntax is too close to other languages (e.g. if we used c-style curly braces), we might project that our semantics are similar, when in fact they are very different.</li>
+</ol>
+
+<p>Below is a sample of code written in the new syntax. This code draws a counter and two buttons that change its value:</p>
+
+<pre><code>build the counter
+```
+  match
+    counter = [#counter count]
+  bind
+    [#div counter class: &quot;counter-container&quot;, children:
+      [#div #count-button class: &quot;button&quot;, sort: 0, text: &quot;-&quot;, diff: -1, counter]
+      [#div class: &quot;count&quot;, sort: 1, text: count]
+      [#div #count-button class: &quot;button&quot;, sort: 2, text: &quot;+&quot;, diff: 1, counter]]
+```
+
+increment the counter
+```
+  match
+    [#click element: [#count-button diff counter]]
+  commit
+    counter.count := counter.count + diff
+```
+
+go!
+```
+  match
+    [#session-connect]
+  commit
+    [#counter count: 0]
+```
+</code></pre>
+
+<p>Describing the syntax would probably take an entire blog post, but if you want to learn more <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md">this is a good place to start</a>. The basic idea is that an Eve program is divided into &ldquo;blocks&rdquo; (the counter program has three blocks), each of which works in two phases:</p>
+
+<ol>
+<li>Phase 1: Match - gather all the information you need from the Eve DB.</li>
+<li>Phase 2: Action - change the state of the Eve DB.</li>
+</ol>
+
+<p>In each of the phases, we are selecting &ldquo;objects&rdquo; (better name pending), which are just collections of attribute-value pairs associated with a unique ID.  In the match phase, the programmer matches objects in the Eve DB with patterns, which select objects from the Eve DB with the provided shape. In the action phase, the programmer mutates the Eve DB by setting, adding, or removing facts.      </p>
+
+<p>To get a better grasp on the syntax, you can check out our <a href="http://incidentalcomplexity.com/2016/07/21/clock/">previous post</a>, which explains the implementation of a clock in Eve line by line.</p>
+
+<h4 id="events-and-reactivity">Events and Reactivity</h4>
+
+<p>One of the principal benefits of Eve is that it reacts and updates values automatically as new data becomes available. For example, when an event like a <code>click</code> or <code>keydown</code> occurs, Eve records that event as a fact in the Eve DB. This fact exists for a single instant, a “tic” of compiler time. In that instant, any block selecting on that event can react to it.</p>
+
+<p><img src="{{ site.url }}/images/dogeve.gif" alt="Events in Eve" /></p>
+
+<p>This login system (which demonstrates several events including <code>keydown</code>,<code>click</code>, and <code>onChange</code>) was written entirely in Eve. Clicking on the login button in the top right triggers Eve to create a <code>#click</code> fact that records the clicked element&rsquo;s ID as well as the time it was clicked. This fact supports the login modal that appears at the bottom of the screen. When the user types the username into the textbox, the <code>value</code> attribute of that element changes on each <code>#keydown</code> event. Finally, when the credentials are submitted, the values in the username/password <code>#textbox</code> elements compared against stored username/passwords in the system.</p>
+
+<p>Below is an analogue <a href="https://github.com/witheve/Eve/blob/c75727d86c0df367678eec6d7d1dd9a5d56c356b/examples/clock.eve">clock in Eve</a> that reacts to changes in <code>#time</code>, which is an object in the system that represents the current time with <code>hours</code>, <code>minutes</code>, and <code>seconds</code>, attributes.</p>
+
+<p><img src="{{ site.url }}/images/eveclock.gif" alt="A Clock in Eve" /></p>
+
+<p>The <code>#time</code> object changes every second, which in turn causes a change in the <code>#clock-hands</code> objects, which finally causes the drawing to update.</p>
+
+<p>What&rsquo;s nice about this interaction model is that it&rsquo;s identical to interacting with any other object in Eve; a <code>click</code> event occurring or the <code>time</code> changing is exactly the same as, for instance, the <code>salary</code> attribute on an object changing, or adding a tag to an object.</p>
+
+<h4 id="error-handling">Error Handling</h4>
+
+<p>If you&rsquo;ve ever seen a <a href="http://codegolf.stackexchange.com/questions/1956/generate-the-longest-error-message-in-c">C++ template error</a>, you&rsquo;ve felt the pain of indecipherable error messages. As with our syntax, we recognize that error messages need to be distinctly designed for humans. Take this example:</p>
+
+<p><img src="{{ site.url }}/images/errorExample.gif" alt="Error handling in Eve" /></p>
+
+<p>Here, the user types <code>#cool</code>, which is syntactically incorrect. The compiler returns an error message pointing out the line and character of the error, and the reason for the error. This is where most compilers call it a day. We go several steps further, providing a suggestion on how to correct the error, and in this case we can even offer a &ldquo;Fix it for me&rdquo; button that applies the fix automatically and re-evaluates the program.</p>
+
+<p>Obviously, this is a simple error, and not every mistake can be fixed automatically, but this exemplifies our general attitude toward error messages. Eve&rsquo;s error messages should be:</p>
+
+<ol>
+<li><strong>Understandable</strong> - Error messages are for humans, so they should be readable and understandable by humans. Most compiler errors actually make perfect sense from the point of view of the compiler, but unfortunately the compiler and the programmer don&rsquo;t always think the same way. Eve errors should be reported in full sentences, explaining exactly why the error occurred.</li>
+<li><strong>Relevant</strong> - In many languages, sometimes an error message is not actually relevant to the cause of the error. Have you ever forgotten a trailing semicolon, and received a completely unrelated error message? Eve error messages should always point to the actual cause of the error.</li>
+<li><strong>Actionable</strong> - Where possible, error messages should indicate potential fixes to the error. In the example above, Eve notes that placing square brackets around <code>#cool</code> might fix the problem. Further, errors should teach the programmer about why the error occurred and provide examples of how to avoid similar errors in the future. The Eve compiler should be a guide and friend.</li>
+</ol>
+
+<h4 id="eve-unicode">Eve ♥ Unicode</h4>
+
+<p>Eve supports Unicode!</p>
+
+<p><img src="{{ site.url }}/images/unicode.jpg" alt="Eve ♥ Unicode" /></p>
+
+<p>This is a fun <a href="https://github.com/witheve/Eve/blob/master/examples/unicode.eve">example</a>, but Unicode can be important in certain domains where notation is standardized (e.g. the number π in math), but moreover it&rsquo;s crucial for making Eve usable in languages other than English.</p>
+
+<h3 id="community">Community</h3>
+
+<h4 id="request-for-comments">Request for Comments</h4>
+
+<p>This month we introduced our <a href="https://github.com/witheve/rfcs">Request for Comments (RFC)</a>process. RFCs have worked well for other languages as a way to engage with the community and move the language forward in a way that is collaborative. In our case, RFCs are meant to be an informal communication for starting a discussion on a particular feature, design, protocol, process, or anything else relating to Eve and the Eve community. Already, our RFC process is off to a good start, with our first two RFCs underway:</p>
+
+<ul>
+<li><a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md">Syntax</a>-  <a href="https://github.com/witheve/rfcs/issues/4">Discussion</a> This RFC is our formal proposal for the developer syntax described above. Already, this RFC has gotten many great comments, and we&rsquo;re already integrating the feedback into the syntax. We&rsquo;d like to publicly thank everyone who has participated so far, including <a href="https://github.com/Eucalyptus2013">@Eucalyptus2013</a> <a href="https://github.com/RubenSandwich">@RubenSandwich</a> <a href="https://github.com/bertrandrustle">@bertrandrustle</a> <a href="https://github.com/shamrin">@shamrin</a> <a href="https://github.com/rainhead">@rainhead</a> <a href="https://github.com/zubairq">@zubairq</a> and <a href="https://github.com/benjyhirsch">@benjyhirsch</a></li>
+<li><a href="https://github.com/witheve/rfcs/blob/master/proposed/strings.md">Strings</a>- <a href="https://github.com/witheve/rfcs/issues/5">Discussion</a> This RFC was opened by <a href="https://github.com/shamrin">@shamrin</a> to discuss string facilities in Eve. Again, we&rsquo;ve taken this feedback and have begun implementing various string manipulation functions into Eve.</li>
+</ul>
+
+<p>In all, we&rsquo;re very pleased with the RFC process so far!</p>
+
+<h4 id="documentation">Documentation</h4>
+
+<p>We started a new repository, <a href="https://github.com/witheve/docs">witheve/docs</a> for documentation, tutorials, and guides. Right now, the Eve team will be contributing the majority of documentation, but we hope that the docs will be a community driven effort. For most open source projects, this is an area where even beginners to the community can contribute. Unfortunately, it&rsquo;s also an area that is lacking in many projects. We&rsquo;ll get the ball rolling on docs ourselves, but it would still be helpful to let us know what kind of docs, guides, or tutorials are missing/needed to make learning Eve easier. To propose anything, just open a pull request with some details on the proposed document.</p>
+
+<p>One series of guides we are planning is &ldquo;Eve for &hellip;&rdquo;, which will target specific domains and offer advice on how to get started with Eve. For example, we&rsquo;ve already thought of &ldquo;Eve for web developers&rdquo;, &ldquo;Eve for scientists&rdquo;, etc. We hope that this series will be a starting point for anyone who is curious about Eve, but doesn&rsquo;t know exactly what Eve is about and how it can benefit them. We&rsquo;ll talk about Eve from the perspective of the potential user, and describe how it can fit into their workflow. Again, let us know if you have any ideas for this series.</p>
+
+<h3 id="example-applications">Example Applications</h3>
+
+<p>As part of testing our language, we&rsquo;ve been busy writing more substantial applications than we have to date. Here is a sampling of the more notable ones:</p>
+
+<h4 id="todomvc-code-21">TodoMVC - <a href="https://github.com/witheve/Eve/blob/master/examples/todomvc.eve">Code</a></h4>
+
+<p><img src="{{ site.url }}/images/evetodomvc.png" alt="Eve - TODO MVC" /></p>
+
+<h4 id="tic-tac-toe-code-21">Tic-Tac-Toe - <a href="https://github.com/witheve/Eve/blob/master/examples/todomvc.eve">Code</a></h4>
+
+<p><img src="{{ site.url }}/images/tic-tac-toe.gif" alt="Eve - Tic-Tac-Toe" /></p>
+
+<h4 id="flappy-bird-code-23">Flappy Bird - <a href="https://github.com/witheve/Eve/blob/master/examples/flappy.eve">Code</a></h4>
+
+<p><img src="{{ site.url }}/images/flippy-flop.gif" alt="Eve - Flappy Bird" /></p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

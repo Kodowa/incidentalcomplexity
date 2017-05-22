@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Eve Dev Diary (Nov): experiments, performance, integrity constraints, zztrees - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2014-12-01-nov/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2014-12-01-nov/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p>We are all so very full of turkey.</p>
+
+<h2 id="light-table">Light Table</h2>
+
+<p>We released <a href="https://github.com/LightTable/LightTable/blob/master/deploy/core/changelog.md">Light Table 0.7.0</a> and gained <a href="https://github.com/orgs/LightTable/teams/committers">three awesome committers</a> who have decimated the bug count, moved all the infrastructure over to community control and changed to the MIT license.</p>
+
+<p>We also have an <a href="https://github.com/LightTable/LightTable/tree/atom-shell">experimental branch</a> using atom-shell instead of node-webkit. This gives us smoother performance and useful new features like using iframes to isolate user code from the editor itself.</p>
+
+<h2 id="more-experiments-with-eve">More experiments with Eve</h2>
+
+<p>We built a Turing machine (just to be sure):</p>
+
+<p><a href="{{ site.url }}/images/turing.png"><img src="{{ site.url }}/images/turing.png" alt="Turing machine" /></a></p>
+
+<p>And some simple animations running at 60 fps to stress the rendering library:</p>
+
+<p><a href="{{ site.url }}/images/clock.png"><img src="{{ site.url }}/images/clock.png" alt="Clock" /></a></p>
+
+<p><a href="{{ site.url }}/images/sine.png"><img src="{{ site.url }}/images/sine.png" alt="Sine balls" /></a></p>
+
+<p>We also bootstrapped part of the new editor, so the tables on the right hand side of the above screenshots are drawn by an Eve program. The tables don&rsquo;t update at 60 fps yet - way too much overhead from all the silly table scans in the solver.</p>
+
+<h2 id="stability-and-performance">Stability and performance</h2>
+
+<p>The compiler, runtime and editor now all run in separate webworkers, so the editor doesn&rsquo;t freeze if you put an infinite loop in your program.</p>
+
+<p>The rendering library got smarter: it now correctly handles incremental updates of ordered elements and can comfortably render 10k row tables in a few milliseconds.</p>
+
+<p>The runtime got some performance improvements in the form of faster unions for views and dirty tracking for propagators.</p>
+
+<p>We had some fun with benchmarking in chrome:</p>
+
+<p><a href="{{ site.url }}/images/chrome-pain.png"><img src="{{ site.url }}/images/chrome-pain.png" alt="Chrome pain" /></a></p>
+
+<p>The benchmark takes longer and longer until the memory usage reaches around 1.5gb, at which point it never returns. Not returning the results from the bench function fixes the problem. The same benchmark runs fine in Firefox and Safari - perhaps a difference in the way they store results in the console?</p>
+
+<h2 id="integrity-constraints">Integrity constraints</h2>
+
+<p><a href="http://en.wikipedia.org/wiki/Data_integrity#Types_of_integrity_constraints">Integrity constraints</a> specify invariants that transactions are not allowed to violate. In Eve, any view can be tagged as an integrity constraint. If that view ever produces output, the current transaction is aborted. This allows us to write column type constraints, foreign key constraints and other arbitrarily complex constraints by simply writing views that look for violations of the constraint.</p>
+
+<pre><code>* columnTypeExample
+ | employee name
+ ? typeof(name) !== 'string'
+
+* foreignKeyExample
+  | employee name department
+  | !department department
+
+* disjointExample // an event is either a keyEvent, a mouseEvent or a networkEvent
+  | event id
+  &gt; keyEvent id | k = count(id)
+  &gt; mouseEvent id | m = count(id)
+  &gt; networkEvent id | n = count(id)
+  ? k + m + n !== 1
+</code></pre>
+
+<p>We could improve this by adding shortcuts for common constraint types and providing more readable syntax (LogicBlox has a <a href="https://developer.logicblox.com/content/docs4/core-reference/webhelp/constraints-predicate-declarations.html">reasonable syntax</a> for constraints).</p>
+
+<h2 id="zztrees">ZZTrees</h2>
+
+<p>Consider a simple relational query:</p>
+
+<pre><code>SELECT user.id
+FROM user
+JOIN login ON user.id = login.userId
+JOIN banned ON login.ipAddress = banned.ipAddress
+</code></pre>
+
+<p>The database has to choose what order to evaluate these joins in. It could first take all the users, lookup all the logins for each user and then check whether each login is in the banned list. Or it could start with the banned list, look up logins of banned ips and then lookup the corresponding users. If we have a million users and one banned ip, the second option will be much faster. If we have one user and a million banned ips, the first option will be faster. In general, determining a good ordering is an <a href="http://wp.sigmod.org/?p=1075">incredibly hard problem</a>.</p>
+
+<p>The appeal of using a constraint solver is that we might not have to solve the problem at all. If each propagation does a small amount of work, if we schedule propagators fairly and if we are able to propagate freely between all variables, then each propagator gets a fair chance to prune the current branch before the other propagators do too much wasted work. This is strikingly similar to the problem of <a href="http://scattered-thoughts.net/blog/2012/12/19/search-trees-and-core-dot-logic/">fair conjunction</a> in prolog-descended languages - we pay a constant overhead to avoid worst-case performance.</p>
+
+<p>The tricky part of this is building an index that can propagate in multiple directions. <a href="http://arxiv.org/abs/1210.0481">Triejoin</a> uses a btree which means we have to choose what order to place the columns in. If we place login.ipAddress before login.userId then we must know exactly what ipAddress we are considering before we can get any bounds on the userId, and vice versa. We could build two indexes, one in each direction, but the cost of doing this increases exponentially as the number of columns in the join increases.</p>
+
+<p>We are currently working on a index based on the <a href="http://globis.ethz.ch/person/moira-c-norrie/?pubdownload=699">PH-Tree</a> and the <a href="http://en.wikipedia.org/wiki/Hash_array_mapped_trie">Hash Array Mapped Trie</a>. We take each row that is to be inserted in the index, hash each value in the row, then interleave the bits of those hashes and then use the result as the trie key.</p>
+
+<pre><code>[userId=92, ipAddress=&quot;127.0.0.1&quot;]
+=&gt;
+[1001..., 1110...]
+=&gt;
+11010110...
+</code></pre>
+
+<p>The intuition behind this is that learning one bit of the hash reduces the entropy of the unknown variable by roughly one bit (with many caveats about collisions and repeated values). Interleaving the bits gives us a small amount of information about each value every time we descend in the tree. The propagator walks down the tree until it finds multiple branches that fit the currently known bits of the variables. Once each propagator has descended as far as it can, we split the solver by guessing an unknown bit. Rinse and repeat until we reach a solution or prune the current branch of the solver.</p>
+
+<p>The tree and the propagator are done but we haven&rsquo;t yet written the solver to go with it. We get to end this month on a cliffhanger.</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Example 2 - The Sandlot - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2017-02-21-ex2-sandlot/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2017-02-21-ex2-sandlot/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p><img src="{{ site.url }}/images/ex2.png" alt="Example 2" /></p>
+
+<h3 id="what-is-this">What is this?</h3>
+
+<p>This app demonstrates how to create a reusable component and how to inject it into the browser. This app displays a batting order for a baseball team using a <code>#player-card</code> component. This component displays information relating to each player on a baseball team &ndash; picture, name, position, and handedness. A <code>#player-card</code> can also be configured with additional functionality using optional tags. The app also shows some of the ways <code>sort</code> can be used, and how to choose specific records out of a list of records.</p>
+
+<p>You can play with this example in your browser <a href="http://play.witheve.com/#gist:8ba50b7bd48b338c85c0590c0cba1563-sandlot.eve">here</a>.</p>
+
+<h3 id="page-layout">Page Layout</h3>
+
+<h4 id="containers">Containers</h4>
+
+<p>I want to break the page down into two sections: one for the active lineup and the bench players, and one for players on injured reserve.</p>
+
+<pre><code>commit @browser
+  [#div class:&quot;container&quot; children:
+    [#div #active class:&quot;lineup&quot; text:&quot;Batting Order&quot;]
+    [#div #inactive class:&quot;lineup&quot; text:&quot;Bench&quot;]]
+  [#div #IR class:&quot;lineup IR&quot; text:&quot;Injured Reserve&quot;]
+</code></pre>
+
+<h4 id="active-lineup">Active Lineup</h4>
+
+<p>The first column drawn should be the active batting order. While I could have specified all the text and contents of each player in this block, note that I used two tags, <code>#player-card</code> and <code>#moveable</code>, whose contents and behavior get defined later. Since every player listed is going to have the same information, <code>#player-card</code> lets me drop the tag in and define all the HTML and content later, which is done in the Player Cards section after this one.</p>
+
+<pre><code>search @session @browser
+  player = [#player not(#bench) not(#injured) lineup]
+  active = [#active]
+
+bind @browser
+  active.children += [#div #lineup children: [#player-card #moveable player sort: lineup]]
+</code></pre>
+
+<h4 id="bench-players">Bench Players</h4>
+
+<p>These are the bench players. Note that <code>#player-card</code> is used again, saving me the work of having to define all the same html and content that&rsquo;s used in the active lineup. The big difference here is the ordering of the players. Whereas the players in the lineup have a deliberate and specific order (which makes sense for things like a batting order), I don&rsquo;t need a specific order for the bench players. I do, however, want to know how many there are and make sure they render in the same order each time, so I sort by the <code>player</code> variable to get an index, <code>n</code>. Each player gets assigned an index, which is how I sort the bench players, and also set <code>player.lineup</code> to that index so they get numbered 1, 2, 3, and so on.</p>
+
+<pre><code>search @session @browser
+  player = [#player #bench lineup]
+  inactive = [#inactive]
+  n = sort[value:player]
+
+bind @session @browser
+  player.lineup := n
+  inactive.children += [#div #lineup children: [#player-card #benched sort:n player]]
+</code></pre>
+
+<h4 id="injured-reserve">Injured Reserve</h4>
+
+<p>These are the injured reserve players. This section is functionally identical to the bench player section, except it gets merged into the <code>#IR</code> section on the page. There&rsquo;s only one player on the IR and no functionality exists to move him elsewhere, because he is a jerk.</p>
+
+<pre><code>search @session @browser
+  player = [#player #injured not(#bench) lineup]
+  IR = [#IR]
+  n = sort[value:player]
+
+bind @session @browser
+  player.lineup := n
+  IR.children += [#div #lineup children: [#player-card sort:n player]]
+</code></pre>
+
+<h3 id="player-cards">Player Cards</h3>
+
+<p>This is where the magic happens. Every time this finds <code>#player-card</code> in the browser, it will make a <code>#div</code> for each player and spit out a player card. It checks to see if the player has a nickname as well, and just leaves a space between the first and last names if there isn&rsquo;t. It&rsquo;s worth mentioning that because I want this to be as general a template as possible, a handful of architectural decisions were made to facilitate that. In the sections that draw each of the three lists, I use the search parameters there to select the specific players I want and inject those player cards. In the Roster Data, all the players have a <code>lineup</code> attribute even though the bench and IR players have an empty string as the value. If you&rsquo;re good at predicting which reusable parts you&rsquo;ll need, you can implement these sorts of things from the outset, or you can figure out where they need to be as you go along and refactor them into your code as you work.</p>
+
+<pre><code>search @browser @session
+  container = [#player-card player]
+  player = [#player firstname lastname position bats lineup photo]
+  middle = if player.nickname then &quot; \&quot;{{player.nickname}}\&quot; &quot;
+           else &quot; &quot;
+
+bind @browser
+  container &lt;- [#div player class: &quot;lineup-position&quot; children:
+    [#div class: &quot;bat-number&quot; text: lineup]
+    [#div class: &quot;player-info&quot; children:
+      [#img class: &quot;player-photo&quot; src: photo]
+      [#div class: &quot;player-text&quot; children:
+        [#div class: &quot;name-line&quot; children:
+          [#div class: &quot;position&quot; text: position]
+          [#div class: &quot;first-name&quot; text: firstname]
+          [#div class: &quot;middle-name&quot; text: middle]
+          [#div class: &quot;last-name&quot; text: lastname]]
+        [#div class:&quot;bat-hand&quot; text:&quot;Bats: {{bats}}&quot;]]]]
+</code></pre>
+
+<h3 id="buttons">Buttons</h3>
+
+<h4 id="move-up">Move Up</h4>
+
+<p>The active roster also features a cool way to use tags. Since I want to be able to reorder my active lineup, each <code>#player-card</code> there is also tagged <code>#moveable</code>. This checks to see if a <code>#player-card</code> is <code>#moveable</code> and adds a child <code>#div</code> to it with a <code>#move-up-btn</code>, unless that player is already at the top of roster and can&rsquo;t move up any further.</p>
+
+<pre><code>search @browser @session
+  container = [#div #moveable player]
+  not(player.lineup = 1)
+
+bind @browser
+  container.children += [#div #move-up-btn player class: &quot;ion-chevron-up&quot;]
+</code></pre>
+
+<p>It&rsquo;s like hashtag inception. Just as the <code>#moveable</code> tag let Eve know to add a <code>#move-up-btn</code>, this block adds another layer of functionality by giving that button some behavior. In this case, when a <code>#move-up-btn</code> is clicked, Eve captures who the specific <code>clicked-player</code> is, finds whoever is one space above them in the lineup, and switches their places.</p>
+
+<pre><code>search @browser @event @session
+  [#click element: [#move-up-btn player: clicked-player]]
+  above-clicked = [#player lineup: clicked-player.lineup - 1]
+
+commit
+  clicked-player.lineup := clicked-player.lineup - 1
+  above-clicked.lineup := above-clicked.lineup + 1
+</code></pre>
+
+<h4 id="move-down">Move Down</h4>
+
+<p>This block is the mirror of the move up buttons. If a <code>#player-card</code> is <code>#moveable</code>, and not at the bottom of the lineup, which is what the <code>count</code> is checking, then a child <code>#div</code> gets added with a <code>#move-down-btn</code>.</p>
+
+<pre><code>search @browser @session
+  container = [#div #moveable player]
+  not(player.lineup: count[given: [#player not(#bench) not(#injured)]])
+
+bind @browser
+  container.children += [#div #move-down-btn player class: &quot;ion-chevron-down&quot;]
+</code></pre>
+
+<p>Once again the reciprocal of the previous section, when a <code>#move-down-btn</code> is clicked, Eve captures the specific <code>clicked-player</code>, finds the player one space below them in the lineup, and switches their places.</p>
+
+<pre><code>search @browser @event @session
+  [#click element:[#move-down-btn player: clicked-player]]
+  below-clicked = [#player lineup: clicked-player.lineup + 1]
+
+commit
+  clicked-player.lineup := clicked-player.lineup + 1
+  below-clicked.lineup := below-clicked.lineup - 1
+</code></pre>
+
+<h4 id="remove-from-lineup">Remove from Lineup</h4>
+
+<p>If a player is <code>#moveable</code>, it means they&rsquo;re in the active lineup and should be able to be removed from the active lineup and sent to the bench. This simply looks for any <code>#moveable</code> players and adds a <code>#deactivate</code> button to them.</p>
+
+<pre><code>search @browser @session
+  container = [#div #moveable player]
+
+bind @browser
+  container.children += [#div #deactivate player class: &quot;ion-log-out&quot;]
+</code></pre>
+
+<p>This gives <code>#deactivate</code> its behavior. The <code>clicked-player</code> is sent to the bench and is stripped of their lineup order. All the players who were below them on the lineup get moved up a spot so that there aren&rsquo;t gaps in the numbering.</p>
+
+<pre><code>search @browser @event @session
+  [#click element: [#deactivate player: clicked-player]]
+  players-below = [#player lineup &gt; clicked-player.lineup]
+
+commit
+  clicked-player += #bench
+  clicked-player.lineup := &quot;&quot;
+  players-below.lineup := players-below.lineup - 1
+</code></pre>
+
+<p>This block takes care of an edge case for <code>#deactivate</code>. Because the previous block finds all the <code>players-below</code> the <code>clicked-player</code>, if the player is at the bottom of the lineup then there are no <code>players-below</code> and the search block fails, preventing the button from doing anything. This makes sure you can move the ninth batter off the lineup onto the bench.</p>
+
+<pre><code>search @browser @event @session
+  [#click element: [#deactivate player: clicked-player]]
+
+commit
+  clicked-player += #bench
+  clicked-player.lineup := &quot;&quot;
+</code></pre>
+
+<h4 id="add-to-lineup">Add to Lineup</h4>
+
+<p>This adds an <code>#activate</code> button to the bench players so we can add them to the active lineup, but only if there are fewer than nine batters already in the lineup.</p>
+
+<pre><code>search @browser @session
+  container = [#div #benched player]
+  active-players = if c = count[given: [#player not(#bench) not(#injured)]] then c else 0
+  active-players != 9
+
+bind @browser
+  container.children += [#div #activate player class:&quot;ion-log-in&quot;]
+</code></pre>
+
+<p>This gives <code>#activate</code> its behavior. When an <code>#activate</code> button is clicked, Eve finds out how many active players are in the lineup then adds the <code>clicked-player</code> and assigns them the next number in the lineup.</p>
+
+<pre><code>search @browser @event @session
+  [#click element: [#activate player:clicked-player]]
+  active-players = if c = count[given:[#player not(#bench) not(#injured)]] then c else 0
+  active-players != 9
+
+commit
+  clicked-player -= #bench
+  clicked-player.lineup := active-players + 1
+</code></pre>
+
+<h3 id="roster-data">Roster Data</h3>
+
+<p>Our sample roster data.</p>
+
+<pre><code>commit
+  [#player firstname:&quot;Kenny&quot; lastname:&quot;DeNunez&quot; position:&quot;P&quot; bats:&quot;R&quot; lineup:3 photo:&quot;http://i.imgur.com/kaRnA7R.png&quot;]
+  [#player firstname:&quot;Hamilton&quot; lastname:&quot;Porter&quot; nickname:&quot;Ham&quot; position:&quot;C&quot; bats:&quot;R&quot; lineup:1 photo:&quot;http://i.imgur.com/7C678n2.jpg&quot;]
+  [#player firstname:&quot;Timmy&quot; lastname:&quot;Timmons&quot; position:&quot;IF&quot; bats:&quot;R&quot; lineup:8 photo:&quot;http://i.imgur.com/JLHupGR.png&quot;]
+  [#player firstname:&quot;Bertram&quot; lastname:&quot;Grover Weeks&quot; position:&quot;IF&quot; bats:&quot;R&quot; lineup:2 photo:&quot;http://i.imgur.com/mfIMIy6.png&quot;]
+  [#player firstname:&quot;Alan&quot; lastname:&quot;McClennan&quot; nickname:&quot;Yeah-Yeah&quot; position:&quot;IF&quot; bats:&quot;R&quot; lineup:6 photo:&quot;http://i.imgur.com/ZyLzCDn.jpg&quot;]
+  [#player firstname:&quot;Benny&quot; lastname:&quot;Rodriguez&quot; nickname:&quot;The Jet&quot; position:&quot;IF&quot; bats:&quot;S&quot; lineup:9 photo:&quot;http://i.imgur.com/UOywuNz.jpg&quot;]
+  [#player firstname:&quot;Scott&quot; lastname:&quot;Smalls&quot; position:&quot;OF&quot; bats:&quot;R&quot; lineup:5 photo:&quot;http://i.imgur.com/eBZ2m17.jpg&quot;]
+  [#player firstname:&quot;Michael&quot; lastname:&quot;Palledorous&quot; nickname:&quot;Squints&quot; position:&quot;OF&quot; bats:&quot;R&quot; lineup:4 photo:&quot;http://i.imgur.com/q8KKRz6.jpg&quot;]
+  [#player firstname:&quot;Tommy&quot; lastname:&quot;Timmons&quot; nickname:&quot;Repeat&quot; position:&quot;OF&quot; bats:&quot;R&quot; lineup:7 photo:&quot;http://i.imgur.com/QPzSCGy.png&quot;]
+  [#player #bench firstname:&quot;Thelonius&quot; lastname:&quot;Mertle&quot; position:&quot;IF&quot; bats:&quot;L&quot; lineup:&quot;&quot; photo:&quot;http://i.imgur.com/XDA0ftH.jpg&quot;]
+  [#player #bench firstname:&quot;George Herman&quot; lastname:&quot;Ruth&quot; nickname:&quot;Babe&quot; position:&quot;P&quot; bats:&quot;L&quot; lineup:&quot;&quot; photo:&quot;http://i.imgur.com/kep7Unm.jpg&quot;]
+  [#player #bench firstname:&quot;Hercules&quot; lastname:&quot;Mertle&quot; nickname:&quot;The Beast&quot; position:&quot;PR&quot; bats:&quot;S&quot; lineup:&quot;&quot; photo:&quot;http://i.imgur.com/WOwMn5c.jpg&quot;]
+  [#player #injured firstname:&quot;&quot; lastname:&quot;Phillips&quot; position:&quot;IF&quot; bats:&quot;R&quot; lineup:&quot;&quot; photo:&quot;http://i.imgur.com/Qvxya5C.jpg&quot;]
+</code></pre>
+
+<h3 id="styles">Styles</h3>
+
+<p>The app needs a good bit of CSS to organize the page sections and various buttons as well as stylize the player cards.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="p">.</span><span class="nc">container</span>  <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">user-select</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">1000</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#555</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">1</span> <span class="kc">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">IR</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">515</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lineup</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">515</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">515</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">min-width</span><span class="p">:</span> <span class="mi">515</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lineup-position</span> <span class="p">{</span>
+  <span class="k">list-style</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">bat-number</span> <span class="p">{</span>
+  <span class="k">order</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#b4b4b4</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">player-info</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">85</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">450</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#ffffff</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#555</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">order</span><span class="p">:</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">name-line</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">position</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">padding-top</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">first-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">middle-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-weight</span><span class="p">:</span> <span class="mi">600</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="p">:</span> <span class="kc">pre</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">last-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">player-photo</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">85</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">85</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">border-right</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#555</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">bat-hand</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">left</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-chevron-up</span> <span class="p">{</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+  <span class="k">top</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-chevron-down</span> <span class="p">{</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-log-out</span> <span class="p">{</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#e65b3c</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-log-in</span> <span class="p">{</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">transform</span><span class="p">:</span> <span class="nb">scaleX</span><span class="p">(</span><span class="mi">-1</span><span class="p">);</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#009ee0</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1848px</span><span class="o">)</span> <span class="p">{</span>
+
+<span class="p">.</span><span class="nc">container</span>  <span class="p">{</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">border-bottom</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">IR</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">515</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lineup</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">18</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">415</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">min-width</span><span class="p">:</span> <span class="mi">415</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">min-height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lineup-position</span> <span class="p">{</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">bat-number</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">player-info</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">45</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">400</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">name-line</span> <span class="p">{</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">position</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">first-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">middle-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">last-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">player-photo</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">45</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">45</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">bat-hand</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span>  <span class="mi">5</span><span class="kt">px</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-chevron-up</span> <span class="p">{</span>
+  <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-chevron-down</span> <span class="p">{</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-log-out</span> <span class="p">{</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-log-in</span> <span class="p">{</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1200px</span><span class="o">)</span> <span class="p">{</span>
+
+<span class="p">.</span><span class="nc">container</span>  <span class="p">{</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">border-bottom</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">IR</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">515</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lineup</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">18</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">min-width</span><span class="p">:</span> <span class="mi">150</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">min-height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lineup-position</span> <span class="p">{</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">bat-number</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">player-info</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">55</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">name-line</span> <span class="p">{</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">flex-wrap</span><span class="p">:</span> <span class="kc">wrap</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">position</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">first-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">middle-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">last-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">player-photo</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">55</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">55</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">bat-hand</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span>  <span class="mi">0</span><span class="kt">px</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-chevron-up</span> <span class="p">{</span>
+  <span class="k">top</span><span class="p">:</span> <span class="mi">7</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-chevron-down</span> <span class="p">{</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">6</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-log-out</span> <span class="p">{</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ion-log-in</span> <span class="p">{</span>
+  <span class="k">right</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

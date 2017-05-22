@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Eve Dev Diary (April 2016) - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2016-06-30-apr/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2016-06-30-apr/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<h3 id="ui">UI</h3>
+
+<p>In March we revisited <a href="http://incidentalcomplexity.com/2016/06/03/oct-nov/">GridEve</a>, adapting it to fit more in line with the ethos of Eve; GridEve had a runtime based on data-flow, instead of the relational model we ultimately want. What we liked most about GridEve was the immediate usefulness of the grid model, so we decided to marry that with a relational engine in a new project: WikiGrid. In the last update, we looked at some interaction-level details of WikiGrid. Now, I&rsquo;ll show some of our ideas about how the relational model can fit in a grid world.</p>
+
+<h4 id="querying-with-grids">Querying with Grids</h4>
+
+<p>One obvious possibility is just to have relational functions and to allow the user to write them in cells. But that doesn&rsquo;t really take advantage of the relational nature of the Eve platform &ndash; you could do this in any language. Eventually, we stumbled upon a really simple yet absolutely cool idea: give semantic meaning to cell adjacency. Consider this:</p>
+
+<p><img src="{{ site.url }}/images/wikigrid2.png" alt="WikiGrid" /></p>
+
+<p>Here, the cell <code>person</code> means &ldquo;select all the entities tagged person&rdquo;. The adjacent cell <code>age</code> means &ldquo;select the attribute age for the adjacent collection&rdquo; i.e. <code>person.age</code>, which returns the set of all ages of &ldquo;person&rdquo;s in the system.</p>
+
+<p>Building under that, we use a reserved word <code>without</code>, an alias for the anti-join operator. The adjacent blocks <code>width</code> and <code>height</code> mean <code>person.width</code> and <code>person.height</code>. So the overall query will select all entities with a &ldquo;person&rdquo; tag and an attribute age, that do not have width or height attributes.</p>
+
+<p>In textual form, this would be written:</p>
+
+<pre><code>(query [age]
+  (fact name :tag &quot;person&quot; :age)
+  (not
+    (fact name :tag &quot;person&quot; :width :height))
+</code></pre>
+
+<p>This was very exciting for us, because you could basically write out a complicated query with no syntax. This was by far our fastest way to write a query yet. Here&rsquo;s what writing one of these looks like in WikiGrid:</p>
+
+<p><img src="{{ site.url }}/images/wikigrid4.gif" alt="WikiGrid" /></p>
+
+<p>Here, we mark off a 5x4 area as a macro cell. Then we name the macro cell &ldquo;test&rdquo; and give it a &ldquo;Formula Grid&rdquo; type. If you look closely at the autocomplete that pops up, you&rsquo;ll see the cell can take on many types: table, code, image, text, chart, drawing, etc. Most of these weren&rsquo;t wired up yet, but it illustrated the idea that cells can contain anything.</p>
+
+<p>So let&rsquo;s put it all together and see how it works when it&rsquo;s hooked up to an evaluator. The runtime in this example was our new Clojure runtime from last month.</p>
+
+<p><img src="{{ site.url }}/images/wikigrid5.gif" alt="WikiGrid" /></p>
+
+<p>We start out in a grid and name it &ldquo;Chris&rdquo; by adding an attribute cell. Each grid represents a single entity, so any attributes added to the grid are attached to that entity. Grids start out nameless, so giving it a name provides a handle to the grid. We then add two more attributes: an <code>age</code> and <code>tag</code>. The <code>tag</code> attribute is a convention used to group similar entities. By adding the tag &ldquo;person&rdquo;, we are now able to talk about collections of &ldquo;person&rdquo;s by joining on that tag.</p>
+
+<p>Next, we create a formula grid, and we query for <code>person.age</code>. The result of the query shows up in the bottom half of the formula grid as we type. Chris is the only result, since he&rsquo;s the only entity in the system, so let&rsquo;s add some more.</p>
+
+<p>Chris has a friend named Rob, so we add him as a new entity under <code>chris.friend</code>. We then navigate to Rob’s grid, which was automatically created when we added Rob as a friend of Chris. Now we just add <code>rob.age</code> and <code>rob.tag</code> and he shows up in the formula grid. We can do the same thing for Chris&rsquo; other friend Bob, and we see he is added as well.</p>
+
+<p>This is a relatively simple example, but we can write arbitrarily complex queries this way:</p>
+
+<p><img src="{{ site.url }}/images/wikigrid3.png" alt="WikiGrid" /></p>
+
+<p>This query draws the name and age of a person in HMTL. The name is in one div, styled red, while the age is in another div, styled blue.</p>
+
+<h3 id="platform-work">Platform Work</h3>
+
+<h4 id="language">Language</h4>
+
+<p>We added more language features to the runtime, including <code>choose</code>, <code>not</code>, and various aggregates.</p>
+
+<h5 id="choose">Choose</h5>
+
+<p>The <code>choose</code> statement works kind of like an <code>if</code> statement in other languages; it has multiple arms, one of which is evaluated based on a condition. For us, each arm is its own sub-query. The condition for evaluation is whether or not there are any results in the sub-query. The first arm of the <code>choose</code> with a result is the one that gets evaluated, so this is one case where order does matter in Eve. Take a look at this example:</p>
+
+<pre><code>(query [grade score]
+  (fact name :score)
+  (choose [grade score]
+    (query
+      (&gt;= score 90)
+      (= grade &quot;A&quot;))
+    (query
+      (&gt;= score 80)
+      (= grade &quot;B&quot;))
+    (query
+      (&gt;= score 70)
+      (= grade &quot;C&quot;))
+    (query
+      (&gt;= score 60)
+      (= grade &quot;D&quot;))
+    (query
+      (&gt; score 0)
+      (= grade &quot;F&quot;))))
+</code></pre>
+
+<p>Here, we are assigning a letter grade given a numerical score. The <code>choose</code> statement itself has its own <a href="http://incidentalcomplexity.com/2016/06/10/jan-feb/">projection</a>, so you can decide which variables internal to the <code>choose</code> are accessible in the parent query.</p>
+
+<h5 id="not">Not</h5>
+
+<p>The <code>not</code> statement is an anti-join operator. Its body is a query, and any results within are excluded from the parent query. For instance:</p>
+
+<pre><code>(query [names]
+  (fact names :tag &quot;person&quot;)
+  (not
+    (fact names :tag &quot;employee&quot;)))
+</code></pre>
+
+<p>will return all of the entities tagged &ldquo;person&rdquo; that are not also tagged &ldquo;employee&rdquo;.</p>
+
+<h5 id="aggregates">Aggregates</h5>
+
+<p>We got some aggregates working for this version as well. Aggregates work just like regular functions, except they can change the cardinality of the output. So <code>sum</code> takes in a set of cardinality N and returns a set of cardinality 1. You have to keep this in mind, or your results might not be what you expect (something we didn’t really like. We later found better semantics for aggregates, which I’ll talk about in a future post). Here is an example of <code>sum</code> in practice:</p>
+
+<pre><code>(query [sum-result]
+  (fact e :score)
+  (= sum-result (sum score)))
+</code></pre>
+
+<p>This will store the sum of all the scores in sum-result.</p>
+
+<h4 id="repl-github-https-github-com-witheve-eve-experiments-tree-e73b18d8111d5ddb73427bcb00f0501fdc9b8f2f">REPL (<a href="https://github.com/witheve/eve-experiments/tree/e73b18d8111d5ddb73427bcb00f0501fdc9b8f2f">github</a>)</h4>
+
+<p>The REPL received a visual overhaul and several additional features. First, let&rsquo;s take a look at the new layout.</p>
+
+<p><img src="{{ site.url }}/images/repl4.png" alt="REPL" /></p>
+
+<p>You can immediately see some new features here. First, we&rsquo;ve changed the layout a little. We have a toolbar on the left, and the REPL &ldquo;cards&rdquo; on the right. We have a button to get another column of cards, which gives us a restricted grid layout.</p>
+
+<p>While the REPL is still written in Typescript, we&rsquo;ve bootstrapped several elements. On the side, we have a space to see all the entities and tags in the system. If we click on an entity, we can see its attributes table. If we click on a tag, we can see a list of all entities with that tag (you can see an example of this in the GIF below).</p>
+
+<p>These are supported by two queries that listen for entities and tags:</p>
+
+<pre><code>// get all entities that are not system entities
+(query [entities attributes values]
+  (fact-btu entities attributes values)
+    (not
+      (fact entities :tag &quot;system&quot;)))
+      
+// get all tags that are not also system tags
+(query [tag entity],
+  (fact entity :tag tag)
+    (not
+      (fact entity :tag &quot;system&quot;)))
+</code></pre>
+
+<p>The client leaves these queries open, so it continuously receives updates as new entities and tags are added.</p>
+
+<p>We also added various views to the output. The view defaults to the results table, which displays the current state of the results. You can also see this History, which logs the incremental changes to the table. This is just a local history according to the client, but eventually this will be a history according to the server. This will allow features like the ability to see the state of the table at an arbitrary time.</p>
+
+<p><img src="{{ site.url }}/images/repl5.png" alt="REPL" /></p>
+
+<p>The info tab displays information from the compiler about the query for debugging purposes. So far, we display the intermediate expansion of the query, as well as Eve bytecode.</p>
+
+<p>We also added a chat system. This required some notion of a user, so we added something quick and dirty. If you try to use the REPL yourself, the first thing you&rsquo;ll see is a login screen. When you submit a username and password here (use eve/eve), we compare it against the users stored in the Eve DB (obviously this is not secure at all, it was just a proof of concept).</p>
+
+<p>Now that you&rsquo;ve logged in, you can send and receive messages:</p>
+
+<p><img src="{{ site.url }}/images/repl1.gif" alt="REPL" /></p>
+
+<p>This whole process is also supported by the Eve backend. When you send a message, we add a new fact into the database, containing the message text, as well as your user ID and the local machine timestamp:</p>
+
+<pre><code>(query []
+  (insert-fact! &quot;${uuid()}&quot; :tag &quot;system&quot;
+                            :tag &quot;repl-chat&quot;
+                            :message &quot;${message}&quot;
+                            :user &quot;${repl.user.id}&quot;
+                            :timestamp &quot;${t}&quot;))
+</code></pre>
+
+<p>Every other client is listening for new messages:</p>
+
+<pre><code>(query [id user message time]
+  (fact id :tag &quot;repl-chat&quot;
+           :message message
+           :user user
+           :timestamp time))
+</code></pre>
+
+<p>Right now we still have more work to do to draw UI, so the messages are displayed using Typescript. But soon we&rsquo;ll be able to bootstrap this whole process (actually, if you want to see what a full chat component looks like in our latest sytanx, you can check it out <a href="https://github.com/witheve/lueve/blob/master/examples/chat.eve">here</a>. This version even has the ability to support multiple channels.).</p>
+
+<h5 id="build-instructions">Build instructions:</h5>
+
+<p>If you&rsquo;d like to try out the REPL yourself, it&rsquo;s pretty easy to get running. We&rsquo;ve tested this under Windows 10 and OSX El Capitan, but I don&rsquo;t see any reason it shouldn&rsquo;t run under Linux.</p>
+
+<ol>
+<li>First, you&rsquo;ll need the following dependencies: Node.js, Clojure, <a href="http://leiningen.org/">Leinengen</a>.</li>
+<li>Next , clone the Eve repo from <a href="https://github.com/witheve/eve-experiments/tree/e73b18d8111d5ddb73427bcb00f0501fdc9b8f2f">this commit</a>.</li>
+<li>Then cd into where you cloned Eve. Download node dependencies and compile the REPL:</li>
+</ol>
+
+<pre><code>&gt; npm install
+&gt; npm run dev
+</code></pre>
+
+<ol>
+<li>When the REPL is finished building, you can kill that process and cd into the <code>/server</code> directory. Then, all you need to do is:</li>
+</ol>
+
+<pre><code>&gt; lein run
+</code></pre>
+
+<p>This will compile and run the server. When it&rsquo;s finished, you&rsquo;ll have a REPL hosted at <code>http://localhost:8081/repl</code>. The REPL was developed in Chrome, on Windows, but I&rsquo;ve also verified it working on Firefox and Edge.</p>
+
+<h4 id="ui-drawing">UI Drawing</h4>
+
+<p>We also added the capability to specify UI with our syntax, obviating the need for HTML or CSS. We are interested in writing useful tools for ourselves in Eve, so we decided to write a little CI report generator.</p>
+
+<pre><code>(define-ui ci-run-result
+  (fact test-run :tag &quot;testrun&quot; :number pr-number :branch :user :title :text description :additions :deletions)
+  (fact test-result :tag &quot;testresult&quot; :run test-run :test :result)
+  (fact-btu test-result &quot;result&quot; :tick)
+  (= test-order (+ 100 (sort tick)))
+  (= delta-text (str &quot;(+&quot; additions &quot; / -&quot; deletions &quot;)&quot;))
+  (= pr (str &quot;#&quot; pr-number))
+  (= url (str &quot;https://github.com/witheve/eve-experiments/pull/&quot; pr-number))
+  (= branch-url (str &quot;https://github.com/witheve/eve-experiments/tree/&quot; branch))
+  (= user-url (str &quot;https://github.com/&quot; user))
+  (= test-class (str &quot;test &quot; result))
+
+  (ui [title pr pr-number url user user-url delta-text branch branch-url description]
+      (div :id run-tile :parent &quot;root&quot; :ix pr-number :class &quot;test-run&quot;)
+      (h3 :id header :parent run-tile :ix 1)
+        (div :parent header :ix 0 :class &quot;spacer&quot; :text title)
+        (a :parent header :ix 1 :text pr :href url)
+      (div :id user-tile :parent run-tile :ix 2 :class &quot;run-info&quot;)
+        (div :parent user-tile :ix 0 :text delta-text)
+        (div :parent user-tile :ix 1 :text &quot;in&quot;)
+        (a :parent user-tile :ix 2 :text branch :href branch-url)
+        (div :parent user-tile :ix 3 :text &quot;by&quot;)
+        (a :parent user-tile :ix 4 :class &quot;user&quot; :text user :href user-url)
+      (blockquote :parent run-tile :ix 3 :class &quot;description&quot; :text description))
+
+  (ui [run-tile test test-class test-order]
+      (div :id test-tile :parent run-tile :ix test-order :class test-class)
+      (div :parent test-tile :ix 0 :text test)))
+</code></pre>
+
+<p>It&rsquo;s pretty simple when you break it down. You can think of the code in two phases. The first phase, we collect all the information necessary to render the cards:</p>
+
+<pre><code>  // Get the test runs and their results. Joins via test-run
+  (fact test-run :tag &quot;testrun&quot; :number pr-number :branch :user :title :text description :additions :deletions)
+  (fact test-result :tag &quot;testresult&quot; :run test-run :test :result)
+
+  // Sort results by tick order
+  (fact-btu test-result &quot;result&quot; :tick)
+
+  // Format some strings
+  (= test-order (+ 100 (sort tick)))
+  (= delta-text (str &quot;(+&quot; additions &quot; / -&quot; deletions &quot;)&quot;))
+  (= pr (str &quot;#&quot; pr-number))
+  (= url (str &quot;https://github.com/witheve/eve-experiments/pull/&quot; pr-number))
+  (= branch-url (str &quot;https://github.com/witheve/eve-experiments/tree/&quot; branch))
+  (= user-url (str &quot;https://github.com/&quot; user))
+  (= test-class (str &quot;test &quot; result))
+</code></pre>
+
+<p>In the second phase, we take the data and display them:</p>
+
+<pre><code>// Draws a commit card. This card is repeated once for every commit
+(ui [title pr pr-number url user user-url delta-text branch branch-url description]
+
+    // Attaches the card to the DOM root
+    (div :id run-tile :parent &quot;root&quot; :ix pr-number :class &quot;test-run&quot;)
+    // Draws the header
+    (h3 :id header :parent run-tile :ix 1)
+      (div :parent header :ix 0 :class &quot;spacer&quot; :text title)
+      (a :parent header :ix 1 :text pr :href url)
+
+    // Draws the line &quot;(+{adds}/-{removes}) in {branch} by {user}&quot;
+    (div :id user-tile :parent run-tile :ix 2 :class &quot;run-info&quot;)
+      (div :parent user-tile :ix 0 :text delta-text)
+      (div :parent user-tile :ix 1 :text &quot;in&quot;)
+      (a :parent user-tile :ix 2 :text branch :href branch-url)
+      (div :parent user-tile :ix 3 :text &quot;by&quot;)
+      (a :parent user-tile :ix 4 :class &quot;user&quot; :text user :href user-url)
+    // Draws the commit message
+    (blockquote :parent run-tile :ix 3 :class &quot;description&quot; :text description))
+
+// Draws the test results. This block is repeated once for every test
+(ui [run-tile test test-class test-order]
+    (div :id test-tile :parent run-tile :ix test-order :class test-class)
+    (div :parent test-tile :ix 0 :text test)))
+</code></pre>
+
+<p>Here is the result:</p>
+
+<p><img src="{{ site.url }}/images/evel-ci.png" alt="Eve CI" /></p>
+
+<p>And we did all this in Eve without having to write separate HTML! The result is completely live, so any new commits are displayed as soon as the tests complete.</p>
+
+<p>The two-phase nature of this query (get some data -&gt; do something with that data) is a general pattern we&rsquo;ve found very useful for both reading and writing Eve programs. In newer versions of the Eve syntax, we make this pattern more explicit.</p>
+
+<h3 id="moving-forward">Moving Forward</h3>
+
+<p>This is the last post in our backlog of development diaries. Moving forward, we&rsquo;ll keep a monthly cadence of dev diaries starting July. To cover our work in May and June, we have some special news, which we will be talking about shortly. As time goes by, and as Eve grows, I hope to keep the blog updated with more features like example Eve programs, community spotlights, tutorials, etc. So stay tuned!</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

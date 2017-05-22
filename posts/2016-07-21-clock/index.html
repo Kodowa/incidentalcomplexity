@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>A Declarative Clock in Eve - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2016-07-21-clock/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2016-07-21-clock/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p>_This post has been updated. See the original <a href="https://github.com/Kodowa/incidentalcomplexity/blob/5fbce96aecc7172166d130406e9e3c42bbbb27dc/_posts/2016-07-21-clock.md">here</a>._</p>
+
+<p>An analog clock is an obligatory example for reactive programming languages. It&rsquo;s got all the right pieces: an event stream that changes over time, and a way to present those changes visually. Here is our version:</p>
+
+<p><img src="{{ site.url }}/images/eveclock.gif" alt="A Clock in Eve" /></p>
+
+<p>This clock is written in the Eve developer syntax, which is proposed in our first <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md">Request for Comments (RFC)</a>. In this post, I&rsquo;ll go through the code and explain how it works.</p>
+
+<h3 id="eve-code">Eve code</h3>
+
+<p>Eve code is written as a series of blocks, each of which can be thought of as operating in two phases:</p>
+
+<ul>
+<li><strong>Phase 1: Match</strong> - select objects from the Eve DB by matching patterns<br /></li>
+<li><strong>Phase 2: Action</strong> - change the Eve DB by either adding, setting, removing, or merging objects.</li>
+</ul>
+
+<p>The clock program consists of two blocks: the first generically defines a clock hand, while the second defines the drawing of the clock. Let&rsquo;s focus on each block in turn.</p>
+
+<h3 id="draw-a-clock-hand">Draw a clock hand</h3>
+
+<p>First, we define how a clock hand is drawn. Although an analog clock has three hands, we can write code as if we&rsquo;re drawing a single hand; Eve&rsquo;s <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#set-semantics">set semantics</a> take care of drawing multiple hands, so no iterators like a <code>for</code> statement are necessary.</p>
+
+<pre><code>match
+
+    // Select #clock-hands with angle and length attributes
+    hand = [#clock-hand angle length]
+
+    // Calculate coordinates for drawing a hand
+    x2 = 50 + (length * sin[angle])
+    y2 = 50 - (length * cos[angle])
+
+// Bind tells Eve to update objects as values change
+bind
+
+    // Merge line coordinates into hand, tag it as a #line
+    hand &lt;- [#line, x1: 50, y1: 50, x2, y2]
+</code></pre>
+
+<p>Blocks start with the <code>match</code> phase, indicated by the <code>match</code> fence. Within the <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#phase-1-match">match</a>, the programmer gathers all of the objects from the Eve DB needed to complete the block. Blocks only enter the <code>action</code> phase if all supplied objects in the <code>match</code> resolve against an object in the Eve DB.</p>
+
+<p>In the first line of the match, we encounter our first <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#objects">object</a>:</p>
+
+<pre><code>hand = [#clock-hand angle length]
+</code></pre>
+
+<p>Objects are a set of attribute:value pairs enclosed in square brackets. They ask Eve to find all the entities that fit the supplied attribute shape. The <code>hand</code> object seen here is asking Eve to find every object <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#tag-selector---">tagged</a> <code>#clock-hand</code> that also has the attributes <code>angle</code> and <code>length</code>. We use the <code>angle</code> and <code>length</code> attributes of this object to calculate two values, <code>x1</code> and <code>y2</code>, which we will use as coordinates for the lines that draw the clock hands.</p>
+
+<p>Now we enter the <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#phase-2-action">action phase</a> of the query, indicated by the use of the <code>bind</code> fence (one of two fences applicable to the <code>action</code> phase). The <code>bind</code> fence says that we are finished reading from the Eve DB, and now we are ready to write to it. The use of the <code>bind</code> fence in particular says that as the objects in the <code>match</code> change, Eve will keep their dependant objects up-to-date.</p>
+
+<pre><code>hand &lt;- [#line, x1: 50, y1: 50, x2, y2]
+</code></pre>
+
+<p>Here, we use the merge operator <code>&lt;-</code>, one of four <a href="https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#action-operators">action operators</a>. The merge operator merges one object with another. In this case, we are merging the object <code>[#line, x1: 50, y1: 50, x2, y2]</code> into the <code>hand</code> object. This means that every <code>#clock-hand</code> with <code>angle</code> and <code>length</code> attributes also has a <code>#line</code> tag, as well as <code>x1</code>, <code>x2</code>, <code>y1</code>, and <code>y2</code> attributes.</p>
+
+<p>That&rsquo;s all this block does: it selects every <code>[#clock-hand angle length]</code>, and tags each one as a <code>#line</code>, which Eve knows how to draw using <code>x1</code>, <code>x2</code>, <code>y1</code>, and <code>y2</code>. Let&rsquo;s see how that&rsquo;s done.</p>
+
+<h3 id="draw-a-clock">Draw a clock</h3>
+
+<p>In this block, we define the clock using a face drawn as a circle, and three <code>#clock-hands</code> drawn as lines.</p>
+
+<pre><code>match
+
+    // Select the current time
+    [#time hours minutes seconds]
+
+// Update the SVG as the time changes
+bind
+
+    // Add an SVG element to the root of the DOM       
+    [#svg viewBox: &quot;0 0 100 100&quot;, width: &quot;300px&quot;, children:
+
+        // Add a clock face at (50,50) with radius 45.
+        [#circle cx: 50, cy: 50, r: 45, fill: &quot;#0B79CE&quot;]
+
+        // Add the hours hand    
+        [#clock-hand @hour-hand angle: 30 * hours, length: 30, stroke: &quot;#023963&quot;]
+
+        // Add the minutes hand 
+        [#clock-hand @minute-hand angle: 6 * minutes, length: 40, stroke: &quot;#023963&quot;]
+
+        // Add the seconds hand 
+        [#clock-hand @second-hand angle: 6 * seconds, length: 40, stroke: &quot;#ce0b46&quot;]]
+</code></pre>
+
+<p>This block (as with all blocks) follows the familiar match -&gt; action pattern. For this block&rsquo;s match, we select the current time, represented by the <code>#time</code> object; and its attributes <code>hours</code>, <code>minutes</code>, and <code>seconds</code>. This object is just like any other, but under the covers Eve keeps it up to date as the system clock changes.</p>
+
+<p>Again we use the <code>bind</code> fence, because we want Eve to update the clock drawing as the time changes. Behind the <code>bind</code> fence, we add an SVG element:</p>
+
+<pre><code>[#svg viewBox: &quot;0 0 100 100&quot;, width: &quot;300px&quot;, children: ... ]
+</code></pre>
+
+<p>Since no parent is specified, the SVG element will be rendered as a child of the DOM root. Next, we add the clock elements as children of the SVG element. We add the clock face (a blue circle with a center at (50, 50) with radius 45):</p>
+
+<pre><code>[#circle cx: 50, cy: 50, r: 45, fill: &quot;#0B79CE&quot;] 
+</code></pre>
+
+<p>and three hands:</p>
+
+<pre><code>[#clock-hand @hour-hand angle: 30 * hours, length: 30, stroke: &quot;#023963&quot;]
+[#clock-hand @minute-hand angle: 6 * minutes, length: 40, stroke: &quot;#023963&quot;]
+[#clock-hand @second-hand angle: 6 * seconds, length: 40, stroke: &quot;#ce0b46&quot;]
+</code></pre>
+
+<p>Now we can see how this block ties back to the first one; the objects representing the hands of the clock are tagged <code>#clock-hand</code> and have <code>angle</code> and <code>length</code> attributes. This is exactly the pattern we were matching against in the first block! Thus, the loop is completed, and the clock hands are drawn as lines based on the current time as an angle.</p>
+
+<h3 id="try-it-yourself">Try it yourself!</h3>
+
+<p>You can download Eve and try the clock yourself! The easiest way is to use our docker container:</p>
+
+<pre><code>docker pull witheve/eve
+</code></pre>
+
+<p>You can also download the Eve source and build it yourself (Linux and OSX only for now):</p>
+
+<pre><code>git clone https://github.com/witheve/Eve.git
+</code></pre>
+
+<p>Instructions to build are available on the <a href="https://github.com/witheve/Eve">witheve/eve repository</a>.</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

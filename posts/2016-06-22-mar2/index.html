@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Eve Dev Diary (March 2016 Part 2: Platform) - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2016-06-22-mar2/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2016-06-22-mar2/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<h3 id="platform">Platform</h3>
+
+<p>For the platform, our main goal for March was to get a server running and everyone in the office connected to it and coding via a REPL. Over the course of a couple months we transitioned from a traditional row/tuple/table store model to storing <code>(Entity, Attribute, Value)</code> triples called EAVs. To support additional features of the language, we expanded this triple to include additional parameters: Bag, Tick, and User. So the full specification for a fact is now <code>(Entity, Attribute, Value, Bag, Tick, User)</code>.</p>
+
+<ol>
+<li><em>Bag</em> - This allows you to compose arbitrary datasets, and provides a mechanism to control visibility of facts. You might put all your facts about planets and astronomers into one bag, while your quarterly earnings report goes into a different bag. Bags will help us with features like version control and distribution. For example, the logic for a networked game like chess might be held in one bag. Then a specific instance of the game would include the game logic bag, as well as additional state facts. Then each player would have their own personal bags representing their local game state, which is coordinated to the other player through the instance bag.</li>
+<li><em>Tick</em> - The time when the fact was created. This allows a partial ordering of the facts. I will have a lot more to say about this in a future post, but this enables some exciting features like time-travel debugging, what-if scenarios, and very low-cost, strong consistency.</li>
+<li><em>User</em> - The ID of the user who created the fact. This would allow you to query or exclude all facts added to Eve by a particular user, for instance. Or it can be used to figure out who added a particular fact to the database. This will also help for things like permissions, where you can restrict access to edit/view certain facts. For example, you don’t want your employees to set their own salaries or see anyone else’s.</li>
+</ol>
+
+<h3 id="server">Server</h3>
+
+<p><a href="http://incidentalcomplexity.com/2016/06/03/oct-nov/">Cardwiki</a> and <a href="http://incidentalcomplexity.com/2016/06/10/jan-feb/">WikiEve</a> used an old runtime written in TypeScript that relied on the client&rsquo;s <code>localStorage</code> to hold the database. Setup was easy for the user, but without a server we couldn’t easily support features like distribution, redundancy, or collaboration. Since Eric started in December, he had been working on a new runtime, (ClojEve, written in Clojure), as the rest of us worked on WikiEve. By April we were ready to migrate to this new environment, which means we needed a protocol. We landed on a JSON interface with four message types: query, error, result, and close.</p>
+
+<pre><code>query:
+{
+    type: &quot;query&quot;
+    id: id
+    query: query
+}
+
+close
+{
+    type: &quot;close&quot;
+    id: id
+}
+</code></pre>
+
+<p>The client can send two types of messages: a <code>query</code> or a <code>close</code>. Each query has a UUID. This is sent to the server along with a plain text query written in our query syntax (more on that in the next section). Any query sent to the server remains open indefinitely, until the client sends a <code>close</code> message with the corresponding ID.</p>
+
+<pre><code>result:
+{
+    type: &quot;result&quot;
+    id: id
+    adds: fact[]
+    removes: fact[]
+}
+
+error:
+{
+    type: &quot;error&quot;
+    id: id
+    reason: reason
+}
+</code></pre>
+
+<p>When the server first receives a query, it sends back a result message. This message is contains the ID of the associated query, along with any additions or removals from the results. The initial result will only have adds, since it is computed from scratch. But if the query remains open, adds and removes are sent incrementally as the database mutates.</p>
+
+<h3 id="syntax-and-compiler">Syntax and Compiler</h3>
+
+<p>Last month, we re-introduced a syntax for Eve for the first time since 2014. The syntax was an s-expression style syntax, intended for internal use only. In general, we were happy with this because it allowed us to easily translate tree-like structures to the syntax. For instance, this property made builing the NL interface easier. This month, we made some changes to the syntax to make it easier to write. We removed the <code>project!</code> statement, replacing it with a bracket syntax. Further, we removed the <code>select</code> statement, and replaced it with <code>fact</code>, which can act like multiple <code>selects</code> at once. For example, this</p>
+
+<pre><code>(query
+ (select &quot;eavs&quot; :entity &quot;apple&quot; :attribute &quot;color&quot; :value color)
+ (select &quot;eavs&quot; :entity &quot;apple&quot; :attribute &quot;tag&quot; :value tag)
+ (project! :color color :tag tag))
+</code></pre>
+
+<p>becomes</p>
+
+<pre><code>(query [color tag]
+  (fact &quot;apple&quot; :color :tag))
+</code></pre>
+
+<p>Which is much simpler. This compiles using a two-stage process. We first parse the original input and translate that to an intermediate language (IL), which decomposes the query into a more primitive form. The above query compiles to the following IL:</p>
+
+<pre><code>(query [color tag]
+  (fact-btu :entity &quot;apple&quot; :attribute &quot;color&quot; :value color)
+  (fact-btu :entity &quot;apple&quot; :attribute &quot;tag&quot; :value tag))
+</code></pre>
+
+<p>Here, the <code>fact</code> statement has decomposed into two <code>fact-btu</code> statements, which resemble the <code>select</code> statement of the previous syntax. IL code then goes through another level of translation into Eve bytecode. The above IL code translates into the following bytecode:</p>
+
+<pre><code>((bind
+  main
+   ((tuple [3] [0] [1] * nil) (send &quot;query2725||color,tag&quot; [3])))
+ (bind
+   &quot;query2725||color,tag&quot;
+   ((scan [3] [])
+    (delta-e [4] [3])
+    (= [3] [4 0] &quot;apple&quot;)
+    (filter [3]) (= [3] [4 1] &quot;color&quot;)
+    (filter [3]) (scan [3] [])
+    (delta-e [5] [3])
+    (= [3] [5 0] &quot;apple&quot;)
+    (filter [3])
+    (= [3] [5 1] &quot;tag&quot;)
+    (filter [3])
+    (tuple [3] [0] [1] [2 2] nil [4 2] [5 2])
+    (send &quot;query2725||color,tag-cont&quot; [3])))
+ (bind
+   &quot;query2725||color,tag-cont&quot;
+   ((delta-c [4] [5])
+    (tuple [3] [0] [1] [4] [5])
+    (send out [3]))))
+</code></pre>
+
+<p>Finally, the above code is sent to the executor, which executes the code and returns a result. In the context of the client-server architecture, the result is packaged as an incremental add/remove message, which is sent to all clients listening to that query. If the executor encounters an error while running the query, an error message is created, indicating what the error was, and where in the source the error occurred.</p>
+
+<p>The IL and bytecode translations for each query are passed to the sender in an &ldquo;info&rdquo; message. This message contains metadata meant to enable interesting interactions for editors. For example, we can add the whole parse tree to this message, and then a client editor can use the tree to style code.</p>
+
+<h3 id="repl-github-https-github-com-witheve-eve-experiments-tree-90a6c6bc4597572a29c72119fc7bb964426f8107">REPL (<a href="https://github.com/witheve/eve-experiments/tree/90a6c6bc4597572a29c72119fc7bb964426f8107">github</a>)</h3>
+
+<p>Putting it all together, we started building a REPL. A basic REPL for Eve is actually very simple, given the protocol laid out above. When you start the REPL, it opens a websocket connection to an Eve server. Then you can type a query in a textbox and send it to the server. The REPL forms a message according to the query protocol and waits for a response from the server. When a response is received, the REPL displays it according to its type. Result messages are rendered as a table, while error messages are rendered as text.</p>
+
+<p><img src="{{ site.url }}/images/repl1.png" alt="REPL" /></p>
+
+<p>In this example REPL session, the user added some new facts about apples in the first card. In the second card, the user asked for all EAV facts in the system, which are displayed in a table. The final query is malformed, so Eve returned an error message.</p>
+
+<p>But since this isn&rsquo;t an ordinary REPL for an ordinary language, we have some nice behaviors. Queries are left open by default, so they continuously receive updates from the server as they become available. So if another Eve user adds a fact that affects any of your open queries, you&rsquo;ll see that change immediately.</p>
+
+<p><img src="{{ site.url }}/images/repl2.png" alt="REPL" /></p>
+
+<p>Here, the user added new facts about lemons, which are added to the result table in the second query.</p>
+
+<p>Other features include the ability to save/load REPL workspaces to/from a file, automatic reconnect if the server dies, and the ability to export result tables as CSV files. And of course, dark mode!</p>
+
+<p><img src="{{ site.url }}/images/repl3.png" alt="REPL" /></p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

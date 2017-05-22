@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Example 5 - Battle School - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2017-03-21-5-battleschool/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2017-03-21-5-battleschool/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p><img src="{{ site.url }}/images/ex5.png" alt="Example 5" /></p>
+
+<h3 id="what-is-this">What is this?</h3>
+
+<p>This example demonstrates saving state across different pages, and advanced sorting using the <code>range[]</code> function. On the &ldquo;control&rdquo; page, you can set a schedule of army matchups for the day. Click on an army and then click on the slot you want to place that army. This matchup is saved, and displayed on the &ldquo;broadcast&rdquo; page.</p>
+
+<p>You can play with this example in your browser <a href="http://play.witheve.com/#gist:139ae7d8cff02032258ccdb87afbd01f-ex5-battleschool.eve">here</a>.</p>
+
+<h3 id="page-layout">Page Layout</h3>
+
+<h4 id="containers">Containers</h4>
+
+<p>This one&rsquo;s pretty simple; I want a nav bar at the top to let me manually go to the different pages, and an app window where those pages are rendered.</p>
+
+<pre><code>commit @browser
+  [#div class:&quot;nav-bar&quot;]
+  [#div class:&quot;app-window&quot;]
+</code></pre>
+
+<h4 id="pages">Pages</h4>
+
+<p>For every page I want, I make a record with an attribute of <code>target</code> to specify which each page is called.</p>
+
+<pre><code>commit
+  [#page target:&quot;Broadcast&quot;]
+  [#page target:&quot;Control&quot;]
+</code></pre>
+
+<h4 id="nav-bar-buttons">Nav Bar Buttons</h4>
+
+<p>By abstracting this step out, I can define all the pages I want as in the block before, and then here find those pages and create a button on the nav bar for each of them.</p>
+
+<pre><code>search @session @browser
+  nav-bar = [#div class:&quot;nav-bar&quot;]
+  [#page target]
+
+bind @browser
+  nav-bar &lt;- [children: [#button target text:target]]
+</code></pre>
+
+<p>This partner block works with the nav buttons by simply setting the app window to whichever nav button is clicked.</p>
+
+<pre><code>search @session @browser @event
+  [#click element: [#button target]]
+  window = [#app-window]
+
+commit
+  window.target := target
+</code></pre>
+
+<h4 id="starting-page">Starting Page</h4>
+
+<p>This commits a record called #<code>app-window</code> whose attribute <code>target</code> specifies which page gets rendered. In this case, when the app starts up, I want the landing view to be the Broadcast page.</p>
+
+<pre><code>commit
+  [#app-window target:&quot;Broadcast&quot;]
+</code></pre>
+
+<h4 id="sci-fi-font">Sci-Fi Font</h4>
+
+<p>It&rsquo;s not the future if there&rsquo;s not futuristic-looking text.</p>
+
+<pre><code>commit @browser
+  [#link href:&quot;https://fonts.googleapis.com/css?family=Orbitron|Play&quot; rel:&quot;stylesheet&quot;]
+</code></pre>
+
+<h3 id="broadcast">Broadcast</h3>
+
+<h4 id="drawing-the-page">Drawing the Page</h4>
+
+<p>The Broadcast page is meant to serve much like the departures or arrivals screen at an airport - it is purely an informative screen showing which armies have been scheduled in which rooms. There are 9 total battle rooms, so I use the <code>range</code> function to generate 9 rooms, each of which has two sides labeled A and B. There&rsquo;s also a #<code>versus</code> block whose text will change based on whether or not there are armies scheduled to that room.</p>
+
+<pre><code>search @session @browser
+  [#app-window target:&quot;Broadcast&quot;]
+  window = [#div class:&quot;app-window&quot;]
+  i = range[from: 1, to: 9]
+
+bind @browser
+  window.class += &quot;broadcast&quot;
+  window.children += [#div i class:&quot;battle-room&quot; children:
+      [#div class:&quot;room-title&quot; text:&quot;{{i}}&quot;]
+      [#div class:&quot;matchup&quot; children:
+        [#room class:&quot;teamA&quot; room:i side:&quot;A&quot;]
+        [#versus room:i]
+        [#room class:&quot;teamB&quot; room:i side:&quot;B&quot;]
+      ]
+    ]
+</code></pre>
+
+<h4 id="drawing-upcoming-battles">Drawing Upcoming Battles</h4>
+
+<p>This block checks to see if there&rsquo;s an army assigned to a room and will inject a card for that army into its room slot, but only if there&rsquo;s another army that has been assigned to the opposing side in that room. Having only an A side or a B side will fail the search. If both sides are accounted for however, the search will pass for both of those armies, and so both cards will get injected.</p>
+<div class="highlight"><pre><code class="language-eve" data-lang="eve"><span></span><span class="kr">search</span> <span class="err">@</span><span class="nv">session</span> <span class="err">@</span><span class="nv">browser</span>
+  <span class="nv">slot</span> <span class="nf">=</span> <span class="p">[</span><span class="err">#</span><span class="nv">room</span> <span class="nv">room</span> <span class="nv">side</span><span class="p">]</span>
+  <span class="nv">army</span> <span class="nf">=</span> <span class="p">[</span><span class="err">#</span><span class="nv">army</span> <span class="nv">room</span> <span class="nv">side</span> <span class="nv">name</span> <span class="nv">color</span><span class="mi">1</span> <span class="nv">color</span><span class="mi">2</span> <span class="nv">color</span><span class="mi">3</span> <span class="nv">uniform</span><span class="p">]</span>
+  <span class="nv">other</span><span class="nf">-</span><span class="nv">side</span> <span class="nf">=</span> <span class="kr">if</span> <span class="nv">side</span> <span class="nf">=</span> <span class="s">&quot;A&quot;</span> <span class="kr">then</span> <span class="s">&quot;B&quot;</span>
+               <span class="kr">else</span> <span class="kr">if</span> <span class="nv">side</span> <span class="nf">=</span> <span class="s">&quot;B&quot;</span> <span class="kr">then</span> <span class="s">&quot;A&quot;</span>
+  <span class="p">[</span><span class="err">#</span><span class="nv">army</span> <span class="nv">room</span> <span class="nv">side</span><span class="nf">:</span><span class="nv">other</span><span class="nf">-</span><span class="nv">side</span><span class="p">]</span>
+  <span class="nv">versus</span> <span class="nf">=</span> <span class="p">[</span><span class="err">#</span><span class="nv">versus</span> <span class="nv">room</span><span class="p">]</span>
+
+<span class="kr">bind</span> <span class="err">@</span><span class="nv">browser</span>
+  <span class="nv">slot</span><span class="nf">.</span><span class="nv">class</span> <span class="nf">+=</span> <span class="p">(</span><span class="s">&quot;army-card&quot;</span><span class="p">)</span>
+  <span class="nv">slot</span> <span class="nf">&lt;-</span> <span class="p">[</span><span class="err">#</span><span class="nv">div</span> <span class="nv">name</span> <span class="nv">children</span><span class="nf">:</span>
+    <span class="p">[</span><span class="err">#</span><span class="nv">div</span> <span class="nv">class</span><span class="nf">:</span><span class="s">&quot;army-name&quot;</span> <span class="nv">text</span><span class="nf">:</span><span class="nv">name</span><span class="p">]</span>
+    <span class="p">[</span><span class="err">#</span><span class="nv">div</span> <span class="nv">class</span><span class="nf">:</span><span class="s">&quot;ribbon&quot;</span> <span class="nv">children</span><span class="nf">:</span>
+      <span class="p">[</span><span class="err">#</span><span class="nv">div</span> <span class="nv">class</span><span class="nf">:</span><span class="nv">color</span><span class="mi">1</span><span class="p">]</span>
+      <span class="p">[</span><span class="err">#</span><span class="nv">div</span> <span class="nv">class</span><span class="nf">:</span><span class="nv">color</span><span class="mi">2</span><span class="p">]</span>
+      <span class="p">[</span><span class="err">#</span><span class="nv">div</span> <span class="nv">class</span><span class="nf">:</span><span class="nv">color</span><span class="mi">3</span><span class="p">]]</span>
+  <span class="p">]</span>
+</code></pre></div>
+
+<p>If a room has two armies assigned to it, one to each side, then the #<code>versus</code> block becomes just the text &ldquo;VS&rdquo; between the two army cards.</p>
+
+<pre><code>search @session @browser
+  versus = [#versus room]
+  [#army room side:&quot;A&quot;]
+  [#army room side:&quot;B&quot;]
+
+bind @browser
+  versus &lt;- [#div class:&quot;versus-text&quot; text:&quot;VS&quot;]
+</code></pre>
+
+<p>If a room is missing either an A or a B side, or both, I want a message to be displayed saying that a battle hasn&rsquo;t been scheduled yet. Since this comprises a union in set theory, I need two blocks to explicity handle all my possibilities. This first one looks to see if both sides have yet to be assigned, and injects the message into the #<code>versus</code> block if that happens to be the case.</p>
+
+<pre><code>search @session @browser
+  versus = [#versus room]
+  not([#army room side:&quot;A&quot;])
+  not([#army room side:&quot;B&quot;])
+
+bind @browser
+  versus &lt;- [#div class:&quot;empty-room&quot; text:&quot;No battle scheduled&quot;]
+</code></pre>
+
+<p>This second block gives us the other half of the union by checking to see if either an A side or a B side has been assigned, but not its complement, and will inject the same message into the #<code>versus</code> block.</p>
+
+<pre><code>search @session @browser
+  versus = [#versus room]
+  army = [#army room side]
+  other-side = if side = &quot;A&quot; then &quot;B&quot;
+               else if side = &quot;B&quot; then &quot;A&quot;
+  not([#army room side:other-side])
+
+bind @browser
+  versus &lt;- [#div class:&quot;empty-room&quot; text:&quot;No battle scheduled&quot;]
+</code></pre>
+
+<h3 id="control">Control</h3>
+
+<h4 id="drawing-the-page-1">Drawing the Page</h4>
+
+<p>The Control page is laid out to be displayed on a smaller device - perhaps a smart phone or a tablet - and is used to assign which armies will fight in which rooms. Again, for the nine rooms, the range function is used to identify and number them, and each room is given two sides. A list of all the available armies - that is, those which have not been assigned to a room - is also drawn.</p>
+
+<pre><code>search @session @browser
+  [#app-window target:&quot;Control&quot;]
+  [#army name color1 color2 color3 uniform not(room)]
+  i = range[from: 1, to: 9]
+  window = [#div class:&quot;app-window&quot;]
+
+bind @browser
+  window.class += &quot;control&quot;
+  window.children += ([#img class:&quot;logo&quot; src:&quot;http://vignette2.wikia.nocookie.net/ansible/images/6/69/InternationalFleetLogo.png&quot;],
+    [#div class:&quot;control-lists&quot; children:
+    [#div class:&quot;all-rooms&quot; children:
+      [#div class:&quot;room&quot; i children:
+        [#div class:&quot;title&quot; text:&quot;Battle Room {{i}}&quot;]
+        [#div room:i side:&quot;A&quot; class:&quot;battle-slot&quot;]
+        [#div class:&quot;vs-line&quot; text:&quot;vs&quot;]
+        [#div room:i side:&quot;B&quot; class:&quot;battle-slot&quot;]
+      ]
+    ],
+    [#div class:&quot;all-armies&quot; children:
+      [#div class:&quot;title&quot; text:&quot;Armies&quot;]
+      [#div sort:name name class:(&quot;army-tab&quot;, uniform) text:name]
+    ]
+    ])
+</code></pre>
+
+<p>As an addition to main drawing block for the Control page, this block checks to see if there are any armies assigned to a slot in a battle room. If it is, that army has its tab drawn in the corresponding slot in the browser.</p>
+
+<pre><code>search @session @browser
+  window = [#div class:&quot;battle-slot&quot; room side]
+  [#army name uniform room side]
+
+bind @browser
+  window.children += [#div class:(&quot;army-tab&quot;, uniform) text:name]
+</code></pre>
+
+<h4 id="selecting">Selecting</h4>
+
+<p>In order to be able to assign armies to slots, there needs to be a mechanism to select both elements. I&rsquo;ve chosen to demonstrate selection in two different ways to cover some of the possibilities of how this might be achieved, and because armies each have a record stored in the session database, I used them to show selection by modifying a session record. The intended workflow here is to click an army to highlight it, then choose a slot to assign them to, or go the other way around and click a battle slot to highlight it, then choose an army to assign there. That means I only want to highlight an element if there&rsquo;s nothing else already selected - otherwise, I&rsquo;m probably trying to assign an army. This block searches for a click on an army tab and, as long as that army isn&rsquo;t already highlighted, nor any battle slots, adds the #<code>highlighted</code> tag to the record of the clicked army.</p>
+
+<pre><code>search @session @event @browser
+  [#click element: [#div class:&quot;army-tab&quot; name]]
+  army = [#army name not(#highlighted)]
+  not([#div #highlighted class:&quot;battle-slot&quot; room])
+
+commit
+  army += #highlighted
+</code></pre>
+
+<p>This block adds the #<code>highlighted</code> tag to a record in browser instead of session. If a battle slot gets clicked and isn&rsquo;t already highlighted and doesn&rsquo;t have an army already assigned to it, then that battle slot becomes highlighted.</p>
+
+<pre><code>search @session @event @browser
+  battle-slot = [#div class:&quot;battle-slot&quot; room side]
+  [#click element: battle-slot]
+  not([#div #highlighted class:&quot;battle-slot&quot; room side])
+  not([#click element:[#div class:&quot;army-tab&quot;]])
+  not([#army #highlighted])
+
+commit @browser
+  battle-slot += #highlighted
+</code></pre>
+
+<h4 id="assigning">Assigning</h4>
+
+<p>Once an army is #<code>highlighted</code>, if a battle slot gets clicked, the highlighted army gets assigned to that particular slot, which corresponds to both a <code>room</code> and a <code>side</code>.</p>
+
+<pre><code>search @session @event @browser
+  army = [#army #highlighted]
+  [#click element: [#div class:&quot;battle-slot&quot; room side]]
+
+commit
+  army.room := room
+  army.side := side
+</code></pre>
+
+<p>On the flip side, if a battle slot is #<code>highlighted</code> and an army gets clicked, the clicked army gets assigned to the highlighted slot.</p>
+
+<pre><code>search @session @event @browser
+  [#div #highlighted class:&quot;battle-slot&quot; room side]
+  army = [#army name]
+  [#click element: [#div class:&quot;army-tab&quot; name]]
+
+commit
+  army.room := room
+  army.side := side
+</code></pre>
+
+<h4 id="unselecting">Unselecting</h4>
+
+<p>A click anywhere deselects anything. This works if you&rsquo;re just clicking around the page and want to deselect something, or if you click to assign an army somewhere. The assigning workflow still occurs, but the final click deselects everything so that no residual highlights are left over.</p>
+
+<pre><code>search @session @event @browser
+  [#click]
+  highlighted = [#highlighted]
+
+commit @session @browser
+  highlighted -= #highlighted
+</code></pre>
+
+<h4 id="unassigning">Unassigning</h4>
+
+<p>If there&rsquo;s an army in a slot that&rsquo;s clicked, this block removes that army from that slot.</p>
+
+<pre><code>search @session @event @browser
+  [#click element: [#div class:&quot;battle-slot&quot; room side]]
+  in-slot = [#army room side]
+
+commit
+  in-slot.room := none
+  in-slot.side := none
+</code></pre>
+
+<h4 id="highlight-styling">Highlight Styling</h4>
+
+<p>When either an army or a battle slot is #<code>highlighted</code>, I want to add a class to it so I can use CSS to add a visual marker to it. Because I add the #<code>highlighted</code> tag to armies and battle slots differently, I need two different blocks to handle those classes. In the case of a highlighted army, the army is highlighted but its corresponding army tab gets the new class apended.</p>
+
+<pre><code>search @session @browser
+  army-tab = [#div class:&quot;army-tab&quot; name]
+  army = [#army #highlighted name]
+
+bind @browser
+  army-tab.class += &quot;highlighted&quot;
+</code></pre>
+
+<p>In the case of a highlighted battle slot, the #<code>highlighted</code> tag is already on the #<code>div</code> that needs the new class, which gets apended with this block.</p>
+
+<pre><code>search @session @browser
+  battle-slot = [#highlighted class:&quot;battle-slot&quot; room]
+
+bind @browser
+  battle-slot.class += &quot;highlighted&quot;
+</code></pre>
+
+<h3 id="army-data">Army Data</h3>
+
+<p>Each army is listed here with its name, its three colors, and a uniform color.</p>
+
+<pre><code>commit
+  [#army name:&quot;Manticore&quot; color1:&quot;gray&quot; color2:&quot;yellow&quot; color3:&quot;green&quot; uniform:&quot;yellow&quot;]
+  [#army name:&quot;Asp&quot; color1:&quot;lightgreen&quot; color2:&quot;blue&quot; color3:&quot;green&quot; uniform:&quot;green&quot;]
+  [#army name:&quot;Scorpion&quot; color1:&quot;purple&quot; color2:&quot;orange&quot; color3:&quot;red&quot; uniform:&quot;orange&quot;]
+  [#army name:&quot;Flame&quot; color1:&quot;red&quot; color2:&quot;yellow&quot; color3:&quot;red&quot;  uniform:&quot;red&quot;]
+  [#army name:&quot;Tide&quot; color1:&quot;blue&quot; color2:&quot;lightblue&quot; color3:&quot;blue&quot; uniform:&quot;lightblue&quot;]
+  [#army name:&quot;Salamander&quot; color1:&quot;green&quot; color2:&quot;lightgreen&quot; color3:&quot;brown&quot; uniform:&quot;lightgreen&quot;]
+  [#army name:&quot;Rat&quot; color1:&quot;black&quot; color2:&quot;brown&quot; color3:&quot;black&quot; uniform:&quot;brown&quot;]
+  [#army name:&quot;Hound&quot; color1:&quot;blue&quot; color2:&quot;brown&quot; color3:&quot;purple&quot; uniform:&quot;brown&quot;]
+  [#army name:&quot;Condor&quot; color1:&quot;black&quot; color2:&quot;white&quot; color3:&quot;black&quot; uniform:&quot;gray&quot;]
+  [#army name:&quot;Squirrel&quot; color1:&quot;green&quot; color2:&quot;gray&quot; color3:&quot;blue&quot; uniform:&quot;gray&quot;]
+  [#army name:&quot;Rabbit&quot; color1:&quot;white&quot; color2:&quot;gray&quot; color3:&quot;red&quot; uniform:&quot;red&quot;]
+  [#army name:&quot;Leopard&quot; color1:&quot;orange&quot; color2:&quot;brown&quot; color3:&quot;orange&quot; uniform:&quot;brown&quot;]
+  [#army name:&quot;Centipede&quot; color1:&quot;orange&quot; color2:&quot;blue&quot; color3:&quot;red&quot; uniform:&quot;blue&quot;]
+  [#army name:&quot;Phoenix&quot; color1:&quot;yellow&quot; color2:&quot;orange&quot; color3:&quot;red&quot; uniform:&quot;yellow&quot;]
+  [#army name:&quot;Dragon&quot; color1:&quot;gray&quot; color2:&quot;orange&quot; color3:&quot;gray&quot; uniform:&quot;orange&quot;]
+  [#army name:&quot;Ferret&quot; color1:&quot;white&quot; color2:&quot;lightblue&quot; color3:&quot;black&quot; uniform:&quot;lightblue&quot;]
+  [#army name:&quot;Badger&quot; color1:&quot;red&quot; color2:&quot;white&quot; color3:&quot;black&quot; uniform:&quot;red&quot;]
+  [#army name:&quot;Griffin&quot; color1:&quot;yellow&quot; color2:&quot;brown&quot; color3:&quot;purple&quot; uniform:&quot;purple&quot;]
+  [#army name:&quot;Tiger&quot; color1:&quot;orange&quot; color2:&quot;black&quot; color3:&quot;white&quot; uniform:&quot;orange&quot;]
+  [#army name:&quot;Spider&quot; color1:&quot;green&quot; color2:&quot;black&quot; color3:&quot;purple&quot; uniform:&quot;purple&quot;]
+</code></pre>
+
+<h3 id="styles">Styles</h3>
+
+<p>There&rsquo;s a lot of CSS this time around because of a greater need for media queries on this example, so it&rsquo;s been split up into the style sheets for each page</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="p">{</span><span class="err">for</span> <span class="err">a</span> <span class="err">good</span> <span class="err">time,</span> <span class="err">leave</span> <span class="err">this</span> <span class="err">here</span><span class="p">}</span>
+</code></pre></div>
+
+<h4 id="broadcast-page">Broadcast Page</h4>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="p">.</span><span class="nc">program</span> <span class="p">{</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">broadcast</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#333</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+  <span class="k">user-select</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">battle-room</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">justify-content</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">room-title</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#316282</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">matchup</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-card</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="k">transform</span><span class="p">:</span> <span class="nf">skew</span><span class="p">(</span><span class="mi">-20</span><span class="kt">deg</span><span class="p">);</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#777</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">empty-room</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#555</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamB</span> <span class="o">&gt;</span> <span class="p">.</span><span class="nc">army-name</span> <span class="p">{</span>
+  <span class="k">order</span><span class="p">:</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamB</span> <span class="o">&gt;</span> <span class="p">.</span><span class="nc">ribbon</span> <span class="p">{</span>
+  <span class="k">order</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamB</span> <span class="o">&gt;</span> <span class="p">.</span><span class="nc">ribbon</span> <span class="nt">div</span> <span class="p">{</span>
+  <span class="k">border-left</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#222</span><span class="p">;</span>
+  <span class="k">border-right</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#222</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-name</span> <span class="p">{</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">transform</span><span class="p">:</span> <span class="nf">skew</span><span class="p">(</span><span class="mi">20</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ribbon</span> <span class="p">{</span>
+  <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ribbon</span> <span class="nt">div</span> <span class="p">{</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">border-left</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#222</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">red</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#EE0034</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">orange</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#FF7900</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">black</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">yellow</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#FCCC0A</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">black</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">green</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#00933C</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lightgreen</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#6CBE45</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">black</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">blue</span> <span class="p">{</span>
+ <span class="k">background</span><span class="p">:</span> <span class="mh">#0039A6</span><span class="p">;</span>
+ <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">lightblue</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#00A1DE</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">purple</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#A626AA</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">black</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#000000</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">white</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#ffffff</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">black</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">gray</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#A7A9AC</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">brown</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#996633</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1279px</span><span class="o">)</span> <span class="p">{</span>
+
+<span class="p">.</span><span class="nc">broadcast</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">max-width</span><span class="p">:</span> <span class="mi">250</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">min-width</span><span class="p">:</span> <span class="mi">220</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">battle-room</span> <span class="p">{</span>
+  <span class="k">border-bottom</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#999</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">67</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">room-title</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">matchup</span> <span class="p">{</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-card</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">130</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">versus-text</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">empty-room</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ribbon</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">1280px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1499px</span><span class="o">)</span> <span class="p">{</span>
+
+<span class="p">.</span><span class="nc">broadcast</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">max-width</span><span class="p">:</span> <span class="mi">550</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">battle-room</span> <span class="p">{</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">55</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">room-title</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">28</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-card</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">versus-text</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">empty-room</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">18</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ribbon</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">50</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamA</span> <span class="p">{</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamB</span> <span class="p">{</span>
+  <span class="k">margin-left</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">1500px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1679px</span><span class="o">)</span> <span class="p">{</span>
+
+<span class="p">.</span><span class="nc">broadcast</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">max-width</span><span class="p">:</span> <span class="mi">750</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">battle-room</span> <span class="p">{</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">room-title</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-card</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">280</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">versus-text</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">empty-room</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">22</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ribbon</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">90</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamA</span> <span class="p">{</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamB</span> <span class="p">{</span>
+  <span class="k">margin-left</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">1680px</span><span class="o">)</span> <span class="p">{</span>
+
+<span class="p">.</span><span class="nc">broadcast</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">max-width</span><span class="p">:</span> <span class="mi">960</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">battle-room</span> <span class="p">{</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">120</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">room-title</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">60</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#316282</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-card</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">320</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="k">transform</span><span class="p">:</span> <span class="nf">skew</span><span class="p">(</span><span class="mi">-20</span><span class="kt">deg</span><span class="p">);</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#777</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">versus-text</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">empty-room</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#555</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamA</span> <span class="p">{</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">teamB</span> <span class="p">{</span>
+  <span class="k">margin-left</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="p">.</span><span class="nc">army-name</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">ribbon</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+
+<h4 id="control-page">Control Page</h4>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="p">.</span><span class="nc">control</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#333</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">450</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">scroll</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+  <span class="k">user-select</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">logo</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">25</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">control-lists</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">400</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">title</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="k">order</span><span class="p">:</span> <span class="mi">-10</span><span class="p">;</span>
+  <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">all-rooms</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">room</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">battle-slot</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">26</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">162</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">white</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">vs-line</span> <span class="p">{</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">all-armies</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+  <span class="k">align-items</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-tab</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">160</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">text-transform</span><span class="p">:</span> <span class="kc">uppercase</span><span class="p">;</span>
+  <span class="k">border-radius</span><span class="p">:</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-family</span><span class="p">:</span> <span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">highlighted</span> <span class="p">{</span>
+  <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span> <span class="mi">10</span><span class="kt">px</span> <span class="mi">5</span><span class="kt">px</span> <span class="mh">#bbb</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">battle-slot</span><span class="p">.</span><span class="nc">highlighted</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#bbc</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1279px</span><span class="o">)</span> <span class="p">{</span>
+
+<span class="p">.</span><span class="nc">battle-slot</span> <span class="p">{</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">22</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">82</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">logo</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">80</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">18</span><span class="kt">px</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">title</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">70</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">2</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">control</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">control-lists</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">all-rooms</span> <span class="p">{</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">80</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">room</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">80</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">vs-line</span> <span class="p">{</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">all-armies</span> <span class="p">{</span>
+  <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">80</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">army-tab</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">80</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+

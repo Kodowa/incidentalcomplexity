@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Flappy Bird (in Eve) - Eve Documentation</title>
+    <meta name="generator" content="Hugo 0.19" />
+
+    
+    <link rel="canonical" href="http://incidentalcomplexity.com/posts/2016-08-23-flappy-eve/">
+    
+    <meta name="author" content="Eve">
+    
+
+    <meta property="og:url" content="http://incidentalcomplexity.com/posts/2016-08-23-flappy-eve/">
+    <meta property="og:title" content="Eve Documentation">
+    
+    <meta name="apple-mobile-web-app-title" content="Eve Documentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="http://incidentalcomplexity.com/images/favicon.png">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?52m981');
+        src: url('http://incidentalcomplexity.com/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://incidentalcomplexity.com/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://incidentalcomplexity.com/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://incidentalcomplexity.com/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/application.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://incidentalcomplexity.com/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://incidentalcomplexity.com/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class=" ">
+
+<div class="layer-wrapper header-wrapper">
+  <header class="layer">
+    <a href="http://witheve.com">
+    <div class="logo">
+      <img src="https://witheve.github.io/assets/images/logo_square.png" />
+      <h1><img alt="EVE" src="http://incidentalcomplexity.com/images/eve.svg" /></h1>
+    </div>
+    </a>
+    <div class="flex-spacer"></div>
+    <nav>
+      <a class="btn rounded cta secondary play-cta" href="http://play.witheve.com">Play</a>
+      
+      <a href="http://incidentalcomplexity.com">Blog</a>
+      <a href="http://docs.witheve.com">Docs</a>
+      <a href="https://groups.google.com/forum/#!forum/eve-talk">Community</a>
+    </nav>
+  </header>
+</div>
+
+
+	
+	
+
+
+<main class="main layer-wrapper">
+	<div class="toplayer">
+		<div class="drawer">
+			<div aria-label="Navigation">
+  
+  <div class="scrollable">
+    <div class="wrapper">
+      
+
+      
+     <a href="">Archive</a>
+
+    </div>
+  </div>
+</div>
+		</div>
+		<article class="article">
+			<div class="wrapper">
+
+				
+
+<p><em>(Editor&rsquo;s Note: Keep in mind as you&rsquo;re reading, this post is an executable Eve program. <a href="https://github.com/witheve/Eve">Try it</a> yourself!)</em></p>
+
+<p><img src="{{ site.url }}/images/flippy-flop.gif" alt="Eve - Flappy Bird" /></p>
+
+<p>{% raw %}</p>
+
+<p>When a player starts the game, we commit a <code>@world</code>, a <code>#player</code>, and some <code>#obstacles</code>. These will keep all of the essential state of the game. All of this information could have been stored on the world, but for clarity we break the important bits of state into objects that they effect.</p>
+
+<ul>
+<li>The <code>@world</code> tracks the distance the player has travelled, the current game screen, and the high score.</li>
+<li>The <code>#player</code> stores his current y position and (vertical) velocity.</li>
+<li>The <code>obstacles</code> have their (horizontal) offset and gap widths. We put distance on the world and only keep two obstacles; rather than moving the player through the world, we keep the player stationary and move the world past the player. When an obstacle goes off screen, we will wrap it around, update the placement of its gap, and continue on.</li>
+</ul>
+
+<p>Add a flappy eve and a world for it to flap in</p>
+
+<pre><code>match
+  [#session-connect]
+commit
+  [#player #self name: &quot;eve&quot; x: 25 y: 50 velocity: 0]
+  [@world screen: &quot;menu&quot; frame: 0 distance: 0 best: 0 gravity: -0.061]
+  [#obstacle gap: 35 offset: 0]
+  [#obstacle gap: 35 offset: -1]
+</code></pre>
+
+<p>Next we draw the backdrop of the world. The player and obstacle will be drawn later based on their current state. Throughout the app we use resources from <a href="https://github.com/bhauman/flappy-bird-demo">@bhauman&rsquo;s flappy bird demo in clojure</a>. Since none of these things change over time, we commit them once when the player starts the game.</p>
+
+<p>Draw the game world!</p>
+
+<pre><code>match
+  [#session-connect]
+commit
+  [#div style: [user-select: &quot;none&quot; -webkit-user-select: &quot;none&quot; -moz-user-select: &quot;none&quot;]  children:
+    [#svg @game-window viewBox: &quot;10 0 80 100&quot;, width: 480 children:
+    [#rect x: 0 y: 0 width: 100 height: 53 fill: &quot;rgb(112, 197, 206)&quot; sort: 0]
+    [#image x: 0 y: 52 width: 100 height: 43 preserveAspectRatio: &quot;xMinYMin slice&quot; href: &quot;https://cdn.rawgit.com/bhauman/flappy-bird-demo/master/resources/public/imgs/background.png&quot; sort: 1]
+    [#rect x: 0 y: 95 width: 100 height: 5 fill: &quot;rgb(222, 216, 149)&quot; sort: 0]]]
+</code></pre>
+
+<h3 id="screens">Screens</h3>
+
+<p>These following blocks handle drawing the game&rsquo;s other screens (such as the main menu and the game over scene).</p>
+
+<p>The main menu displays a message instructing the player how to start the game.</p>
+
+<pre><code>match
+  [@world screen: &quot;menu&quot;]
+  svg = [@game-window]
+bind
+  svg.children += [#text x: 50 y: 45 text-anchor: &quot;middle&quot; font-size: 6 text: &quot;Click the screen to begin!&quot; sort: 10]
+</code></pre>
+
+<p>The &ldquo;game over&rdquo; screen displays the final score of the last game, the high score of all games, and a message inviting the player to play the game again.</p>
+
+<pre><code>match
+  [@world screen: &quot;game over&quot; score best]
+  svg = [@game-window]
+bind
+  svg.children += [#text x: 50 y: 30 text-anchor: &quot;middle&quot; font-size: 6 text: &quot;Game Over :(&quot; sort: 10]
+  svg.children += [#text x: 50 y: 55 text-anchor: &quot;middle&quot; font-size: 6 text: &quot;Score {{score}}&quot; sort: 10]
+  svg.children += [#text x: 50 y: 65 text-anchor: &quot;middle&quot; font-size: 6 text: &quot;Best {{best}}&quot; sort: 10]
+  svg.children += [#text x: 50 y: 85 text-anchor: &quot;middle&quot; font-size: 4 text: &quot;Click to play again!&quot; sort: 10]
+</code></pre>
+
+<p>We haven&rsquo;t calculated the score yet, so let&rsquo;s do that. We calculate the score as the <code>floor</code> of the distance, meaning we just round the distance down to the nearest integer. If the distance between pipes is changed, this value can be scaled to match.</p>
+
+<pre><code>match
+  world = [@world distance]
+bind
+  world.score := floor[value: distance]
+</code></pre>
+
+<p>When the game is on the &ldquo;menu&rdquo; or &ldquo;game over&rdquo; screens, a click anywhere in the application will (re)start the game. Additionally, if the current score is better than the current best, we&rsquo;ll swap them out now. Along with starting the game, we make sure to reset the distance and player positions in the came of a restart.</p>
+
+<p>Start a new game</p>
+
+<pre><code>match
+  [#click #direct-target]
+  world = if world = [@world screen: &quot;menu&quot;] then world
+          else [@world screen: &quot;game over&quot;]
+  new = if world = [@world score best] score &gt; best then score
+        else if world = [@world best] then best
+  player = [#player]
+commit
+  world &lt;- [screen: &quot;game&quot; distance: 0 best: new]
+  player &lt;- [x: 25 y: 50 velocity: 0]
+</code></pre>
+
+<h3 id="run-the-game">Run the game</h3>
+
+<p>Now we need some logic to actually play the game. We slide obstacles along proportional to the distance travelled, and wrap them around to the beginning once they&rsquo;re entirely off screen. Additionally, we only show obstacles once their distance travelled is positive. This allows us to offset a pipe in the future, without the modulo operator wrapping it around to start off halfway through the screen.</p>
+
+<p>Every 2 distance a wild obstacle appears</p>
+
+<pre><code>match
+  [@world distance]
+  obstacle = [#obstacle offset]
+  obstacle-distance = distance + offset
+  obstacle-distance &gt;= 0
+bind
+  obstacle &lt;- [x: 100 - (50 * mod[value: obstacle-distance, by: 2])]
+</code></pre>
+
+<p>When the obstacle is offscreen (<code>x &gt; 90</code>), we randomly adjust the height of its gap to ensure the game doesn&rsquo;t play the same way twice. Eve&rsquo;s current random implementation yields a single result per seed per evaluation, so you can ask for <code>random[seed: &quot;foo&quot;]</code> in multiple queries and get the same result in that evaluation. In practice, this means that for every unique sample of randomness you care about in a program at a fixed time, you should use a unique seed. In this case, since we want one sample per obstacle, we just use the obstacle UUIDs as our seeds. The magic numbers in the equation just keep the gap from being at the very top of the screen or underground.</p>
+
+<p>Readjust the height of the gap every time the obstacle resets</p>
+
+<pre><code>match
+  [@world screen: &quot;game&quot;]
+  obstacle = [#obstacle x &gt; 90]
+  height = random[seed: obstacle] * 30 + 5
+commit
+  obstacle.height := height
+</code></pre>
+
+<p>Next we draw the <code>#player</code> at its (x,y) coordinates. Since the player is stationary in x, setting his x position here dynamically is just a formality, but it allows us to configure his position on the screen when we initialize. We create the sprite first, then set the x and y positions to let us reuse the same element regardless of where the player is.
+Draw the player</p>
+
+<pre><code>match
+  svg = [@game-window]
+  player = [#player x y]
+  imgs = &quot;https://cdn.rawgit.com/bhauman/flappy-bird-demo/master/resources/public/imgs&quot;
+bind
+  sprite = [#image player width: 10 height: 10 href: &quot;http://i.imgur.com/sp68LtM.gif&quot; sort: 8]
+  sprite.x := x - 5
+  sprite.y := y - 5
+  svg.children += sprite
+</code></pre>
+
+<p>Drawing obstacles is much the same process as drawing the player, but we encapsulate the sprites into a nested SVG to group and move them as a unit.</p>
+
+<p>Draw the obstacles</p>
+
+<pre><code>match
+  svg = [@game-window]
+  obstacle = [#obstacle x height gap]
+  bottom-height = height + gap
+  imgs = &quot;https://cdn.rawgit.com/bhauman/flappy-bird-demo/master/resources/public/imgs&quot;
+bind
+  sprite-group = [#svg @obs-spr obstacle sort: 2 overflow: &quot;visible&quot; children:
+    [#image y: 0 width: 10 height, preserveAspectRatio: &quot;none&quot; href: &quot;{{imgs}}/pillar-bkg.png&quot; sort: 1]
+    [#image x: -1 y: height - 5 width: 12 height: 5 href: &quot;{{imgs}}/lower-pillar-head.png&quot; sort: 2]
+    [#image y: bottom-height width: 10 height: 90 - bottom-height, preserveAspectRatio: &quot;none&quot; href: &quot;{{imgs}}/pillar-bkg.png&quot; sort: 1]
+    [#image x: -1 y: bottom-height width: 12 height: 5 href: &quot;{{imgs}}/lower-pillar-head.png&quot; sort: 2]]
+  sprite-group.x := x
+  svg.children += sprite-group
+</code></pre>
+
+<p>When a player clicks during gameplay, we give the bird some lift by setting its velocity.</p>
+
+<pre><code>match
+  [#click #direct-target]
+  [@world screen: &quot;game&quot;]
+  player = [#player #self]
+commit
+  player.velocity := 1.17
+</code></pre>
+
+<p>Next, we scroll the world in time with frame updates. Eve is currently locked to 60fps updates here, but this will probably be configurable in the future. Importantly, we only want to update the world state once per frame, so to ensure that we note the offset of the frame we last computed in <code>world.frame</code> and ensure we’re not recomputing for the same offset.</p>
+
+<pre><code>match
+  [#time frames]
+  world = [@world screen: &quot;game&quot; frame != frames gravity]
+  player = [#player y velocity]
+  not([#click])
+commit
+  world.frame := frames
+  world.distance := world.distance + 1 / 60
+  player &lt;- [y: y - velocity, velocity: velocity + gravity]
+</code></pre>
+
+<p>Checking collision with the ground is very simple. Since we know the y height of the ground, we just check if the player&rsquo;s bottom (determined by center + radius) is below that point.</p>
+
+<p>The game is lost if the player hits the ground.</p>
+
+<pre><code>match
+  world = [@world screen: &quot;game&quot;]
+  [#player y &gt; 85] // ground height + player radius
+commit
+  world.screen := &quot;game over&quot;
+</code></pre>
+
+<p>Collision with the pipes is only slightly harder. Since they come in pairs, we first determine if the player is horizontally in a slice that may contain pipes and if so, whether we&rsquo;re above or below the gap. If neither, we&rsquo;re in the clear, otherwise we&rsquo;ve collided.</p>
+
+<p>The game is lost if the player hits an <code>#obstacle</code></p>
+
+<pre><code>match
+  world = [@world screen: &quot;game&quot;]
+  [#player x y]
+  [#obstacle x: obstacle-x height gap]
+  ∂x = abs[value: obstacle-x + 5 - x] - 10 // distance between the edges of player and obstacle (offset of 1/2 obstacle width because origin is on the left)
+  ∂x &lt; 0
+  collision = if y - 5 &lt;= height then true
+              else if y + 5 &gt;= gap + height then true
+commit
+  world.screen := &quot;game over&quot;
+</code></pre>
+
+<p>{% endraw %}</p>
+
+
+			</div>
+		</article>
+	</div>
+</main>
+
+<div class="layer-wrapper contact-wrapper">
+	<section class="contact">
+	<a href="http://incidentalcomplexity.com">
+		<h3>Blog</h3>
+		<p>Read up on new releases, technical musings and more.</p>
+	</a>
+	<a href="https://groups.google.com/forum/#!forum/eve-talk">
+		<h3>Mailing List</h3>
+		<p>Chat with the community and team about the future of Eve.</p>
+	</a>
+	<a href="https://github.com/witheve/eve/issues">
+		<h3>GitHub Issues</h3>
+		<p>Let us know about any problems you run into using Eve.</p>
+	</a>
+	</section>
+</div>
+
