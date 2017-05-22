@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Archives on Eve Documentation</title>
+    <link>http://incidentalcomplexity.com/archive/index.xml</link>
+    <description>Recent content in Archives on Eve Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="http://incidentalcomplexity.com/archive/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title></title>
+      <link>http://incidentalcomplexity.com/archive/archive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://incidentalcomplexity.com/archive/archive/</guid>
+      <description>&lt;p&gt;something&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

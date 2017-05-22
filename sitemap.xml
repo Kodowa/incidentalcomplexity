@@ -172,7 +172,12 @@
   </url>
   
   <url>
+    <loc>http://incidentalcomplexity.com/archive/archive/</loc>
+  </url>
+  
+  <url>
     <loc>http://incidentalcomplexity.com/archive/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
