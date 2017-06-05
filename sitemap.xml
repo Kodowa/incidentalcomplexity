@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://incidentalcomplexity.com/posts/2017-06-02-may/</loc>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://incidentalcomplexity.com/posts/2017-05-15-april/</loc>
     <lastmod>2017-05-15T00:00:00+00:00</lastmod>
   </url>
@@ -182,13 +187,13 @@
   
   <url>
     <loc>http://incidentalcomplexity.com/</loc>
-    <lastmod>2017-05-15T00:00:00+00:00</lastmod>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://incidentalcomplexity.com/posts/</loc>
-    <lastmod>2017-05-15T00:00:00+00:00</lastmod>
+    <lastmod>2017-06-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -6,8 +6,81 @@
     <description>Recent content in Posts on Eve Documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 May 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jun 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://incidentalcomplexity.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dev Diary (Mayh 2017)</title>
+      <link>http://incidentalcomplexity.com/posts/2017-06-02-may/</link>
+      <pubDate>Thu, 01 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://incidentalcomplexity.com/posts/2017-06-02-may/</guid>
+      <description>
+
+&lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you’re new to Eve, &lt;a href=&#34;http://witheve.com&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In May we released Preview 3 of v0.3, published some new documentation, and had a meetup.&lt;/p&gt;
+
+&lt;h2 id=&#34;preview-3-of-v0-3&#34;&gt;Preview 3 of v0.3&lt;/h2&gt;
+
+&lt;h3 id=&#34;the-eve-syntax-returns&#34;&gt;The Eve Syntax Returns&lt;/h3&gt;
+
+&lt;p&gt;The parser for the Eve syntax returns in Preview 3. While the parser is included again, there’s still no editor bundled, so parsing a program written in the Eve syntax can accomplished in JavaScript like so:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Program&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;witheve&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;program&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Program&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;program name&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+&lt;span class=&#34;nx&#34;&gt;program&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;
+&lt;span class=&#34;sb&#34;&gt;# An eve program&lt;/span&gt;
+
+&lt;span class=&#34;sb&#34;&gt;This is an Eve program&lt;/span&gt;
+
+&lt;span class=&#34;sb&#34;&gt;~~~&lt;/span&gt;
+&lt;span class=&#34;sb&#34;&gt;search&lt;/span&gt;
+&lt;span class=&#34;sb&#34;&gt;  [#person name: &amp;quot;Jeff&amp;quot;]&lt;/span&gt;
+
+&lt;span class=&#34;sb&#34;&gt;bind&lt;/span&gt;
+&lt;span class=&#34;sb&#34;&gt;  [#ui/text text: &amp;quot;Hi Jeff&amp;quot;]&lt;/span&gt;
+&lt;span class=&#34;sb&#34;&gt;~~~`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A second method is to download &lt;a href=&#34;https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fwitheve%2Feve-starter&amp;amp;sa=D&amp;amp;sntz=1&amp;amp;usg=AFQjCNHEFK6uF3Udjrz51ipbaJv4j6g1BA&#34;&gt;eve-starter&lt;/a&gt;, and put your *.eve file in the “programs” directory. Then launch the program switcher (run npm start in the eve-start directory, then direct your browser to localhost:8000), and you will see your program listed in the left panel.&lt;/p&gt;
+
+&lt;p&gt;We also updated the &lt;a href=&#34;https://github.com/witheve/eve-starter/tree/master/programs&#34;&gt;example Eve applications&lt;/a&gt; for v0.3. This entailed removing any references to databases and updating records to use the new namespaced tags. We&amp;rsquo;re currently in the process of documenting watchers (e.g. html, svg, events), but if you’re curious how to use these, you can use the example programs as a reference for now.&lt;/p&gt;
+
+&lt;h3 id=&#34;documentation-for-v0-3&#34;&gt;Documentation for v0.3&lt;/h3&gt;
+
+&lt;p&gt;As part of this release, we’re also making available our &lt;a href=&#34;http://docs.witheve.com/v0.3/&#34;&gt;documentation refresh&lt;/a&gt;. We’ve updated the layout to match the new Eve website, and we’ve added some summary documents to help new users get oriented in the language. These include:&lt;/p&gt;
+
+&lt;p&gt;- A new &lt;a href=&#34;http://docs.witheve.com/v0.3/tutorials/quickstart.eve/&#34;&gt;quickstart&lt;/a&gt; – We’ve got a new version of the quickstart that aims to be a 5 to 10 minute introduction to Eve. In 6 blocks we introduce blocks, records, and the difference between binding and committing records.&lt;/p&gt;
+
+&lt;p&gt;- A new &lt;a href=&#34;http://docs.witheve.com/v0.3/syntaxreference/&#34;&gt;syntax reference&lt;/a&gt; – This is a 3 page document that acts as a reference for the Eve syntax. You can view it online, or print it out to keep handy on your desk.&lt;/p&gt;
+
+&lt;p&gt;- A &lt;a href=&#34;http://docs.witheve.com/v0.3/handbook/libraries/&#34;&gt;library reference&lt;/a&gt; – This page will act as an index to the standard library. For every function in the standard library, we list its arguments as well as an example demonstrating its usage.&lt;/p&gt;
+
+&lt;p&gt;These documents are the essential documentation for using the Eve language. We hope you’ll take a look, and let us know if anything needs more clarity, or if we’ve omitted any important details. As we update the v0.2 docs for v0.3, they will become available on the v0.3 docs site.&lt;/p&gt;
+
+&lt;p&gt;One other note about documentation &amp;ndash; from now on we’ll be maintaining documentation for the present and future versions of Eve. To that end, when you go to &lt;a href=&#34;http://docs.witheve.com&#34;&gt;docs.witheve.com&lt;/a&gt;, you’ll currently see an option to select v0.2 or v0.3&lt;/p&gt;
+
+&lt;h2 id=&#34;community&#34;&gt;Community&lt;/h2&gt;
+
+&lt;h3 id=&#34;eve-around-the-world&#34;&gt;Eve Around the World&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Copenhagen, June TBD&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Just a reminder that Zubair is hosting a meetup in Copenhagen this June. We&amp;rsquo;ll let you know when a date has been finalized.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;San Francisco, Wednesday May 31&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Last night we held our first official Eve meetup at our offices in downtown San Francisco. I&amp;rsquo;d like to thank everyone for dropping by. We enjoyed meeting everyone and putting faces to names. We had an opportunity to finally meet some long-time users, as well as introduce ourselves to people finding Eve for the first time.&lt;/p&gt;
+
+&lt;p&gt;If you have any feedback or ideas for future meetups, please send me an &lt;a href=&#34;mailto:corey@kodowa.com&#34;&gt;e-mail&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;San Francisco, Tuesday June 27&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you wanted to attend the meetup but couldn&amp;rsquo;t for some reason, don&amp;rsquo;t worry &amp;ndash; we&amp;rsquo;ll be holding another one at the end of this month, again at the Kodowa office in downtown (SOMA) SF. You can RSVP at &lt;a href=&#34;https://www.meetup.com/witheve/events/240467367/&#34;&gt;this link&lt;/a&gt;, and we hope to see you all there!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Dev Diary (April 2017)</title>
@@ -3895,226 +3968,6 @@ bind db
 &lt;p&gt;The quick start guide is coming along nicely. It&amp;rsquo;s gone through a few iterations of user feedback, and we&amp;rsquo;d like to hear from a wider audience. The guide starts by showing you &amp;ldquo;Hello World!&amp;rdquo; in Eve, and from there slowly introduces language concepts until you have the tools to write a simple web app. We hope you&amp;rsquo;ll &lt;a href=&#34;https://witheve.github.io/docs/guides/quickstart/&#34;&gt;give it a read&lt;/a&gt; and let us know how it can be improved.&lt;/p&gt;
 
 &lt;p&gt;That&amp;rsquo;s all for September. But as I said earlier, we have some exciting stuff in the pipeline for October. As always, we hope you give Eve a try and tell us what you think on the &lt;a href=&#34;https://groups.google.com/forum/#!forum/eve-talk&#34;&gt;mailing list&lt;/a&gt;!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Dev Diary (August 2016)</title>
-      <link>http://incidentalcomplexity.com/posts/2016-08-31-august/</link>
-      <pubDate>Wed, 31 Aug 2016 00:00:00 +0000</pubDate>
-      
-      <guid>http://incidentalcomplexity.com/posts/2016-08-31-august/</guid>
-      <description>
-
-&lt;p&gt;&lt;em&gt;This post has been updated. See the original &lt;a href=&#34;https://github.com/Kodowa/incidentalcomplexity/blob/6d461b59f7530ade2225a24f8bcc01b4eb1d8fc9/_posts/2016-08-31-august.md&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;(Eve is a new programming language, and this is our development blog. If you&amp;rsquo;re new to Eve, &lt;a href=&#34;https://github.com/witheve/Eve&#34;&gt;start here&lt;/a&gt;)&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;The majority of August was spent adding language features, fixing bugs, writing documentation, and listening/responding to community feedback. We did a lot this month, so this update is going to be a long one.&lt;/p&gt;
-
-&lt;h3 id=&#34;platform&#34;&gt;Platform&lt;/h3&gt;
-
-&lt;p&gt;The Eve platform saw rapid improvements over the last month as we quickly responded to user feedback. As is the case when all projects are set loose in the wild, we encountered stability, performance, and usability concerns almost immediately. Let&amp;rsquo;s take a look at all of the work put into the Eve platform first.&lt;/p&gt;
-
-&lt;h4 id=&#34;word-choice-adjustments&#34;&gt;Word Choice Adjustments&lt;/h4&gt;
-
-&lt;p&gt;Surprisingly, one of the most difficult aspects of developing a language is deciding on the words and verbiage used to describe Eve concepts. Choosing the wrong words can alienate users and make things more confusing than they need to be. Therefore, we&amp;rsquo;ve spent countless hours looking through thesauruses and dictionaries for the perfect words. In presenting the language to new users, we&amp;rsquo;ve learned some of the choices that made sense to us didn&amp;rsquo;t make sense to others. For instance, we used to talk about &amp;ldquo;freezing&amp;rdquo;, but community feedback suggested that word didn&amp;rsquo;t provide an intuition for how that command actually worked.&lt;/p&gt;
-
-&lt;p&gt;For anyone following our development, but not following the &lt;a href=&#34;https://github.com/witheve/rfcs/issues/4&#34;&gt;Syntax RFC discussion&lt;/a&gt;, we&amp;rsquo;ve made the following adjustments to how we talk about Eve:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;freeze   -&amp;gt; commit
-maintain -&amp;gt; bind
-object   -&amp;gt; record
-bag      -&amp;gt; database
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;new-function-syntax&#34;&gt;New Function Syntax&lt;/h4&gt;
-
-&lt;p&gt;Whereas most languages use functions to accomplish code-reuse, Eve takes a different route; our records obviate the need for most functions. Therefore, we don&amp;rsquo;t fully support user defined functions at the moment. Nonetheless, functions are useful for primitive operations, like math or string manipulation. Thus, we adjusted our function syntax to look a little more like the record syntax.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s look at the sine function:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;y = sin[degrees: 90]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The first thing to notice are the square brackets. These are reminiscent of the record syntax, which also uses square brackets. That&amp;rsquo;s because a function call is really just sugar for:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[@sin #function degrees: 90 value]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;which is a record like any other. The new function syntax uses the &lt;code&gt;value&lt;/code&gt; attribute as an
-implicit return, so functions can be inlined into expressions.&lt;/p&gt;
-
-&lt;p&gt;The second thing to notice is that arguments are explicitly defined at the call site. This has several nice properties. First, it makes code more readable and self-documenting; any reader of the program unfamiliar with the function arguments can read them where the function is called, without having to look up documentation. Second, explicit arguments allow a nice mechanism to provide alternative arguments. For instance, we could use the sine function with a radian input:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;y = sin[radians: angle]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The reader of this program doesn&amp;rsquo;t need to guess if the input is radians or degrees. One interesting thing you can do with this is add custom arguments to existing functions. In this example, we create a new coordinate system that takes angles in “fun-degrees”:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt; match
-    return = sin[angle: value? / 2 + 30]
- bind
-    sin[fun-degrees: value?, return]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And then we can use the new argument the same way we use the default arguments:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt; match
-    answer = sin[fun-degrees: 40]
- bind
-    [#div text: answer]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Finally, this syntax allows for optional arguments. For instance, in the case of &lt;code&gt;count&lt;/code&gt;, the &lt;code&gt;per&lt;/code&gt; argument is optional. So we can use count in the following ways:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;y = count[given: students]
-y = count[given: students, per: grade]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;databases&#34;&gt;Databases&lt;/h4&gt;
-
-&lt;p&gt;We&amp;rsquo;ve started thinking more about how modularity will work in Eve. For a while now, we&amp;rsquo;ve had a concept of &amp;ldquo;databases&amp;rdquo; (formerly bags), which are just containers of facts. So far, we&amp;rsquo;ve only exposed two databases: a default &amp;ldquo;session&amp;rdquo; database and a &amp;ldquo;global&amp;rdquo; database. The global database was exposed to users via &lt;code&gt;commit global&lt;/code&gt;, which directed committed records to a global database accessible by any session on the server.&lt;/p&gt;
-
-&lt;p&gt;In the &lt;a href=&#34;https://github.com/witheve/Eve/tree/modularity&#34;&gt;modularity branch&lt;/a&gt;, we&amp;rsquo;ve opened up the ability to send facts to and select facts from specific databases. For instance, until now a committed &lt;code&gt;#div&lt;/code&gt; was implicitly directed to a special browser database. Now, if you want to render something in the browser you&amp;rsquo;ll have to tell Eve to put it there explicitly:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;commit @browser
-  [#div text: &amp;quot;some text&amp;quot;]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Databases are specified after one of the three actions: &lt;code&gt;match&lt;/code&gt;, &lt;code&gt;commit&lt;/code&gt;, or &lt;code&gt;bind&lt;/code&gt;. If no database is specified, the database is implicitly a default session database. You can even work with multiple databases at once:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;match (@my-database, @your-database)
-  [#person name]
-bind
-  [#div text: {{name}}]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This would select every &lt;code&gt;#person&lt;/code&gt; from two different databases, essentially merging two databases.&lt;/p&gt;
-
-&lt;p&gt;With this mechanism in place, we can start to talk about how modularity and libraries will work in Eve. For instance, I could create a custom math library, and what I would distribute is a database. Then anyone who wants to use my custom math would do the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;match @custom-math-lib
-  ...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We still have a lot of work to do here, so this feature is not available on the master branch yet. Stay tuned for an RFC coming next month on modularity.&lt;/p&gt;
-
-&lt;h4 id=&#34;talking-with-the-outside-world&#34;&gt;Talking with the outside world&lt;/h4&gt;
-
-&lt;p&gt;Eve cannot thrive in isolation, so we need a way to communicate with the outside world. We&amp;rsquo;ve done some work on this front, adding the ability to read/write files, handle JSON (opening up the ability to interact with any JSON compatible API), and handle HTTP requests. This work is available in the &lt;a href=&#34;https://github.com/witheve/Eve/tree/process&#34;&gt;process branch&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;What&amp;rsquo;s nice about our solution here is that interacting with the outside world doesn&amp;rsquo;t look or feel any different than interacting exclusively within Eve; you still match and modify records, except the facts in those records originate from external sources. If you&amp;rsquo;ve been using Eve, then you&amp;rsquo;re already interacting with the browser through changing the DOM and handling events like clicks and keypresses.&lt;/p&gt;
-
-&lt;p&gt;Eric has been working on a little &lt;a href=&#34;https://github.com/witheve/Eve/blob/5b49dbbb0b6d02a305a1efeebc39923239627634/examples/http-server.eve&#34;&gt;HTTP file server&lt;/a&gt; written in Eve. It&amp;rsquo;s still a work in progress, but the functionality to accept requests and serve files is already in place. Take a look at how an HTTP request is handled:&lt;/p&gt;
-
-&lt;p&gt;Start path resolution&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  match
-     r = [#http-request]
-     split[text: r.request.url, token, index, by: &amp;quot;/&amp;quot;]
-     fr = [#root]
-  bind
-     [#path index: 1, file: fr]
-     [#path index token]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Resolve a path&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;match
-    [#path index: pindex, file: pfile]
-    f = pfile.child
-    child = [#path index: (pindex + 1), token: f.name]
-bind
-    child.file := f
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;After some more work to determine the requested file is available, then we can send a response:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;match
-    r = [#request-object extension file connection]
-    ct = [#content-type suffix: extension]
-commit
-  connection.response := [
-      content: file.contents
-      status: &amp;quot;200&amp;quot;
-      reason: &amp;quot;OK&amp;quot;
-      header: [Content-Type:ct.type]]
-  r := none
-bind 
-  r.completed := true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;You&amp;rsquo;ll see here that we are interacting with both an external &lt;code&gt;#http-request&lt;/code&gt;, and the file system through &lt;code&gt;#path&lt;/code&gt;. Again, what&amp;rsquo;s notable is that despite interacting with data external to Eve, the code is written as if you were working entirely within the boundaries of Eve. You can check out the &lt;a href=&#34;https://github.com/witheve/Eve/blob/5b49dbbb0b6d02a305a1efeebc39923239627634/examples/http-server.eve&#34;&gt;full program&lt;/a&gt; to see the rest of the implementation details.&lt;/p&gt;
-
-&lt;h4 id=&#34;syntax-highlighting&#34;&gt;Syntax Highlighting&lt;/h4&gt;
-
-&lt;p&gt;We added syntax highlighting to the built-in editor!&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://incidentalcomplexity.com/posts/images/syntax-highlighting.png&#34; alt=&#34;Eve Syntax Highlighting&#34; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;eve-and-markdown&#34;&gt;Eve and Markdown&lt;/h4&gt;
-
-&lt;p&gt;One key feature of the Eve programming model is that the order of statements doesn&amp;rsquo;t matter. A nice implication of this property is that we can write Eve code in an order that makes sense for a human, as opposed to writing code in an order that is imposed by the compiler or runtime. This idea is the basis for &lt;a href=&#34;https://en.wikipedia.org/wiki/Literate_programming&#34;&gt;literate programming&lt;/a&gt;, a practice for writing programs introduced by Donald Knuth in 1981. The idea behind literate programming is to treat a program as a document of prose written to a human audience, with code interspersed throughout. In writing this way, a programmer can use prose and formal methods to reinforce one another, leading to programs that are (in principle) easier to maintain. We talk about some of the benefits of literate programming &lt;a href=&#34;https://github.com/witheve/rfcs/blob/master/proposed/syntax.md#program-structure&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://incidentalcomplexity.com/posts/images/EveMD.png&#34; alt=&#34;Eve Syntax Highlighting&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Whereas other literate programming implementations require a &amp;ldquo;tangle&amp;rdquo; step to turn a literate program into a compilable program, Eve&amp;rsquo;s semantics mean a &lt;code&gt;*.eve&lt;/code&gt; file can be rendered as markdown or executed by Eve without any additional compilation steps. We accomplish this by being &lt;a href=&#34;http://commonmark.org/&#34;&gt;CommonMark&lt;/a&gt; compatible; Eve programs are written just as you would write any markdown document, but code blocks containing Eve code are actually executable.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ve written a few literate programs this way. If you follow our blog, you&amp;rsquo;ve already seen some of them:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://incidentalcomplexity.com/2016/08/11/tic-tac-toe/&#34;&gt;Tic-Tac-Toe&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://incidentalcomplexity.com/2016/08/19/todoMVC/&#34;&gt;TodoMVC&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://incidentalcomplexity.com/2016/08/23/flappy-eve/&#34;&gt;FlappyBird&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Each of these blog posts are executable Eve programs &amp;ldquo;as-is&amp;rdquo;; just send them through the Eve compiler and they&amp;rsquo;ll run. As Eve grows, we hope more people will join us in practicing literate programming, but there&amp;rsquo;s nothing about Eve that demands writing code this way; you can write programs with as little or as much prose as you prefer.&lt;/p&gt;
-
-&lt;h4 id=&#34;views&#34;&gt;Views&lt;/h4&gt;
-
-&lt;p&gt;We&amp;rsquo;ve been thinking a lot about what kind of graphical tools would be useful for working with the textual version of Eve. One thing currently missing from Eve is the ability to explore the contents of the Eve DB. Without this ability, Eve is as opaque as any other programming language. After all, the ability to inspect your program as it executes is one of the core features of our language.&lt;/p&gt;
-
-&lt;p&gt;An idea we keep coming back to is the concept of &amp;ldquo;views&amp;rdquo;. Views are small graphical elements that represent records in the system. By default, they are just small squares, but a programmer can imbue them with properties (position, color, size, shape, etc.) to visualize the records they represent. For example, a graph can be constructed out of views by applying height and position properties to them, like in this example:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://incidentalcomplexity.com/posts/images/pixels2.gif&#34; alt=&#34;Eve Syntax Highlighting&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Here, we use &lt;code&gt;#pixel&lt;/code&gt; (views used to be called pixels, so this would currently be accessed using &lt;code&gt;#view&lt;/code&gt;) to inspect some records. Three views are displayed, one for each &lt;code&gt;#clock-hand&lt;/code&gt;. In this case, since we&amp;rsquo;re inspecting records, the views display the attributes and values for each of the records. Then, we change to a different mode and look at the history of a specific attribute on &lt;code&gt;#clock-hand&lt;/code&gt;s, namely &lt;code&gt;x2&lt;/code&gt;. This results in three graphs illustrating how &lt;code&gt;x2&lt;/code&gt; changes for each &lt;code&gt;#clock-hand&lt;/code&gt; over time.&lt;/p&gt;
-
-&lt;p&gt;Obviously, this is just a concept at the moment, but the core idea we like about views is how flexible they are. We can package some default functionality, like the record inspector and history illustrated here. But even more importantly this functionality should be trivially extended by the programmer.&lt;/p&gt;
-
-&lt;h3 id=&#34;community&#34;&gt;Community&lt;/h3&gt;
-
-&lt;p&gt;I&amp;rsquo;m especially excited by the engagement we&amp;rsquo;ve seen from the community so far. It&amp;rsquo;s hard to know exactly how many people are following our development and using Eve, but so far we&amp;rsquo;ve received comments and feedback from users in Sydney, Copenhagen, Moscow, Finland, Hong Kong, the UK, Germany, and many other places.&lt;/p&gt;
-
-&lt;h4 id=&#34;issues-pull-requests&#34;&gt;Issues + Pull Requests&lt;/h4&gt;
-
-&lt;p&gt;Thank you to everyone who submitted a PR or an issue report. Specifically, thank you to &lt;a href=&#34;https://github.com/btheado&#34;&gt;@btheado&lt;/a&gt;,  &lt;a href=&#34;https://github.com/bertrandrustle&#34;&gt;@bertrandrustle&lt;/a&gt;, &lt;a href=&#34;https://github.com/RubenSandwich&#34;&gt;@RubenSandwich&lt;/a&gt;, &lt;a href=&#34;https://github.com/frankier&#34;&gt;@frankier&lt;/a&gt;, &lt;a href=&#34;https://github.com/dram&#34;&gt;@dram&lt;/a&gt;, and &lt;a href=&#34;https://github.com/martinchooooooo&#34;&gt;@martinchooooooo&lt;/a&gt;. Let me know if I missed anyone!&lt;/p&gt;
-
-&lt;h4 id=&#34;rfcs&#34;&gt;RFCs&lt;/h4&gt;
-
-&lt;p&gt;The syntax RFC received a lot of &lt;a href=&#34;https://github.com/witheve/rfcs/issues/4&#34;&gt;activity&lt;/a&gt; this month, surpassing 100 comments from over a dozen users. Your comments have been well thought out, provocative, and very constructive, so thank you to everyone who has participated so far. Due to the feedback we received, we&amp;rsquo;ve already made several adjustments to the syntax, including changes to keywords and the general vocabulary of Eve (see above).&lt;/p&gt;
-
-&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
-
-&lt;p&gt;Documentation is still in an early stage, but it&amp;rsquo;s improving daily.&lt;/p&gt;
-
-&lt;h5 id=&#34;syntax-quick-reference&#34;&gt;Syntax Quick Reference&lt;/h5&gt;
-
-&lt;p&gt;We put together a short &lt;a href=&#34;https://github.com/witheve/assets/blob/master/docs/SyntaxReference.pdf&#34;&gt;syntax reference&lt;/a&gt; with all the necessary details to help you write Eve programs.&lt;/p&gt;
-
-&lt;h5 id=&#34;eve-handbook&#34;&gt;Eve Handbook&lt;/h5&gt;
-
-&lt;p&gt;The &lt;a href=&#34;https://github.com/witheve/docs/blob/master/drafts/handbook/contents.md&#34;&gt;Eve Handbook&lt;/a&gt; has received some work this month, particularly in the area of documenting the standard library. If you&amp;rsquo;d like to contribute to the development of Eve, this is the easiest way to get started. You don&amp;rsquo;t even need to contribute any content; just pointing out the shortcomings of this document will help in its development. Major areas of improvement include:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Completeness - are there any missing gaps?&lt;/li&gt;
-&lt;li&gt;Accuracy - is the handbook true to Eve?&lt;/li&gt;
-&lt;li&gt;Exposition - is the document written in an order that helps people learn the language?&lt;/li&gt;
-&lt;li&gt;Examples - many examples are needed, especially for the standard library&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We&amp;rsquo;ll be improving the handbook and other documentation daily, so keep checking back.&lt;/p&gt;
 </description>
     </item>
     

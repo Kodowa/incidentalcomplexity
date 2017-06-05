@@ -152,9 +152,8 @@ img {
 
 .drawer {
   color: rgb(85, 85, 85);
-  border-right: 1px solid #f0f0f0;
   padding-left: 10px;
-  padding-right: 50px;
+  padding-right: 60px;
   padding-bottom: 20px;
 
 }
