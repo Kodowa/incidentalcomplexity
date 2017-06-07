@@ -1,0 +1,5 @@
+highlighter: rouge
+permalink: pretty
+markdown: kramdown
+timezone: America/Los_Angeles
+future: true
