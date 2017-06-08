@@ -3,4 +3,4 @@ permalink: pretty
 markdown: kramdown
 timezone: America/Los_Angeles
 future: true
-theme: jekyll-theme-slate
+theme: jekyll-theme-cayman
