@@ -1,7 +1,5 @@
-highlighter: rouge
 permalink: pretty
 markdown: kramdown
 timezone: America/Los_Angeles
 future: true
-theme: jekyll-theme-cayman
-source:       ./blog
+url: http://cmontella.github.io/blog/
