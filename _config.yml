@@ -4,3 +4,4 @@ markdown: kramdown
 timezone: America/Los_Angeles
 future: true
 theme: jekyll-theme-cayman
+source:       ./blog
