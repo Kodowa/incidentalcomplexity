@@ -18,7 +18,7 @@ title: Eve
         <h3>Other posts</h3>
         <ul class="posts">
             {% for post in site.posts offset: 1 limit: 4 %}
-            <li><a href="{{ post.url }}"><span>{{ post.title }}</span></a></li>
+            <li><a href="{{ site.url }}{{ post.url }}"><span>{{ post.title }}</span></a></li>
             {% endfor %}
         </ul>
     </div>
