@@ -267,6 +267,18 @@ nav > *:hover { background: #f2f2f2; }
 nav > *:active { background: #e9e9e9; }
 nav > .play-cta { margin: 0; padding: 10px 20px; color: white; }
 
+@media (max-width: 760px) {
+    header { flex-direction: column; }
+    header .logo { margin-bottom: 30px; }
+}
+
+@media (max-width: 540px) {
+    nav { flex-wrap: wrap; }
+    nav > * { flex: 1 0 auto; padding: 10px 15px; text-align: center; }
+    nav > .play-cta { display: none; }
+    .header-wrapper { margin-bottom: -30px; }
+}
+
 .btn { cursor: pointer; text-align: center; user-select: none; -moz-user-select: none; -ms-user-select: none; }
 .btn.big { flex: 1 0 auto; padding: 18px 30px; }
 .btn.rounded { border-radius: 3px; }
@@ -315,6 +327,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 td { 
   border: 1px #AAA solid; 
   width: 20em; 
