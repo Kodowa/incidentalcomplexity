@@ -4,3 +4,5 @@ _cache/
 _jekyll_s3.yml
 .DS_Store
 *.swp
+
+.jekyll-metadata
