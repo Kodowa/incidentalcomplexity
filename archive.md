@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: archive
 title: Post Archive
 meta: The vault of all posts.
 ---
