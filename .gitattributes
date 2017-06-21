@@ -1,3 +1,2 @@
-_config.yml merge=ours
-
-CNAME merge=ours
+/_config.yml merge=ours
+/CNAME merge=ours
