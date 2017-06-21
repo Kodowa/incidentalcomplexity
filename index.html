@@ -1,0 +1,26 @@
+---
+layout: default
+title: Eve
+---
+
+<div id="blogposts">
+    {% for post in site.posts limit: 1 %}
+    <div class="post" id="{{post.link}}">
+        <h1>{{post.title}}</h1>
+        <p class="date">{{post.author}}&nbsp;-&nbsp;{{post.date | date_to_string }}</p>
+        {{ post.content }}
+
+    </div>
+    {% endfor %}
+
+    {% if site.posts.size > 1 %}
+    <div id="related">
+        <h3>Other posts</h3>
+        <ul class="posts">
+            {% for post in site.posts offset: 1 limit: 4 %}
+            <li><a href="{{ site.url }}{{ post.url }}"><span>{{ post.title }}</span></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
