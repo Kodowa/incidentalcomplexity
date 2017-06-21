@@ -2,6 +2,6 @@ permalink: pretty
 markdown: kramdown
 timezone: America/Los_Angeles
 future: true
-url: http://incidentalcomplexity.com/
+url: http://incidentalcomplexity.com
 markdown_ext: "markdown,mkdown,mkdn,mkd,md,eve"
 github: [metadata]
