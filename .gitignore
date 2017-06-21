@@ -4,6 +4,6 @@ _cache/
 _jekyll_s3.yml
 .DS_Store
 *.swp
-CNAME
+/CNAME
 .jekyll-metadata
-*.yml
+/_config.yml
