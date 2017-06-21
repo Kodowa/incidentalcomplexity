@@ -7,3 +7,5 @@ _jekyll_s3.yml
 .jekyll-metadata
 CNAME
 _config.yml
+CNAME
+*.yml
