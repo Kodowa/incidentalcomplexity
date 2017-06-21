@@ -6,4 +6,4 @@ _jekyll_s3.yml
 *.swp
 CNAME
 .jekyll-metadata
-_config.yml
+*.yml
