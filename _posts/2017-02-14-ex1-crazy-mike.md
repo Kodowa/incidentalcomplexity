@@ -20,7 +20,7 @@ You can play with this example in your browser [here](http://play.witheve.com/#g
 
 I want this app to have three containers: a hero image, a nav bar above the page container, and page contents which are going to change depending on the active section. I draw the basic page structure here and worry about details like drawing the individual tabs for the subpages later. The hero image and the nav bar also have their classes set here because their style never changes. The individual pages may require different styles, so their classes are bound later.
 
-```
+```eve
 commit @browser
   [#div class:"app-wrapper" children:
     [#div class:"hero-image"]
@@ -34,7 +34,7 @@ Crazy Mike sells a modest selection of repossessed electronics. I can set all th
 
 Each page has a name, which is displayed as a label on the navigation button; and an order, which indicates its position in the nav bar.
 
-```
+```eve
 commit
   [#page name: "Home" order: 1]
   [#page name: "Televisions" order: 3]
@@ -57,7 +57,7 @@ commit
 
 While the hero image was easy, the nav bar gets its own section because it needs a little more love than a background. It needs to make a button for each page of the website, which were committed in the Subpages section, so I take all the #`page` records and add a child #`div` to the #`nav-bar` for each of them.
 
-```
+```eve
 search @session @browser
   page = [#page]
   nav-bar = [#nav-bar]
@@ -83,7 +83,7 @@ commit
 
 Purely as a style issue, I want to change the background color of the nav bar button of whichever page we're on. You could also use this block to bind a new class to `nav-btn` and use CSS to set the new background color, but this is a little more terse without obfuscating the goal.
 
-```
+```eve
 search @session @browser
   [#app page]
   nav-btn = [#div page class:"nav-btn"]
@@ -98,7 +98,7 @@ bind @browser
 
 When the app specifies that we should be looking at the home page, the contents of this block are injected into the #`page-contents` record that was bound to the browser at the start of the Page Layout section.
 
-```
+```eve
 search @session @browser
   [#app page: "Home"]
   view = [#page-contents]
@@ -115,7 +115,7 @@ bind @browser
 
 Much like the home page, when the app specifies that we want to navigate to the Computers tab, we want to inject this page into #`page-contents`.
 
-```
+```eve
 search @session @browser
   [#app page: "Computers"]
   view = [#page-contents]
@@ -131,7 +131,7 @@ bind @browser
 
 Once more, when we navigate to the Televisions tab, it gets injected into #`page-contents`.
 
-```
+```eve
 search @session @browser
   [#app page: "Televisions"]
   view = [#page-contents]
@@ -147,7 +147,7 @@ bind @browser
 
 When we navigate to the Stereos tab, it gets injected into #`page-contents`.
 
-```
+```eve
 search @session @browser
   [#app page: "Stereos"]
   view = [#page-contents]
