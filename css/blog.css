@@ -283,6 +283,7 @@ nav > .play-cta { margin: 0; padding: 10px 20px; color: white; }
     .toplayer {display: block;}
     .drawer {text-align: center;}
     .header-wrapper { margin-bottom: -30px; }
+    .article { padding-left: 0px; }
 }
 
 .btn { cursor: pointer; text-align: center; user-select: none; -moz-user-select: none; -ms-user-select: none; }
