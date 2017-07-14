@@ -17,7 +17,7 @@ You can play with this example in your browser [here](http://play.witheve.com/#g
 
 The app contains the current page, as well as the current user. Initially, though, there is no user, so we just need to specify the current page.
 
-```
+```eve
 bind @browser
   [#div #app class: "app-wrapper" page: "login" children: 
     [#div sort: 0 text: "Jurassic Park System Security Interface"]]
@@ -29,7 +29,7 @@ bind @browser
 
 The log in form contains two input boxes, one for the username and another for a password. We must explicitly sort the fields (using a `sort` attribute) to display them in a specific order.
 
-```
+```eve
 search @browser
   app = [#app page: "login"]
   
@@ -71,7 +71,7 @@ commit @browser
 
 Clicking the sign up button changes the page to the sign up page
 
-```
+```eve
 search @browser @event
   [#click element: [#signup]] 
   app = [#app]
@@ -84,7 +84,7 @@ commit @browser
 
 The user registration page requests the name, department, a username and password.
 
-```
+```eve
 search @browser
   app = [#app page: "signup"]
   
@@ -104,7 +104,7 @@ bind @browser
 
 We need to create a `#user` from the submission of the registration form. This will only work if every field has an entry, and the two password fields match.
 
-```
+```eve
 search @browser
   [#form name: "Sign Up" submission: [username password confirm-password full-name department]]
   // The password and the confirmation must match
@@ -120,7 +120,7 @@ commit
 
 Clicking the login button changes the page back to the login screen
 
-```
+```eve
 search @browser @event
   [#click element: [#login]] 
   app = [#app]
@@ -133,7 +133,7 @@ commit @browser
 
 The profile page displays information relating to the current user profile. It is accessed after a successful submission of the login form, which creates a user attribute in the #app.
 
-```
+```eve
 search @browser @session
   app = [#app page: "profile" user]
   
@@ -148,7 +148,7 @@ bind @browser
 
 Clicking logout returns to the login page, and removes the user from `#app`.
 
-```
+```eve
 search @browser @event
   [#click element: [#logout]] 
   app = [#app]
@@ -163,7 +163,7 @@ commit @browser
 
 We can specify custom behavior by special casing search conditions and adding new side effects. In this block, we hijack the login process when the username is "dnedry". Instead of displaying the typical "login failed" message, we give the user a surprise.
 
-```
+```eve
 search @browser @session
   app = [#app]
   
@@ -179,7 +179,7 @@ commit @browser
 
 Clicking anywhere returns to the login screen
 
-```
+```eve
 search @browser @session @event
   [#click]
   app = [#app class: "uh-uh-uh"]
