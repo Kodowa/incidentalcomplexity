@@ -25,7 +25,7 @@ Ideally, we'd like to build a database explorer for Eve in Eve itself. Unfortuna
 As part of the refactor, we've built a Javascript DSL to write Eve code. The following block is 
 Javascript, but it describes an Eve block:
 
-```
+```javascript
 let prog = new Program("test");
  prog.block("simple block", ({find, record, lib}) => {
     let a = find("person");
@@ -40,7 +40,7 @@ let prog = new Program("test");
 
 If you're familiar with the Eve syntax, this is equivalent to:
 
-```
+```eve
 search
   a = [#person]
   b = [#person]
