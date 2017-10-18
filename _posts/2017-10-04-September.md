@@ -18,7 +18,7 @@ The incrementor example:
 The bouncing balls example ([link](https://www.youtube.com/watch?v=zenELksXotI&feature=youtu.be) for video): 
 
 <center>
-<a href="https://www.youtube.com/watch?v=zenELksXotI&feature=youtu.be"><img src="iamges\bouncing.png"></a>
+<a href="https://www.youtube.com/watch?v=zenELksXotI&feature=youtu.be"><img src="images\bouncing.png"></a>
 </center>
 
 We started a [thread on the mailing list](https://groups.google.com/forum/#!topic/eve-talk/tLgrw4zlc5U) where we will be posting more of these videos as the interface becomes more robust. We're going to hold this prototype back from release until the end of October, just to get it a little further along; but in the meantime, we'd like to hear any feedback you have! 
